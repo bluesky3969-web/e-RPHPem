@@ -32,3 +32,10 @@ Jangan gunakan atau simpan `service_role`/Secret Key di dalam aplikasi ini.
 - `supabase-setup.sql` — struktur pangkalan data dan polisi keselamatan.
 
 Data RPH pengguna tidak disimpan dalam repo ini. Data tersebut kekal dalam pelayar atau akaun Supabase pengguna.
+
+## Penggunaan ramai guru
+
+- Setiap guru mesti mendaftar atau log masuk sebelum membuka aplikasi.
+- Data cloud diasingkan mengikut ID pengguna melalui Supabase Auth dan polisi RLS.
+- Cache pada pelayar turut diasingkan bagi setiap akaun supaya pertukaran guru pada peranti yang sama tidak mencampurkan RPH.
+- Data tempatan lama hanya dipautkan kepada akaun pertama pada peranti tersebut dan tidak dihantar ke Supabase tanpa tindakan pengguna.

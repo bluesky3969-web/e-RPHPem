@@ -135,8 +135,14 @@
   .week-navigator{display:grid;grid-template-columns:auto minmax(240px,1fr) auto;gap:10px;align-items:center;margin-bottom:12px;padding:12px 14px}.week-heading{text-align:center}.week-heading h3{margin:0;color:var(--navy)}.week-heading p{margin:3px 0 0;color:var(--muted);font-size:.82rem}.week-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;margin-top:8px}.week-actions input{width:150px}.week-active-badge,.week-done-badge{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:.68rem;font-weight:900}.week-active-badge{background:#e5f1ff;color:#21649a}.week-done-badge{background:#e2f4ec;color:#277455}.archive-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:12px}.archive-filters>div:first-child{grid-column:span 2}.archive-week{border:1px solid #dce5ee;border-radius:11px;padding:12px;margin:9px 0;background:#fbfdff}.archive-week-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.archive-week h4{margin:0;color:var(--navy)}.archive-rph-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-top:10px}.archive-rph{background:#fff;border:1px solid #e0e7ef;border-radius:9px;padding:10px;font-size:.78rem}.archive-rph h5{margin:0 0 4px;color:var(--navy)}.archive-rph p{margin:3px 0;color:var(--muted)}.empty-week{padding:16px;text-align:center;background:#f8fafc;border:1px dashed #c9d6e2;border-radius:10px}.copy-dialog{border:0;border-radius:14px;padding:0;max-width:560px;width:calc(100% - 24px);box-shadow:0 20px 60px rgba(20,45,70,.3)}.copy-dialog::backdrop{background:rgba(20,38,55,.55)}.copy-dialog-body{padding:20px}.copy-dialog h3{margin-top:0;color:var(--navy)}.copy-dialog-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:14px}.danger-zone{border:1px solid #edcaca;background:#fff8f8}.storage-alert{border-left:4px solid var(--danger)}
   .pdpc-status-card{border-left:4px solid #d99a2b}.pdpc-toggle,.pdpc-reason{display:flex;gap:9px;align-items:flex-start;margin:8px 0;font-weight:700}.pdpc-toggle input,.pdpc-reason input{width:auto;margin-top:2px}.pdpc-options{padding:2px 0 0}.pdpc-reasons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px;margin:8px 0}.pdpc-preview{background:#f7fafc;border:1px solid #dce6ef;border-radius:10px;padding:11px;margin:10px 0}.pdpc-preview strong{color:var(--navy)}.pdpc-link{color:var(--primary);text-decoration:underline;cursor:pointer}.session-note{margin-top:7px!important;padding-top:7px;border-top:1px solid #edf1f5;color:#825815!important}.toast{position:fixed;right:20px;bottom:20px;z-index:100;background:#244b3c;color:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.22);max-width:390px}.toast.err{background:#9b3e3e}
   .cloud-card{border-left:4px solid #3aa981}.cloud-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.cloud-grid .wide{grid-column:1/-1}.cloud-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.cloud-state{margin-top:10px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.cloud-state.ok{background:#e5f5ed;color:#237253}.cloud-state.err{background:#fff0ef;color:#a44646}.cloud-versions{margin-top:10px}.cloud-version-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #e7edf2}.cloud-version-row small{color:var(--muted)}
+  .auth-gate{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;padding:20px;background:linear-gradient(135deg,#eef5fb,#e8f6ef)}
+  .auth-card{width:min(440px,100%);background:#fff;border:1px solid #d8e4ee;border-radius:20px;padding:24px;box-shadow:0 22px 65px rgba(24,55,82,.18)}
+  .auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:18px}.auth-brand img{width:126px;height:62px;object-fit:contain;border-radius:11px;background:#fff}.auth-brand h1{margin:0;color:var(--navy);font-size:1.28rem}.auth-brand p{margin:3px 0 0;color:var(--muted);font-size:.8rem}
+  .auth-card input[type=email],.auth-card input[type=password]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font:inherit}.auth-card input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+  .auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.auth-actions button{margin:0}.auth-note{margin:14px 0 0;color:var(--muted);font-size:.77rem;text-align:center}.auth-state{margin-top:12px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.auth-state.ok{background:#e5f5ed;color:#237253}.auth-state.err{background:#fff0ef;color:#a44646}
+  body.auth-locked>header.app,body.auth-locked>nav.app-nav,body.auth-locked>main.workspace,body.auth-locked>footer{visibility:hidden}.account-chip{margin-left:auto;display:flex;align-items:center;gap:8px}.account-chip span{max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.78rem;font-weight:700}.account-chip button{margin:0;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.45);padding:7px 10px}
   @media(max-width:1050px){.stat-grid{grid-template-columns:repeat(2,1fr)}.week-overview{grid-template-columns:repeat(5,220px)}.tool-layout{grid-template-columns:1fr 1fr}.settings-row,.settings-row.groups{grid-template-columns:repeat(2,1fr)}.print-grid{grid-template-columns:1fr}}
-  @media(max-width:720px){header.app{padding:12px}.brand{gap:10px}.brand-logo-wrap{width:132px;height:58px}.workspace{padding:16px 10px}.app-nav{overflow:auto}.page-heading{align-items:flex-start;flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}.session-grid{grid-template-columns:1fr}.app-body{flex-direction:column}.panel-preview{min-width:0}.settings-row,.settings-row.groups,.tool-layout,.cloud-grid{grid-template-columns:1fr}.cloud-grid .wide{grid-column:auto}.day-workbar{align-items:stretch;flex-direction:column}.print-grid{grid-template-columns:1fr}.pdpc-reasons{grid-template-columns:1fr}.week-navigator{grid-template-columns:1fr}.archive-filters{grid-template-columns:1fr}.archive-week-head{flex-direction:column}}
+  @media(max-width:720px){header.app{padding:12px}.brand{gap:10px;flex-wrap:wrap}.brand-logo-wrap{width:132px;height:58px}.account-chip{width:100%;margin-left:0;justify-content:space-between}.workspace{padding:16px 10px}.app-nav{overflow:auto}.page-heading{align-items:flex-start;flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}.session-grid{grid-template-columns:1fr}.app-body{flex-direction:column}.panel-preview{min-width:0}.settings-row,.settings-row.groups,.tool-layout,.cloud-grid{grid-template-columns:1fr}.cloud-grid .wide{grid-column:auto}.day-workbar{align-items:stretch;flex-direction:column}.print-grid{grid-template-columns:1fr}.pdpc-reasons{grid-template-columns:1fr}.week-navigator{grid-template-columns:1fr}.archive-filters{grid-template-columns:1fr}.archive-week-head{flex-direction:column}.auth-actions{grid-template-columns:1fr}}
 
   /* ===== Borang RPH rasmi ===== */
   .rph-wrap{background:#fff}
@@ -167,9 +173,19 @@
   }
 </style>
 </head>
-<body>
+<body class="auth-locked">
+<section id="authGate" class="auth-gate no-print" aria-labelledby="authTitle">
+  <div class="auth-card">
+    <div class="auth-brand"><img src="assets/redox-logo.png" alt="Logo REDOX"><div><h1 id="authTitle">e-RPH Pemulihan Khas</h1><p>Log masuk untuk membuka ruang kerja RPH anda.</p></div></div>
+    <label for="authEmail">E-mel</label><input id="authEmail" type="email" autocomplete="username" placeholder="nama@email.com">
+    <label for="authPassword">Kata laluan</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Sekurang-kurangnya 6 aksara">
+    <div class="auth-actions"><button type="button" onclick="logMasukGateUI()">Log Masuk</button><button type="button" class="secondary" onclick="daftarGateUI()">Daftar Akaun</button></div>
+    <div id="authState" class="auth-state">Setiap guru mempunyai data RPH yang berasingan dan dilindungi.</div>
+    <p class="auth-note">Gunakan Publishable Key sahaja. Kata laluan diuruskan oleh Supabase Auth.</p>
+  </div>
+</section>
 <header class="app no-print">
-  <div class="brand"><div class="brand-logo-wrap"><img class="brand-logo" src="assets/redox-logo.png" alt="Logo RedoX Pemulihan SK. Semangar"></div><div><h1>e-RPH Pemulihan Khas</h1><p>Rancang, jana, semak dan cetak RPH berasaskan buku panduan rasmi.</p></div></div>
+  <div class="brand"><div class="brand-logo-wrap"><img class="brand-logo" src="assets/redox-logo.png" alt="Logo RedoX Pemulihan SK. Semangar"></div><div><h1>e-RPH Pemulihan Khas</h1><p>Rancang, jana, semak dan cetak RPH berasaskan buku panduan rasmi.</p></div><div class="account-chip"><span id="headerUserEmail">Pengguna</span><button type="button" onclick="logKeluarSupabaseUI()">Log Keluar</button></div></div>
 </header>
 
 <nav class="app-nav no-print" aria-label="Navigasi utama">
@@ -679,6 +695,8 @@ function toolSalinHariSebelum(store, dayId) {
    LAPISAN UI — store, render, settings, tools, AI  (integrasi enjin A & B)
    ===================================================================== */
 const KUNCI = "erph_v3";
+const KUNCI_PENGGUNA_PREFIX = "erph_v3_user_";
+const KUNCI_TUNTUT_LEGASI = "erph_v3_legacy_claimed_by";
 const KUNCI_SUPABASE_CONFIG = "erph_supabase_config_v1";
 const KUNCI_SUPABASE_SESSION = "erph_supabase_session_v1";
 const KUNCI_SUPABASE_SYNC = "erph_supabase_sync_v1";
@@ -826,9 +844,15 @@ function normalisasiStore(d){
   d.days.forEach(day=>{if(!day||!isoSah(day.tarikh))return;day.mondayDate=isninBagiTarikh(day.tarikh);if(day.minggu==null)day.minggu=nomborMingguBagiMonday(day.mondayDate,d);if(!day.createdAt)day.createdAt=new Date().toISOString();if(!day.updatedAt)day.updatedAt=day.createdAt;});
   d.schemaVersion=SCHEMA_VERSION;return d;
 }
-function muatStore(){
+function idPenggunaAktif(){const s=bacaJSONTempatan(KUNCI_SUPABASE_SESSION,null);return s&&s.user&&s.user.id?String(s.user.id):'';}
+function kunciStorePengguna(userId){return KUNCI_PENGGUNA_PREFIX+String(userId||'').replace(/[^a-z0-9-]/gi,'');}
+function kunciStoreSemasa(){const userId=idPenggunaAktif();return userId?kunciStorePengguna(userId):KUNCI;}
+function kunciSyncPengguna(userId=idPenggunaAktif()){return KUNCI_SUPABASE_SYNC+(userId?'_'+userId:'');}
+function kunciMetaPengguna(userId=idPenggunaAktif()){return KUNCI_SUPABASE_META+(userId?'_'+userId:'');}
+function kunciPemulihanPengguna(userId=idPenggunaAktif()){return KUNCI_PEMULIHAN_CLOUD+(userId?'_'+userId:'');}
+function muatStore(kunciOverride){
   try{
-    const raw=localStorage.getItem(KUNCI);if(!raw)return storeDefault();dataRosakMentah=raw;const d=JSON.parse(raw);if(!d||!d.settings)throw new Error("Struktur data e-RPH tidak sah.");return normalisasiStore(d);
+    const raw=localStorage.getItem(kunciOverride||kunciStoreSemasa());if(!raw)return storeDefault();dataRosakMentah=raw;const d=JSON.parse(raw);if(!d||!d.settings)throw new Error("Struktur data e-RPH tidak sah.");return normalisasiStore(d);
   }catch(e){ralatMuatStore=e;console.error("e-RPH gagal membaca localStorage",e);}
   return storeDefault();
 }
@@ -837,15 +861,17 @@ let cloudVersion=null,cloudReady=false,pemasaCloud=null,cloudSedangSimpan=false,
 function bacaJSONTempatan(kunci,nilaiAsal=null){try{const raw=localStorage.getItem(kunci);return raw?JSON.parse(raw):nilaiAsal;}catch(e){return nilaiAsal;}}
 function configSupabase(){const cfg=bacaJSONTempatan(KUNCI_SUPABASE_CONFIG,{})||{};return {url:String(cfg.url||SUPABASE_URL_ASAL).replace(/\/+$/,''),key:String(cfg.key||SUPABASE_PUBLISHABLE_KEY_ASAL).trim()};}
 function sessionSupabase(){return bacaJSONTempatan(KUNCI_SUPABASE_SESSION,null);}
-function metaSupabase(){return bacaJSONTempatan(KUNCI_SUPABASE_META,null);}
+function metaSupabase(){return bacaJSONTempatan(kunciMetaPengguna(),null);}
 function simpanSessionSupabase(s){if(s)localStorage.setItem(KUNCI_SUPABASE_SESSION,JSON.stringify(s));else localStorage.removeItem(KUNCI_SUPABASE_SESSION);}
-function setCloudMeta(userId,version){cloudVersion=version==null?null:+version;localStorage.setItem(KUNCI_SUPABASE_META,JSON.stringify({userId,version:cloudVersion,updatedAt:new Date().toISOString()}));}
-function cloudMsg(teks,jenis=''){const el=$('cloudState');if(el){el.textContent=teks;el.className='cloud-state'+(jenis?' '+jenis:'');}}
-function cloudBadge(){const badge=$('cloudUserBadge'),s=sessionSupabase();if(!badge)return;if(s&&s.user){badge.textContent=s.user.email||'LOG MASUK';badge.className='status-pill status-complete';}else{badge.textContent='BELUM LOG MASUK';badge.className='status-pill';}}
+function setCloudMeta(userId,version){cloudVersion=version==null?null:+version;localStorage.setItem(kunciMetaPengguna(userId),JSON.stringify({userId,version:cloudVersion,updatedAt:new Date().toISOString()}));}
+function authMsg(teks,jenis=''){const el=$('authState');if(el){el.textContent=teks;el.className='auth-state'+(jenis?' '+jenis:'');}}
+function cloudMsg(teks,jenis=''){const el=$('cloudState');if(el){el.textContent=teks;el.className='cloud-state'+(jenis?' '+jenis:'');}if(document.body.classList.contains('auth-locked'))authMsg(teks,jenis);}
+function kemasKiniAuthGate(){const s=sessionSupabase(),masuk=!!(s&&s.user&&s.user.id);document.body.classList.toggle('auth-locked',!masuk);if($('authGate'))$('authGate').hidden=masuk;if($('headerUserEmail'))$('headerUserEmail').textContent=masuk?(s.user.email||'Pengguna'):'Pengguna';if(masuk&&$('authEmail'))$('authEmail').value=s.user.email||'';}
+function cloudBadge(){const badge=$('cloudUserBadge'),s=sessionSupabase();if(badge){if(s&&s.user){badge.textContent=s.user.email||'LOG MASUK';badge.className='status-pill status-complete';}else{badge.textContent='BELUM LOG MASUK';badge.className='status-pill';}}kemasKiniAuthGate();}
 function dataUntukCloud(){const data=JSON.parse(JSON.stringify(store));delete data.ui;return data;}
 function dataCloudSama(a,b){try{return JSON.stringify(a)===JSON.stringify(b);}catch(e){return false;}}
-function simpanSnapshotPemulihan(sebab){try{localStorage.setItem(KUNCI_PEMULIHAN_CLOUD,JSON.stringify({savedAt:new Date().toISOString(),reason:sebab||'snapshot',data:store}));}catch(e){console.warn('Snapshot pemulihan tidak dapat disimpan',e);}}
-function hentikanSyncCloud(mesej){cloudReady=false;localStorage.setItem(KUNCI_SUPABASE_SYNC,'false');clearTimeout(pemasaCloud);if(mesej)cloudMsg(mesej,'err');}
+function simpanSnapshotPemulihan(sebab){try{localStorage.setItem(kunciPemulihanPengguna(),JSON.stringify({savedAt:new Date().toISOString(),reason:sebab||'snapshot',data:store}));}catch(e){console.warn('Snapshot pemulihan tidak dapat disimpan',e);}}
+function hentikanSyncCloud(mesej){cloudReady=false;localStorage.setItem(kunciSyncPengguna(),'false');clearTimeout(pemasaCloud);if(mesej)cloudMsg(mesej,'err');}
 function simpanKonfigurasiSupabaseUI(){
   const url=String(($('supabaseUrl')&&$('supabaseUrl').value)||'').trim().replace(/\/+$/,''),key=String(($('supabaseKey')&&$('supabaseKey').value)||'').trim();
   if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){cloudMsg('Project URL Supabase tidak sah.','err');return false;}
@@ -858,7 +884,7 @@ async function responsSupabase(path,opt={}){
   let s=sessionSupabase();
   if(opt.auth!==false&&s&&s.refresh_token&&s.expires_at&&Date.now()/1000>s.expires_at-60){
     const refresh=await fetch(cfg.url+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:cfg.key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:s.refresh_token})});
-    const refreshed=await refresh.json().catch(()=>({}));if(!refresh.ok)throw new Error(refreshed.msg||refreshed.message||'Sesi tamat. Sila log masuk semula.');
+    const refreshed=await refresh.json().catch(()=>({}));if(!refresh.ok){simpanSessionSupabase(null);cloudBadge();throw new Error(refreshed.msg||refreshed.message||'Sesi tamat. Sila log masuk semula.');}
     refreshed.expires_at=Math.floor(Date.now()/1000)+(refreshed.expires_in||3600);s=refreshed;simpanSessionSupabase(s);
   }
   const headers=Object.assign({apikey:cfg.key,'Content-Type':'application/json'},opt.headers||{});if(opt.auth!==false){if(!s||!s.access_token)throw new Error('Sila log masuk Supabase dahulu.');headers.Authorization='Bearer '+s.access_token;}
@@ -867,30 +893,55 @@ async function responsSupabase(path,opt={}){
   if(!response.ok){const mesej=(data&&((data.message||data.msg||data.error_description)||data.hint))||String(data||response.statusText);const err=new Error(mesej);err.status=response.status;err.payload=data;throw err;}
   return data;
 }
+function renderSemulaUntukAkaun(){
+  migrateSettingsCatalog();selaraskanKumpulan(store);buildSettingUI();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();
+  const initial=store.ui&&['dashboard','jana','tools','cetak','settings'].includes(store.ui.view)?store.ui.view:'dashboard';showView(initial);
+}
+function aktifkanStorePengguna(userId){
+  const key=kunciStorePengguna(userId),cacheSedia=localStorage.getItem(key),claimedBy=localStorage.getItem(KUNCI_TUNTUT_LEGASI);let dataLegasiDituntut=false;
+  if(!cacheSedia){
+    const legacy=localStorage.getItem(KUNCI);
+    if(legacy&&!claimedBy){
+      try{const calon=JSON.parse(legacy);if(calon&&calon.settings){localStorage.setItem(key,legacy);localStorage.setItem(KUNCI_TUNTUT_LEGASI,userId);dataLegasiDituntut=true;}}catch(e){}
+    }
+    if(!localStorage.getItem(key))localStorage.setItem(key,JSON.stringify(storeDefault()));
+  }
+  ralatMuatStore=null;dataRosakMentah=null;store=muatStore(key);renderSemulaUntukAkaun();
+  return {cacheBaharu:!cacheSedia,dataLegasiDituntut};
+}
+function salinGateKeTetapan(){
+  if($('supabaseEmail'))$('supabaseEmail').value=String(($('authEmail')&&$('authEmail').value)||'').trim();
+  if($('supabasePassword'))$('supabasePassword').value=String(($('authPassword')&&$('authPassword').value)||'');
+}
+async function logMasukGateUI(){salinGateKeTetapan();authMsg('Sedang log masuk...');await logMasukSupabaseUI();}
+async function daftarGateUI(){salinGateKeTetapan();authMsg('Sedang mendaftarkan akaun...');await daftarSupabaseUI();}
 async function daftarSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
   if(!email||password.length<6){cloudMsg('Masukkan e-mel dan kata laluan sekurang-kurangnya 6 aksara.','err');return;}
-  try{cloudMsg('Mendaftarkan akaun...');const data=await responsSupabase('/auth/v1/signup',{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);await mulaSesiCloud();cloudMsg('Akaun berjaya didaftarkan dan dilog masuk. Data tempatan belum dihantar.','ok');}else cloudMsg('Akaun didaftarkan. Semak e-mel untuk pengesahan, kemudian log masuk.','ok');}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
+  try{cloudMsg('Mendaftarkan akaun...');const data=await responsSupabase('/auth/v1/signup',{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg(konteks.dataLegasiDituntut?'Akaun berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.':'Akaun berjaya didaftarkan dan dilog masuk.','ok');}else cloudMsg('Akaun didaftarkan. Semak e-mel untuk pengesahan, kemudian log masuk.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
 }
 async function logMasukSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
   if(!email||!password){cloudMsg('Masukkan e-mel dan kata laluan.','err');return;}
-  try{cloudMsg('Sedang log masuk...');const data=await responsSupabase('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email,password}});data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);$('supabasePassword').value='';await mulaSesiCloud();}catch(e){cloudMsg('Log masuk gagal: '+e.message,'err');}
+  try{cloudMsg('Sedang log masuk...');const data=await responsSupabase('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email,password}});data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);$('supabasePassword').value='';if($('authPassword'))$('authPassword').value='';cloudBadge();await mulaSesiCloud(konteks);if(konteks.dataLegasiDituntut)cloudMsg('Log masuk berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.','ok');}catch(e){cloudMsg('Log masuk gagal: '+e.message,'err');}
 }
 async function logKeluarSupabaseUI(){
+  const userId=idPenggunaAktif();if(userId)simpanStore();
   try{if(sessionSupabase())await responsSupabase('/auth/v1/logout',{method:'POST'});}catch(e){}
-  simpanSessionSupabase(null);localStorage.removeItem(KUNCI_SUPABASE_META);localStorage.setItem(KUNCI_SUPABASE_SYNC,'false');cloudVersion=null;cloudReady=false;cloudBadge();cloudMsg('Log keluar selesai. Data tempatan masih kekal pada peranti ini.');if($('cloudVersions'))$('cloudVersions').innerHTML='';
+  if(userId){localStorage.removeItem(kunciMetaPengguna(userId));localStorage.setItem(kunciSyncPengguna(userId),'false');}
+  simpanSessionSupabase(null);cloudVersion=null;cloudReady=false;store=storeDefault();cloudBadge();authMsg('Log keluar selesai. Data setiap akaun kekal berasingan.','ok');if($('cloudVersions'))$('cloudVersions').innerHTML='';
 }
 async function rekodCloudSemasa(){const list=await responsSupabase('/rest/v1/erph_state?select=data,version,updated_at&limit=1');return Array.isArray(list)&&list.length?list[0]:null;}
-async function mulaSesiCloud(){
+async function mulaSesiCloud(konteks={}){
   cloudBadge();const s=sessionSupabase();if(!s||!s.user)return;
   try{const remote=await rekodCloudSemasa(),meta=metaSupabase(),localData=dataUntukCloud();
     if(!remote){cloudVersion=0;cloudReady=false;cloudMsg('Log masuk berjaya. Supabase masih kosong. Klik “Hantar Data Tempatan ke Supabase” untuk salinan pertama.','ok');return;}
     cloudVersion=+remote.version;
-    if(dataCloudSama(localData,remote.data)){setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(KUNCI_SUPABASE_SYNC,'true');cloudMsg('Data tempatan dan Supabase adalah sama. Autosimpan cloud aktif (versi '+remote.version+').','ok');return;}
-    if(meta&&meta.userId===s.user.id&&+meta.version===+remote.version&&localStorage.getItem(KUNCI_SUPABASE_SYNC)==='true'){cloudReady=true;cloudMsg('Terdapat perubahan tempatan yang belum dihantar. Autosimpan cloud akan menyambung daripada versi '+remote.version+'.','ok');jadualkanCloudSave();return;}
+    if(konteks.cacheBaharu&&!konteks.dataLegasiDituntut){gunaDataCloud(remote,'muat-akaun-pada-peranti-baharu');setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data akaun berjaya dimuat daripada Supabase. Autosimpan aktif (versi '+remote.version+').','ok');return;}
+    if(dataCloudSama(localData,remote.data)){setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data tempatan dan Supabase adalah sama. Autosimpan cloud aktif (versi '+remote.version+').','ok');return;}
+    if(meta&&meta.userId===s.user.id&&+meta.version===+remote.version&&localStorage.getItem(kunciSyncPengguna())==='true'){cloudReady=true;cloudMsg('Terdapat perubahan tempatan yang belum dihantar. Autosimpan cloud akan menyambung daripada versi '+remote.version+'.','ok');jadualkanCloudSave();return;}
     hentikanSyncCloud('Data tempatan dan Supabase berbeza. Pilih “Muat Data Supabase” atau “Hantar Data Tempatan” selepas menyemak data. Tiada data ditindih secara automatik.');
-  }catch(e){hentikanSyncCloud('Sambungan Supabase belum sedia: '+e.message);}
+  }catch(e){if(!sessionSupabase()){cloudReady=false;cloudBadge();authMsg('Sesi tamat. Sila log masuk semula.','err');}else hentikanSyncCloud('Sambungan Supabase belum sedia: '+e.message);}
 }
 async function simpanCloudSekarang(paksa=false){
   if(cloudSedangSimpan){cloudPerluSimpanLagi=true;return false;}const s=sessionSupabase();if(!s||!s.user)return false;if(!cloudReady&&!paksa)return false;
@@ -898,14 +949,14 @@ async function simpanCloudSekarang(paksa=false){
   try{
     if(cloudVersion==null){const remote=await rekodCloudSemasa();cloudVersion=remote?+remote.version:0;}
     const result=await responsSupabase('/rest/v1/rpc/save_erph_state',{method:'POST',headers:{Prefer:'return=representation'},body:{p_expected_version:cloudVersion||0,p_data:dataUntukCloud()}});
-    const row=Array.isArray(result)?result[0]:result,newVersion=row&&row.new_version!=null?+row.new_version:cloudVersion;setCloudMeta(s.user.id,newVersion);cloudReady=true;localStorage.setItem(KUNCI_SUPABASE_SYNC,'true');cloudMsg('✓ Disimpan ke Supabase • versi '+newVersion+' • '+new Date().toLocaleTimeString('ms-MY'),'ok');return true;
+    const row=Array.isArray(result)?result[0]:result,newVersion=row&&row.new_version!=null?+row.new_version:cloudVersion;setCloudMeta(s.user.id,newVersion);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('✓ Disimpan ke Supabase • versi '+newVersion+' • '+new Date().toLocaleTimeString('ms-MY'),'ok');return true;
   }catch(e){
     simpanSnapshotPemulihan('konflik-atau-gagal-cloud');
     if(/VERSION_CONFLICT|serialization|40001/i.test(e.message))hentikanSyncCloud('Konflik dikesan: data cloud lebih baharu. Autosimpan dihentikan supaya tiada data ditindih. Muat data Supabase atau eksport backup tempatan.');
     else cloudMsg('Simpan cloud gagal; data tempatan masih selamat: '+e.message,'err');return false;
   }finally{cloudSedangSimpan=false;if(cloudPerluSimpanLagi&&cloudReady)jadualkanCloudSave();}
 }
-function jadualkanCloudSave(){if(!cloudReady||localStorage.getItem(KUNCI_SUPABASE_SYNC)!=='true'||!sessionSupabase())return;clearTimeout(pemasaCloud);pemasaCloud=setTimeout(()=>simpanCloudSekarang(false),2500);}
+function jadualkanCloudSave(){if(!cloudReady||localStorage.getItem(kunciSyncPengguna())!=='true'||!sessionSupabase())return;clearTimeout(pemasaCloud);pemasaCloud=setTimeout(()=>simpanCloudSekarang(false),2500);}
 async function hantarDataTempatanKeCloudUI(){
   if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const remote=await rekodCloudSemasa();cloudVersion=remote?+remote.version:0;const amaran=remote?'Supabase sudah mempunyai data versi '+remote.version+'. Data tempatan ini akan menjadi versi baharu.':'Ini akan membuat salinan pertama data tempatan di Supabase.';if(!confirm(amaran+'\n\nTeruskan?'))return;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok)paparToast('Data tempatan berjaya disalin ke Supabase.');}catch(e){hentikanSyncCloud('Data tidak dapat dihantar: '+e.message);}
 }
@@ -913,7 +964,7 @@ function gunaDataCloud(remote,sebab){
   simpanSnapshotPemulihan(sebab);const uiLama=store.ui;store=normalisasiStore(JSON.parse(JSON.stringify(remote.data)));store.ui=uiLama||store.ui||{view:'dashboard'};ralatMuatStore=null;dataRosakMentah=null;selaraskanKumpulan(store);migrateSettingsCatalog();tulisStore();buildSettingUI();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();
 }
 async function muatDataCloudKeTempatanUI(){
-  if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const remote=await rekodCloudSemasa();if(!remote){cloudMsg('Supabase masih belum mempunyai data.','err');return;}if(!confirm('Data Supabase versi '+remote.version+' akan menggantikan paparan tempatan. Snapshot pemulihan tempatan akan dibuat dahulu.\n\nTeruskan?'))return;cloudReady=false;gunaDataCloud(remote,'sebelum-muat-data-cloud');const s=sessionSupabase();setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(KUNCI_SUPABASE_SYNC,'true');cloudMsg('Data Supabase versi '+remote.version+' berjaya dimuat. Autosimpan cloud aktif.','ok');paparToast('Data Supabase berjaya dimuat.');}catch(e){hentikanSyncCloud('Data cloud tidak dapat dimuat: '+e.message);}
+  if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const remote=await rekodCloudSemasa();if(!remote){cloudMsg('Supabase masih belum mempunyai data.','err');return;}if(!confirm('Data Supabase versi '+remote.version+' akan menggantikan paparan tempatan. Snapshot pemulihan tempatan akan dibuat dahulu.\n\nTeruskan?'))return;cloudReady=false;gunaDataCloud(remote,'sebelum-muat-data-cloud');const s=sessionSupabase();setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data Supabase versi '+remote.version+' berjaya dimuat. Autosimpan cloud aktif.','ok');paparToast('Data Supabase berjaya dimuat.');}catch(e){hentikanSyncCloud('Data cloud tidak dapat dimuat: '+e.message);}
 }
 async function paparVersiCloudUI(){
   if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const list=await responsSupabase('/rest/v1/erph_state_versions?select=id,version,created_at&order=version.desc&limit=20'),wrap=$('cloudVersions');wrap.innerHTML=list.length?'<h4>Versi terkini</h4>'+list.map(v=>`<div class="cloud-version-row"><span><b>Versi ${v.version}</b><br><small>${esc(new Date(v.created_at).toLocaleString('ms-MY'))}</small></span><button type="button" class="secondary kecil" onclick="pulihVersiCloudUI(${v.id})">Pulihkan</button></div>`).join(''):'<p class="muted">Belum ada versi cloud.</p>';cloudMsg(list.length+' versi cloud dipaparkan.','ok');}catch(e){cloudMsg('Versi cloud gagal dimuat: '+e.message,'err');}
@@ -921,13 +972,13 @@ async function paparVersiCloudUI(){
 async function pulihVersiCloudUI(id){
   try{const list=await responsSupabase('/rest/v1/erph_state_versions?select=data,version&id=eq.'+encodeURIComponent(id)+'&limit=1'),lama=list&&list[0];if(!lama)throw new Error('Versi tidak ditemui.');const remote=await rekodCloudSemasa();if(!confirm('Pulihkan versi '+lama.version+' sebagai versi baharu? Snapshot data tempatan semasa akan dibuat dahulu.'))return;cloudReady=false;gunaDataCloud(lama,'sebelum-pulih-versi-'+lama.version);cloudVersion=remote?+remote.version:0;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok){paparToast('Versi '+lama.version+' dipulihkan sebagai versi cloud baharu.');paparVersiCloudUI();}}catch(e){hentikanSyncCloud('Versi tidak dapat dipulihkan: '+e.message);}
 }
-function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&cfg.key)mulaSesiCloud();else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk menyimpan RPH.','ok');}
+function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&s.user&&cfg.key){const konteks=aktifkanStorePengguna(s.user.id);mulaSesiCloud(konteks);}else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk membuka aplikasi.','ok');}
 function setStatusSimpan(teks,ok=true){const el=$("autoSaveMsg");if(el){el.textContent=teks;el.className="ai-mesej "+(ok?"ok":"err");}}
 function tulisStore(){
   try{
     if(ralatMuatStore&&dataRosakMentah!=null){setStatusSimpan("Data rosak dilindungi. Import backup atau gunakan Zon Berisiko untuk memulakan semula.",false);return false;}
     store.schemaVersion=SCHEMA_VERSION;
-    localStorage.setItem(KUNCI, JSON.stringify(store));
+    localStorage.setItem(kunciStoreSemasa(), JSON.stringify(store));
     setStatusSimpan("✓ Disimpan " + new Date().toLocaleTimeString("ms-MY"),true);jadualkanCloudSave();return true;
   }catch(e){console.error("e-RPH gagal menyimpan localStorage",e);setStatusSimpan("Data tidak dapat disimpan. Eksport backup dan semak ruang penyimpanan browser.",false);if($("appToast"))paparToast("Data tidak dapat disimpan. Sila eksport backup dan semak ruang penyimpanan browser.",false);return false;}
 }
@@ -1301,7 +1352,7 @@ function importBackupPenuh(file){
 function padamSemuaDataUI(){
   if(!confirm('AMARAN: Semua Settings, jadual, RPH dan arkib dalam pelayar ini akan dipadam. Teruskan?'))return;
   if(!confirm('Pengesahan akhir: data yang belum dieksport tidak boleh dipulihkan. Padam semua data?'))return;
-  try{localStorage.removeItem(KUNCI);ralatMuatStore=null;dataRosakMentah=null;store=storeDefault();simpanStore();buildSettingUI();renderTabs();muatBorang();renderShellSummaries();renderArkib();paparToast('Semua data e-RPH telah dipadam.');}catch(e){console.error('Reset data gagal',e);setBackupMsg('Data tidak dapat dipadam: '+e.message,false);}
+  try{localStorage.removeItem(kunciStoreSemasa());ralatMuatStore=null;dataRosakMentah=null;store=storeDefault();simpanStore();buildSettingUI();renderTabs();muatBorang();renderShellSummaries();renderArkib();paparToast('Semua data e-RPH untuk akaun ini telah dipadam.');}catch(e){console.error('Reset data gagal',e);setBackupMsg('Data tidak dapat dipadam: '+e.message,false);}
 }
 
 /* ---------- MASTER DATA, DROPDOWN BERGANTUNG & AI ---------- */
@@ -1795,7 +1846,7 @@ document.addEventListener("DOMContentLoaded",()=>{
   $('importFile').addEventListener('change',e=>{if(e.target.files[0])importJSONFail(e.target.files[0]);});
   $('backupImportFile').addEventListener('change',e=>{if(e.target.files[0])importBackupPenuh(e.target.files[0]);});
 
-  if(!ralatMuatStore)simpanStore();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();initSupabaseUI();
+  if(!ralatMuatStore&&sessionSupabase())simpanStore();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();initSupabaseUI();
   const initial=store.ui&&['dashboard','jana','tools','cetak','settings'].includes(store.ui.view)?store.ui.view:'dashboard';showView(initial);
   const bersih=store.migrations&&store.migrations.v8,jumlahBersih=bersih?((bersih.placeholderTangguhDibuang||0)+(bersih.statusTangguhDipulihkan||0)+(bersih.duplikatSlotDibuang||0)):0;
   if(jumlahBersih&&!(store.ui&&store.ui.migrasiV8Dimaklumkan)){store.ui=store.ui||{};store.ui.migrasiV8Dimaklumkan=true;simpanStore();paparToast('Pembersihan selesai: '+(bersih.placeholderTangguhDibuang||0)+' rekod rosak dibuang, '+(bersih.statusTangguhDipulihkan||0)+' status dipulihkan dan '+(bersih.duplikatSlotDibuang||0)+' duplicate slot dibuang.');}
