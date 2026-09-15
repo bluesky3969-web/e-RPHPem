@@ -1,0 +1,1806 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-RPH Pemulihan Khas</title>
+<style>
+  :root{
+    --biru:#6ba3d6; --biru-muda:#eaf3fb; --hijau:#7dc4a5; --hijau-muda:#e8f6ef;
+    --kelabu:#5a6472; --border:#cdd8e4; --putih:#ffffff;
+    --rph-kuning:#f6c62b; --rph-oren:#d98c1f;
+  }
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+    margin:0; background:#f4f8fc; color:#2b3440; line-height:1.5;}
+  header.app{background:linear-gradient(135deg,var(--biru),var(--hijau));
+    color:#fff; padding:12px 20px; text-align:center;}
+  header.app h1{margin:0; font-size:1.3rem}
+  header.app p{margin:3px 0 0; font-size:.8rem; opacity:.95}
+
+  /* ===== Bar atas: Setting / Tools / Tab Hari / Cetak ===== */
+  .topbar{display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+    max-width:1500px; margin:0 auto; padding:10px 16px 0;}
+  .topbar .day-tabs{display:flex; flex-wrap:wrap; gap:6px; flex:1; min-width:120px}
+  .slot-picker{width:auto;max-width:230px;min-width:150px}
+  .day-tab{background:#e7eef6; color:#2b3440; border:1px solid var(--border);
+    padding:6px 10px; border-radius:8px 8px 0 0; cursor:pointer; font-size:.82rem; font-weight:600;
+    display:inline-flex; align-items:center; gap:6px}
+  .day-tab.aktif{background:var(--putih); border-bottom-color:var(--putih); color:var(--biru)}
+  .day-tab .x{color:#c0392b; font-weight:800; cursor:pointer}
+  .day-tab-kosong{color:#9aa5b1; font-size:.82rem; font-style:italic; padding:6px}
+
+  /* ===== Panel Setting & Tools ===== */
+  .panel-drop{max-width:1500px; margin:8px auto 0; padding:0 16px}
+  .panel-inner{background:var(--putih); border:1px solid var(--border);
+    border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .panel-inner h2{margin:0 0 12px; font-size:1rem; color:var(--kelabu);
+    border-bottom:2px solid var(--biru-muda); padding-bottom:8px}
+  .jadual-hari{border:1px solid var(--border); border-radius:8px; padding:10px; margin-bottom:10px; background:#fbfdff}
+  .jadual-hari h3{margin:0 0 8px; font-size:.88rem; color:var(--biru)}
+  .slot-baris{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-bottom:6px}
+  .slot-baris input{flex:1; min-width:90px}
+  .slot-baris select{width:auto; min-width:125px}
+  .slot-kumpulan{display:flex; flex:1 1 260px; gap:6px; min-width:240px}
+  .data-actions{display:flex; flex-wrap:wrap; gap:6px; align-items:end}
+  .data-actions > div{min-width:170px; flex:1}
+  .nama-kumpulan-baris{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+  .nama-kumpulan-baris input{flex:1; min-width:120px}
+
+  /* ===== Susun atur dua panel ===== */
+  .app-body{display:flex; gap:16px; align-items:flex-start;
+    max-width:1500px; margin:0 auto; padding:12px 16px 16px;}
+  .panel-edit{flex:1 1 440px; min-width:340px}
+  .panel-preview{flex:1 1 520px; min-width:340px; position:sticky; top:12px;
+    max-height:calc(100vh - 24px); overflow:auto;}
+  @media(max-width:900px){.app-body{flex-direction:column}
+    .panel-preview{position:static; max-height:none; width:100%}}
+
+  .card{background:var(--putih); border:1px solid var(--border); border-radius:12px;
+    padding:16px; margin-bottom:16px; box-shadow:0 1px 4px rgba(0,0,0,.05);}
+  .card h2{margin:0 0 12px; font-size:1rem; color:var(--kelabu);
+    border-bottom:2px solid var(--biru-muda); padding-bottom:8px;}
+  .group-block{border:2px solid var(--hijau-muda); border-radius:10px; padding:12px; margin-bottom:14px; background:#fcfffe}
+  .group-block > h3{margin:0 0 10px; font-size:.95rem; color:#2e8b57; font-weight:800}
+  label{display:block; font-weight:600; font-size:.82rem; margin:9px 0 4px; color:var(--kelabu)}
+  input[type=text],input[type=number],input[type=date],select,textarea{width:100%;
+    padding:8px 10px; border:1px solid var(--border); border-radius:8px;
+    font-size:.9rem; font-family:inherit; background:#fdfefe;}
+  input:focus,select:focus,textarea:focus{outline:none; border-color:var(--biru);
+    box-shadow:0 0 0 3px var(--biru-muda);}
+  textarea{resize:vertical; min-height:56px}
+  .row{display:flex; flex-wrap:wrap; gap:10px}
+  .row > div{flex:1; min-width:110px}
+  .sp-box{border:1px solid var(--border); border-radius:8px; padding:10px;
+    max-height:150px; overflow:auto; background:#fdfefe;}
+  .sp-box label{display:flex; align-items:flex-start; gap:8px; font-weight:400; margin:6px 0; cursor:pointer}
+  .sp-box input[type=checkbox]{width:auto; margin-top:3px}
+  .sp-kosong{color:#9aa5b1; font-style:italic; font-size:.85rem}
+  button{background:var(--biru); color:#fff; border:none; padding:9px 14px;
+    border-radius:8px; font-size:.86rem; font-weight:600; cursor:pointer;
+    margin:5px 5px 0 0; transition:opacity .15s;}
+  button:hover{opacity:.88}
+  button.hijau{background:var(--hijau)} button.abu{background:#8a97a6}
+  button.merah{background:#d97a7a} button.kecil{padding:6px 10px; font-size:.8rem}
+  .ai-nota{background:var(--hijau-muda); border-left:4px solid var(--hijau);
+    padding:9px 12px; border-radius:6px; font-size:.8rem; margin-bottom:10px;}
+  .ai-mesej{font-size:.8rem; margin-top:6px; font-weight:600}
+  .ai-mesej.ok{color:#2e8b57} .ai-mesej.err{color:#c0392b}
+  details.ai-blok{margin-top:8px} details.ai-blok summary{cursor:pointer; font-weight:600; font-size:.82rem; color:var(--biru)}
+  .external-ai-card{margin-top:14px;padding:14px;border:1px solid #cfe0f2;border-radius:12px;background:#f5f9fe}
+  .external-ai-card h4{margin:0 0 4px;color:var(--navy)}
+  .external-ai-card p{margin:0 0 10px;color:var(--muted);font-size:.82rem}
+  .external-ai-card .ai-step{display:block;margin:12px 0 5px;color:var(--primary);font-size:.78rem;font-weight:900;letter-spacing:.02em}
+  .external-ai-card textarea{background:#fff;min-height:112px}
+  .external-ai-card .ai-jawapan{min-height:150px}
+  .external-ai-actions{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:5px}
+  .preview-tajuk{font-size:.82rem; color:var(--kelabu); font-weight:600; margin:0 0 8px}
+  .tools-grid{display:flex; flex-wrap:wrap; gap:6px}
+  footer{text-align:center; font-size:.78rem; color:#9aa5b1; padding:16px}
+  [hidden]{display:none !important}
+
+  /* ===== Shell dashboard ===== */
+  :root{--navy:#17324d;--ink:#203044;--muted:#6f7d8e;--surface:#fff;--soft:#f4f7fb;--primary:#3979b8;--primary-soft:#eaf2fb;--success:#2f8f68;--warning:#b27814;--danger:#c45151}
+  body{background:#eef3f8;color:var(--ink)}
+  header.app{padding:16px 24px;text-align:left;background:linear-gradient(125deg,#17324d,#2d638c 58%,#4f9b83)}
+  .brand{max-width:1440px;margin:auto;display:flex;align-items:center;gap:13px}
+  .brand-logo-wrap{width:180px;height:72px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:13px;background:#fff;border:1px solid rgba(255,255,255,.55);box-shadow:0 5px 16px rgba(12,32,49,.18)}
+  .brand-logo{display:block;width:100%;height:100%;object-fit:contain;transform:scale(1.75)}
+  header.app h1{font-size:1.24rem} header.app p{font-size:.79rem;color:#e6f0f7}
+  .app-nav{display:flex;gap:6px;padding:9px 18px;background:#fff;border-bottom:1px solid #dbe4ee;position:sticky;top:0;z-index:20;box-shadow:0 1px 5px rgba(20,46,72,.05)}
+  .app-nav .nav-btn{background:transparent;color:#58687a;margin:0;border-radius:9px;padding:9px 14px}
+  .app-nav .nav-btn:hover,.app-nav .nav-btn.aktif{background:var(--primary-soft);color:var(--primary)}
+  .workspace{max-width:1440px;margin:0 auto;padding:24px 18px 34px}
+  .app-view{animation:viewIn .18s ease-out}@keyframes viewIn{from{opacity:.4;transform:translateY(3px)}to{opacity:1;transform:none}}
+  .page-heading{display:flex;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:18px}
+  .page-heading h2{margin:2px 0 4px;font-size:1.55rem;color:var(--navy)} .page-heading p,.section-head p,.muted{margin:0;color:var(--muted);font-size:.88rem}
+  .eyebrow{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;font-weight:800;color:var(--primary)}
+  button{background:var(--primary);margin:4px 4px 0 0} button.primary{background:var(--primary)} button.secondary{background:#e9eff6;color:#40556a} button.danger{background:var(--danger)} button.ghost{background:transparent;color:var(--danger);border:1px solid #e4bcbc}
+  button:disabled{opacity:.55;cursor:wait}
+  .card{border-color:#dce5ee;box-shadow:0 5px 18px rgba(30,58,84,.06);border-radius:14px}
+  .section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}.section-head h3{margin:0 0 3px;color:var(--navy);font-size:1rem}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}.stat-card{background:#fff;border:1px solid #dce5ee;border-radius:14px;padding:15px}.stat-card strong{display:block;font-size:1.55rem;color:var(--navy)}.stat-card span{font-size:.79rem;color:var(--muted)}
+  .week-overview{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:10px;overflow:auto}.week-day{border:1px solid #e0e7ef;border-radius:11px;padding:10px;background:#fbfdff}.week-day h4{margin:0 0 8px;color:var(--navy)}.week-item{border-left:3px solid #b7c8d9;padding:6px 7px;margin:6px 0;background:#fff;border-radius:4px;font-size:.76rem}.week-item[data-status="complete"]{border-color:var(--success)}
+  .day-workbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #dce5ee;border-radius:13px;padding:10px;margin-bottom:13px}.day-workbar .day-tabs{display:flex;flex-wrap:wrap;gap:6px;flex:1}.day-tab{border-radius:9px;border-color:#d8e2ec;background:#f3f6fa;padding:8px 12px}.day-tab.aktif{background:var(--primary);border-color:var(--primary);color:#fff}
+  .session-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:11px;margin-bottom:14px}.session-card{background:#fff;border:1px solid #dce5ee;border-radius:13px;padding:13px;box-shadow:0 3px 12px rgba(24,55,82,.05)}.session-card.aktif{border-color:#76a8d7;box-shadow:0 0 0 3px #e5f0fb}.session-card h3{margin:3px 0;color:var(--navy);font-size:1rem}.session-card p{margin:2px 0;color:var(--muted);font-size:.78rem}.session-actions{display:flex;align-items:center;justify-content:space-between;margin-top:9px}
+  .status-pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;background:#edf1f5;color:#607080;font-size:.65rem;font-weight:900;letter-spacing:.03em}.status-ready{background:#fff2d5;color:#90630d}.status-generated{background:#e8f2ff;color:#286495}.status-edited{background:#f0eaff;color:#65509b}.status-complete{background:#e2f4ec;color:#277455}.status-reflection{background:#fff0ed;color:#a44c3d}
+  .status-deferred{background:#fff0d8;color:#955c00}.status-transferred{background:#e5f1ff;color:#21649a}
+  .notice{padding:10px 12px;border-radius:9px;background:#eaf2fb;color:#315f8c;margin:0 0 12px;font-size:.84rem}.notice.err{background:#fff0ef;color:#a44646}
+  .app-body{padding:0;max-width:none}.panel-edit{min-width:0}.compact-card{padding:14px}.action-bar{display:flex;align-items:center;flex-wrap:wrap;gap:5px}
+  details.group-block,details.reflection-card{padding:0;overflow:hidden}details.group-block>summary,details.reflection-card>summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:800;color:var(--navy);background:#fbfdff}details.group-block>summary::-webkit-details-marker,details.reflection-card>summary::-webkit-details-marker{display:none}.details-body{padding:4px 16px 16px;border-top:1px solid #e5ebf1}summary small{font-weight:500;color:var(--muted)}
+  .skill-summary{background:#eef6fd;border:1px solid #d4e6f6;border-radius:9px;padding:9px 11px;margin:8px 0;font-size:.8rem;color:#355d7d}.field-tools{display:flex;gap:6px;align-items:end}.field-tools>div:first-child{flex:1}.field-tools button{white-space:nowrap}.inline-actions{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}
+  .settings-tabs{display:flex;gap:7px;margin-bottom:12px}.settings-tabs button{background:#e6edf5;color:#4b5f73}.settings-tabs button.aktif{background:var(--primary);color:#fff}.settings-row{display:grid;grid-template-columns:1.15fr .7fr 1fr .7fr 1.3fr auto;gap:7px;align-items:end;padding:10px 0;border-bottom:1px solid #edf1f5}.settings-row.groups{grid-template-columns:1fr .8fr 1.4fr 1fr 1.2fr auto}.settings-row label{margin-top:0}.settings-row button{margin-bottom:1px}
+  .tool-layout{display:grid;grid-template-columns:1fr 1.4fr 1.2fr auto;gap:12px;align-items:end}.print-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.print-card>span{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--primary-soft);color:var(--primary);font-weight:900}.print-card h3{margin:12px 0 4px}.print-card p{color:var(--muted);font-size:.85rem;min-height:42px}
+  .search-input{margin-bottom:7px}
+  .week-navigator{display:grid;grid-template-columns:auto minmax(240px,1fr) auto;gap:10px;align-items:center;margin-bottom:12px;padding:12px 14px}.week-heading{text-align:center}.week-heading h3{margin:0;color:var(--navy)}.week-heading p{margin:3px 0 0;color:var(--muted);font-size:.82rem}.week-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;margin-top:8px}.week-actions input{width:150px}.week-active-badge,.week-done-badge{display:inline-flex;border-radius:999px;padding:4px 8px;font-size:.68rem;font-weight:900}.week-active-badge{background:#e5f1ff;color:#21649a}.week-done-badge{background:#e2f4ec;color:#277455}.archive-filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-bottom:12px}.archive-filters>div:first-child{grid-column:span 2}.archive-week{border:1px solid #dce5ee;border-radius:11px;padding:12px;margin:9px 0;background:#fbfdff}.archive-week-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.archive-week h4{margin:0;color:var(--navy)}.archive-rph-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-top:10px}.archive-rph{background:#fff;border:1px solid #e0e7ef;border-radius:9px;padding:10px;font-size:.78rem}.archive-rph h5{margin:0 0 4px;color:var(--navy)}.archive-rph p{margin:3px 0;color:var(--muted)}.empty-week{padding:16px;text-align:center;background:#f8fafc;border:1px dashed #c9d6e2;border-radius:10px}.copy-dialog{border:0;border-radius:14px;padding:0;max-width:560px;width:calc(100% - 24px);box-shadow:0 20px 60px rgba(20,45,70,.3)}.copy-dialog::backdrop{background:rgba(20,38,55,.55)}.copy-dialog-body{padding:20px}.copy-dialog h3{margin-top:0;color:var(--navy)}.copy-dialog-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:14px}.danger-zone{border:1px solid #edcaca;background:#fff8f8}.storage-alert{border-left:4px solid var(--danger)}
+  .pdpc-status-card{border-left:4px solid #d99a2b}.pdpc-toggle,.pdpc-reason{display:flex;gap:9px;align-items:flex-start;margin:8px 0;font-weight:700}.pdpc-toggle input,.pdpc-reason input{width:auto;margin-top:2px}.pdpc-options{padding:2px 0 0}.pdpc-reasons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 16px;margin:8px 0}.pdpc-preview{background:#f7fafc;border:1px solid #dce6ef;border-radius:10px;padding:11px;margin:10px 0}.pdpc-preview strong{color:var(--navy)}.pdpc-link{color:var(--primary);text-decoration:underline;cursor:pointer}.session-note{margin-top:7px!important;padding-top:7px;border-top:1px solid #edf1f5;color:#825815!important}.toast{position:fixed;right:20px;bottom:20px;z-index:100;background:#244b3c;color:#fff;border-radius:10px;padding:12px 16px;box-shadow:0 8px 24px rgba(0,0,0,.22);max-width:390px}.toast.err{background:#9b3e3e}
+  .cloud-card{border-left:4px solid #3aa981}.cloud-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.cloud-grid .wide{grid-column:1/-1}.cloud-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.cloud-state{margin-top:10px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.cloud-state.ok{background:#e5f5ed;color:#237253}.cloud-state.err{background:#fff0ef;color:#a44646}.cloud-versions{margin-top:10px}.cloud-version-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid #e7edf2}.cloud-version-row small{color:var(--muted)}
+  @media(max-width:1050px){.stat-grid{grid-template-columns:repeat(2,1fr)}.week-overview{grid-template-columns:repeat(5,220px)}.tool-layout{grid-template-columns:1fr 1fr}.settings-row,.settings-row.groups{grid-template-columns:repeat(2,1fr)}.print-grid{grid-template-columns:1fr}}
+  @media(max-width:720px){header.app{padding:12px}.brand{gap:10px}.brand-logo-wrap{width:132px;height:58px}.workspace{padding:16px 10px}.app-nav{overflow:auto}.page-heading{align-items:flex-start;flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}.session-grid{grid-template-columns:1fr}.app-body{flex-direction:column}.panel-preview{min-width:0}.settings-row,.settings-row.groups,.tool-layout,.cloud-grid{grid-template-columns:1fr}.cloud-grid .wide{grid-column:auto}.day-workbar{align-items:stretch;flex-direction:column}.print-grid{grid-template-columns:1fr}.pdpc-reasons{grid-template-columns:1fr}.week-navigator{grid-template-columns:1fr}.archive-filters{grid-template-columns:1fr}.archive-week-head{flex-direction:column}}
+
+  /* ===== Borang RPH rasmi ===== */
+  .rph-wrap{background:#fff}
+  table.rph{border-collapse:collapse; width:100%; background:#fff;
+    font-size:.78rem; color:#000; table-layout:fixed;}
+  table.rph td{border:1.3px solid var(--rph-oren); padding:5px 7px; vertical-align:top; word-wrap:break-word;}
+  .rph-title{background:var(--rph-kuning); text-align:center; font-weight:800;
+    letter-spacing:.5px; font-size:.86rem; padding:7px 4px !important;}
+  .rph-acthdr{background:var(--rph-kuning); text-align:center; font-weight:800; font-size:.82rem;}
+  .rph-kumpulan{background:#fce9b8; text-align:center; font-weight:800; font-size:.82rem; letter-spacing:.3px;}
+  .rph-label{font-weight:800; text-align:left; font-size:.72rem}
+  .rph-rlabel{font-weight:800; text-align:center; font-size:.72rem}
+  .rph-step{font-weight:800; text-align:center; vertical-align:middle; font-size:.74rem}
+  .rph-val{white-space:pre-wrap}
+  .rph-center{text-align:center}
+  .rph-act-cell{min-height:48px; height:48px; white-space:pre-wrap}
+  .rph-kbox{text-align:center; font-weight:700; vertical-align:middle}
+
+  @media print{
+    body{background:#fff}
+    header.app, footer, .app-nav, .page-heading, .day-workbar, .session-grid, .panel-edit, .no-print, .preview-tajuk{display:none !important}
+    .workspace,.app-view{padding:0;margin:0;max-width:none}.app-view[hidden]{display:none!important}
+    .app-body{display:block; padding:0; margin:0; max-width:100%}
+    .panel-preview{position:static; max-height:none; overflow:visible; width:100%; flex:none;}
+    .card{border:none; box-shadow:none; padding:0; margin:0; border-radius:0}
+    table.rph{font-size:.82rem}
+    @page{margin:12mm}
+  }
+</style>
+</head>
+<body>
+<header class="app no-print">
+  <div class="brand"><div class="brand-logo-wrap"><img class="brand-logo" src="assets/redox-logo.png" alt="Logo RedoX Pemulihan SK. Semangar"></div><div><h1>e-RPH Pemulihan Khas</h1><p>Rancang, jana, semak dan cetak RPH berasaskan buku panduan rasmi.</p></div></div>
+</header>
+
+<nav class="app-nav no-print" aria-label="Navigasi utama">
+  <button class="nav-btn aktif" data-view="dashboard" onclick="showView('dashboard')">Dashboard</button>
+  <button class="nav-btn" data-view="jana" onclick="showView('jana')">Jana RPH</button>
+  <button class="nav-btn" data-view="tools" onclick="showView('tools')">Tools</button>
+  <button class="nav-btn" data-view="cetak" onclick="showView('cetak')">Cetak / PDF</button>
+  <button class="nav-btn" data-view="settings" onclick="showView('settings')">Settings</button>
+</nav>
+
+<main class="workspace">
+  <section class="app-view" id="dashboardView" data-view-panel="dashboard">
+    <div class="page-heading"><div><span class="eyebrow">Ringkasan minggu</span><h2>Dashboard RPH</h2><p>Lihat kemajuan RPH dan teruskan kerja yang belum lengkap.</p></div><button class="primary" onclick="showView('jana')">Buka Jana RPH</button></div>
+    <div class="stat-grid" id="dashboardStats"></div>
+    <div class="card"><div class="section-head"><div><h3>Status Mingguan</h3><p>Setiap sesi daripada jadual dipaparkan mengikut hari.</p></div></div><div id="dashboardWeek" class="week-overview"></div></div>
+  </section>
+
+  <section class="app-view" id="janaView" data-view-panel="jana" hidden>
+    <div class="page-heading"><div><span class="eyebrow">Penggunaan harian</span><h2>Jana RPH</h2><p>Pilih hari dan buka hanya sesi yang mahu disiapkan.</p></div><div><button onclick="janaBatchHari()">Jana Semua Hari Ini</button><button class="secondary" onclick="janaBatchMinggu()">Jana Seminggu</button></div></div>
+    <div class="notice">Mod tempatan selamat: butang Jana AI menggunakan data buku panduan dan tidak menghantar data murid keluar. Penyambung AI luaran boleh ditambah kemudian melalui lapisan generator sedia ada.</div>
+    <div class="card week-navigator no-print">
+      <button class="secondary" onclick="navigasiMinggu(-1)">&larr; Minggu Sebelum</button>
+      <div class="week-heading"><h3 id="viewedWeekTitle">Minggu</h3><p id="viewedWeekRange"></p><div class="week-actions"><span id="activeWeekBadge" class="week-active-badge" hidden>MINGGU AKTIF</span><span id="completedWeekBadge" class="week-done-badge" hidden>MINGGU SIAP</span><button id="backActiveWeek" class="secondary kecil" onclick="kembaliMingguAktif()" hidden>Kembali ke Minggu Aktif</button><label class="muted">Pergi ke minggu <input type="date" id="goToWeekDate" onchange="pergiKeMinggu(this.value)"></label><button id="toggleWeekComplete" class="kecil" onclick="toggleMingguSiap()">Tandakan Minggu Siap</button><button class="secondary kecil" onclick="bukaArkib()">Arkib RPH</button></div></div>
+      <button class="secondary" onclick="navigasiMinggu(1)">Minggu Seterusnya &rarr;</button>
+    </div>
+    <div class="day-workbar no-print">
+      <div class="day-tabs" id="dayTabs"></div>
+      <button class="secondary kecil" onclick="kemaskiniMingguDariJadual(false)">Kemaskini dari Jadual</button>
+      <select id="rphSlotSelect" class="slot-picker" onchange="pilihSlotUI(this.value)" hidden></select>
+      <button id="padamRphAktif" class="danger ghost kecil" onclick="padamHariAktifUI()" hidden>Padam RPH</button>
+    </div>
+    <div id="batchMsg" class="notice" hidden></div>
+    <div id="sessionCards" class="session-grid"></div>
+    <div id="emptyViewedWeek" class="empty-week" hidden><p>Belum ada RPH pada minggu ini.</p><button onclick="janaMingguDilihatUI()">Jana RPH Minggu Ini</button></div>
+
+    <div class="app-body" id="editorWorkspace">
+      <div class="panel-edit no-print" id="borangEdit">
+        <div class="card compact-card">
+          <div class="section-head"><div><span class="eyebrow">Sesi aktif</span><h3 id="activeRphTitle">Maklumat RPH</h3></div><span id="activeRphStatus" class="status-pill">BELUM MULA</span></div>
+          <div class="row">
+            <div><label>Tarikh</label><input type="date" id="f_tarikh" data-field="tarikh" readonly></div>
+            <div><label>Hari</label><input type="text" id="f_hari" data-field="hari" readonly></div>
+            <div><label>Minggu</label><input type="text" id="f_minggu" data-field="minggu" readonly></div>
+          </div>
+          <div class="row">
+            <div><label>Kelas</label><input type="text" id="f_kelas" data-field="kelas" readonly></div>
+            <div><label>Masa</label><input type="text" id="f_masa" data-field="masa" readonly></div>
+            <div><label>Bilangan Murid</label><input type="number" id="f_bilanganMurid" data-field="bilanganMurid" min="0"></div>
+          </div>
+          <label>Mata Pelajaran</label><select id="f_mataPelajaran" data-field="mataPelajaran" disabled><option value="">- Pilih -</option><option value="Bahasa Melayu">Bahasa Melayu</option><option value="Matematik">Matematik</option></select>
+        </div>
+
+        <div id="groupEditWrap"></div>
+
+        <details class="card reflection-card" open>
+          <summary><span>Refleksi &amp; Intervensi</span><small>Diisi selepas PdP</small></summary>
+          <div class="details-body">
+            <div class="row">
+              <div><label>Murid hadir</label><input type="number" id="f_kehadiran" data-field="kehadiran" min="0"></div>
+              <div><label>Murid menguasai</label><input type="number" id="f_kuasai" data-field="kuasai" min="0"></div>
+              <div><label>Belum menguasai</label><input type="number" id="f_belumKuasai" data-field="belumKuasai" min="0"></div>
+            </div>
+            <div class="inline-actions"><button class="kecil" onclick="janaRefleksiUI()">Jana Refleksi</button><button class="secondary kecil" onclick="janaIntervensiUI()">Jana Intervensi AI</button></div>
+            <label>Refleksi / Impak</label><textarea id="f_refleksi" data-field="refleksi"></textarea>
+            <label>Intervensi / Tindakan Susulan</label><textarea id="f_intervensi" data-field="intervensi"></textarea>
+            <label>Nota Kehadiran</label><input type="text" id="f_kehadiranNota" data-field="kehadiranNota">
+            <span id="reflectionMsg" class="ai-mesej"></span>
+          </div>
+        </details>
+
+        <details class="card reflection-card pdpc-status-card" id="pdpcStatusCard" open>
+          <summary><span>Status PdPc</span><small id="pdpcStatusSummary">Dijadualkan</small></summary>
+          <div class="details-body">
+            <label class="pdpc-toggle"><input type="checkbox" id="pdpcNotConducted"> <span>PdPc tidak dapat dijalankan</span></label>
+            <div id="pdpcDeferredOptions" class="pdpc-options" hidden>
+              <p class="muted">Sebab (boleh pilih lebih daripada satu):</p>
+              <div class="pdpc-reasons">
+                <label class="pdpc-reason"><input type="checkbox" data-pdpc-reason="leave"> <span>Cuti Umum / Cuti Sakit / CRK</span></label>
+                <label class="pdpc-reason"><input type="checkbox" data-pdpc-reason="course_meeting_workshop"> <span>Kursus / Mesyuarat / Bengkel</span></label>
+                <label class="pdpc-reason"><input type="checkbox" data-pdpc-reason="external_activity"> <span>Aktiviti Luar</span></label>
+                <label class="pdpc-reason"><input type="checkbox" data-pdpc-reason="school_program"> <span>Program Sekolah</span></label>
+                <label class="pdpc-reason"><input type="checkbox" data-pdpc-reason="other"> <span>Lain-lain</span></label>
+              </div>
+              <div id="pdpcOtherWrap" hidden><label>Nyatakan sebab lain</label><input type="text" id="pdpcOtherReason" placeholder="Nyatakan sebab..."></div>
+              <label class="pdpc-toggle"><input type="checkbox" id="copyRphToNext"> <span>Salin RPH ke PdP seterusnya</span></label>
+              <div id="deferPreview" class="pdpc-preview" hidden></div>
+              <div id="deferConflict" hidden>
+                <label>Slot PdP seterusnya sudah mempunyai RPH jadual</label>
+                <select id="deferConflictAction">
+                  <option value="replace">Gunakan slot ini dan gantikan kandungan (Disyorkan)</option>
+                  <option value="cancel">Batal</option>
+                </select>
+              </div>
+              <button type="button" class="primary" id="confirmDeferCopy" onclick="sahkanSalinRphDitangguh()" hidden>Sahkan &amp; Salin RPH</button>
+              <span id="deferMsg" class="ai-mesej"></span>
+            </div>
+          </div>
+        </details>
+
+        <div class="card action-bar"><button class="primary" onclick="cetakRphAktif()">Cetak RPH Ini</button><button class="secondary" onclick="showView('cetak')">Pilihan Cetak</button><span id="autoSaveMsg" class="ai-mesej ok"></span></div>
+      </div>
+
+      <aside class="panel-preview">
+        <p class="preview-tajuk no-print">Pratonton langsung</p>
+        <div class="card rph-wrap"><table class="rph"><colgroup><col style="width:16%"><col style="width:15%"><col style="width:13%"><col style="width:8%"><col style="width:16%"><col style="width:32%"></colgroup><tbody id="rphBody"></tbody></table></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="app-view" id="toolsView" data-view-panel="tools" hidden>
+    <div class="page-heading"><div><span class="eyebrow">Tindakan pukal</span><h2>Tools</h2><p>Pilih skop dengan jelas sebelum mengubah kandungan RPH.</p></div></div>
+    <div class="card tool-layout">
+      <div><label>Skop</label><select id="toolScope" onchange="renderToolFilters()"><option value="all">Semua RPH</option><option value="day">Hari tertentu</option><option value="subject">Mata pelajaran tertentu</option><option value="rph">RPH tertentu</option></select></div>
+      <div id="toolFilterWrap"></div>
+      <div><label>Tindakan</label><select id="toolAction"><option value="aktiviti">Padam Aktiviti Sahaja</option><option value="objektif">Padam Objektif Sahaja</option><option value="refleksi">Kosongkan Refleksi</option><option value="intervensi">Kosongkan Intervensi</option><option value="semua">Padam Semua Kandungan</option></select></div>
+      <div><button class="danger" onclick="jalankanBulkTool()">Jalankan Tindakan</button></div>
+    </div>
+    <div class="card"><h3>Salin kandungan</h3><p class="muted">Tindakan ini menggunakan RPH yang sedang aktif.</p><button onclick="toolUI('mingguLalu')">Salin Minggu Lalu</button><button class="secondary" onclick="toolUI('hariSebelum')">Salin Hari Sebelum</button><span id="toolMsg" class="ai-mesej"></span></div>
+    <div class="card" id="archiveCard"><div class="section-head"><div><h3>Arkib RPH</h3><p>Cari, buka, guna sebagai template atau salin RPH lama tanpa mengubah Minggu Aktif.</p></div></div><div class="archive-filters"><div><label>Cari kemahiran / kandungan</label><input id="archiveSearch" type="search" placeholder="Cari RPH lama..." oninput="renderArkib()"></div><div><label>Minggu</label><select id="archiveWeek" onchange="renderArkib()"><option value="">Semua</option></select></div><div><label>Mata Pelajaran</label><select id="archiveSubject" onchange="renderArkib()"><option value="">Semua</option><option>Bahasa Melayu</option><option>Matematik</option></select></div><div><label>Kelas</label><select id="archiveClass" onchange="renderArkib()"><option value="">Semua</option></select></div><div><label>Hari</label><select id="archiveDay" onchange="renderArkib()"><option value="">Semua</option><option>Isnin</option><option>Selasa</option><option>Rabu</option><option>Khamis</option><option>Jumaat</option></select></div><div><label>Status Minggu</label><select id="archiveStatus" onchange="renderArkib()"><option value="">Semua</option><option value="completed">Siap</option><option value="open">Belum Siap</option></select></div></div><div id="archiveList"></div></div>
+  </section>
+
+  <section class="app-view" id="cetakView" data-view-panel="cetak" hidden>
+    <div class="page-heading"><div><span class="eyebrow">Output A4</span><h2>Cetak / PDF</h2><p>Gunakan dialog cetak pelayar dan pilih Save as PDF jika diperlukan.</p></div></div>
+    <div class="print-grid">
+      <div class="card print-card"><span>01</span><h3>Satu RPH</h3><p>Cetak sesi yang sedang aktif sahaja.</p><button onclick="cetakRphAktif()">Cetak RPH Ini</button></div>
+      <div class="card print-card"><span>02</span><h3>Satu Hari</h3><p>Cetak semua sesi pada hari dipilih.</p><button onclick="cetakHariPDF()">Cetak Hari Dipilih</button></div>
+      <div class="card print-card"><span>03</span><h3>Seminggu</h3><p>Cetak semua RPH minggu yang sedang dilihat dengan page break.</p><button onclick="exportMingguPDF()">Cetak Mingguan</button></div>
+    </div>
+    <span id="printMsg" class="ai-mesej"></span>
+  </section>
+
+  <section class="app-view" id="settingsView" data-view-panel="settings" hidden>
+    <div class="page-heading"><div><span class="eyebrow">One-off setup</span><h2>Settings</h2><p>Sediakan kelas, jadual dan kumpulan sekali untuk digunakan semula.</p></div></div>
+    <div class="settings-tabs" role="tablist"><button class="aktif" onclick="showSettingsTab('kelas',this)">Kelas</button><button onclick="showSettingsTab('jadual',this)">Jadual</button><button onclick="showSettingsTab('kumpulan',this)">Kumpulan</button><button onclick="showSettingsTab('data',this)">Data</button></div>
+    <div class="settings-panel" id="settingsKelas">
+      <div class="card"><div class="section-head"><div><h3>Setting Kelas</h3><p>Maklumat ini digunakan semula dalam jadual dan RPH.</p></div><button onclick="tambahKelasUI()">+ Tambah Kelas</button></div><div id="kelasSettingWrap"></div></div>
+    </div>
+    <div class="settings-panel" id="settingsJadual" hidden>
+      <div class="card"><div class="row"><div><label>Minggu Semasa</label><input type="number" id="setMinggu" min="1"></div><div><label>Tarikh Isnin</label><input type="date" id="mulaMinggu"></div></div><button class="primary" onclick="binaMingguUI()">Simpan Jadual &amp; Jana Minggu</button><button class="secondary" onclick="kemaskiniMingguDariJadual(true)">Kemaskini RPH Minggu Ini</button><span id="janaMingguMsg" class="ai-mesej"></span></div>
+      <div class="card"><div class="section-head"><div><h3>Setting Jadual</h3><p>Tambah beberapa sesi bagi setiap hari.</p></div></div><div id="jadualWrap"></div></div>
+    </div>
+    <div class="settings-panel" id="settingsKumpulan" hidden>
+      <div class="card"><div class="section-head"><div><h3>Setting Kumpulan</h3><p>Simpan nama, tahap, murid dan kemahiran semasa.</p></div><button onclick="tambahKumpulanSettingUI()">+ Tambah Kumpulan</button></div><div id="kumpulanSettingWrap"></div></div>
+    </div>
+    <div class="settings-panel" id="settingsData" hidden>
+      <div class="card"><h3>Import, Export &amp; Minggu Seterusnya</h3><div class="data-actions"><div><label>Export minggu dilihat</label><button onclick="exportMingguJSON()">JSON</button><button onclick="exportMingguCSV()">CSV</button></div><div><label>Skop import JSON</label><select id="importMode"><option value="week">Seminggu terus</option><option value="day">Hari dipilih</option><option value="class">Kelas dipilih</option></select><input type="file" id="importFile" accept="application/json,.json" hidden><button onclick="$('importFile').click()">Pilih Fail &amp; Import</button></div><div><label>Minggu depan</label><select id="resetMingguDepan"><option value="none">Guna semula kandungan</option><option value="objektif">Reset objektif</option><option value="kemahiran">Reset kemahiran</option><option value="aktiviti">Reset aktiviti</option><option value="semua">Reset semua</option></select><button onclick="sediakanMingguDepanUI()">Sediakan Minggu Depan</button></div></div><span id="dataMsg" class="ai-mesej"></span></div>
+      <div class="card cloud-card"><div class="section-head"><div><h3>Supabase Cloud</h3><p>Simpan RPH mengikut akaun, cegah pertindihan dua tab dan simpan 100 versi terakhir.</p></div><span id="cloudUserBadge" class="status-pill">BELUM LOG MASUK</span></div><div class="cloud-grid"><div class="wide"><label>Project URL</label><input id="supabaseUrl" type="url" value="https://tmpmqqumgvtsvdqgifob.supabase.co" autocomplete="off"></div><div class="wide"><label>Publishable Key <small class="muted">(jangan gunakan Secret / service_role key)</small></label><input id="supabaseKey" type="password" placeholder="sb_publishable_..." autocomplete="off"></div><div><label>E-mel</label><input id="supabaseEmail" type="email" autocomplete="username"></div><div><label>Kata Laluan</label><input id="supabasePassword" type="password" autocomplete="current-password"></div></div><div class="cloud-actions"><button type="button" class="secondary" onclick="simpanKonfigurasiSupabaseUI()">Simpan Sambungan</button><button type="button" onclick="daftarSupabaseUI()">Daftar Akaun</button><button type="button" onclick="logMasukSupabaseUI()">Log Masuk</button><button type="button" class="secondary" onclick="logKeluarSupabaseUI()">Log Keluar</button></div><div class="cloud-actions"><button type="button" class="hijau" onclick="hantarDataTempatanKeCloudUI()">Hantar Data Tempatan ke Supabase</button><button type="button" class="secondary" onclick="muatDataCloudKeTempatanUI()">Muat Data Supabase</button><button type="button" class="secondary" onclick="paparVersiCloudUI()">Lihat Versi Lama</button></div><div id="cloudState" class="cloud-state">Masukkan Publishable Key, kemudian daftar atau log masuk. Data tempatan belum disentuh.</div><div id="cloudVersions" class="cloud-versions"></div></div>
+      <div class="card"><h3>Backup Penuh</h3><p class="muted">Simpan atau pulihkan Settings, jadual, kumpulan, Minggu Aktif, semua RPH dan metadata arkib.</p><button onclick="exportBackupPenuh()">Export Backup</button><input type="file" id="backupImportFile" accept="application/json,.json" hidden><button class="secondary" onclick="$('backupImportFile').click()">Import Backup</button><span id="backupMsg" class="ai-mesej"></span></div>
+      <div class="card danger-zone"><h3>Zon Berisiko</h3><p class="muted">Tindakan ini memadam semua data e-RPH dalam pelayar ini.</p><button class="danger" onclick="padamSemuaDataUI()">Padam Semua Data</button></div>
+    </div>
+  </section>
+</main>
+<dialog id="copyRphDialog" class="copy-dialog"><div class="copy-dialog-body"><h3>Salin RPH</h3><div id="copyRphSource" class="notice"></div><label>Ke minggu</label><select id="copyWeekSelect" onchange="renderSlotDestinasiCopy()"></select><label>Slot destinasi</label><select id="copySlotSelect" onchange="semakKonflikCopy()"></select><div id="copyConflictWrap" hidden><label>Slot ini sudah mempunyai RPH</label><select id="copyConflictAction"><option value="replace">Gantikan Kandungan</option><option value="cancel">Pilih Slot Lain / Batal</option></select></div><div id="copyRphMsg" class="ai-mesej"></div><div class="copy-dialog-actions"><button class="secondary" onclick="tutupDialogSalinRph()">Batal</button><button onclick="sahkanSalinRphLama()">Sahkan &amp; Salin RPH</button></div></div></dialog>
+<div id="appToast" class="toast" role="status" aria-live="polite" hidden></div>
+
+<footer class="no-print">e-RPH Pemulihan Khas &bull; Autosimpan tempatan &bull; Data panduan rasmi BM dan Matematik</footer>
+
+<script src="master-data.js"></script>
+<script>
+const MASTER_DATA = window.ERPH_MASTER_DATA || {subjects:{"Bahasa Melayu":[],"Matematik":[]}};
+const kurikulum = MASTER_DATA.subjects;
+
+/* =====================================================================
+   ENJIN A — Settings / Hari / Kalendar / Kumpulan  (dibina oleh subagent, teruji node)
+   ===================================================================== */
+function idUnik() {
+  return "d" + Date.now() + Math.floor(Math.random() * 1000000);
+}
+function hariBM(iso) {
+  if (!iso) return "";
+  var hari = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"];
+  var d = new Date(iso + "T00:00:00");
+  if (isNaN(d.getTime())) return "";
+  return hari[d.getDay()];
+}
+function formatTarikhBM(iso) {
+  if (!iso) return "";
+  var bulan = ["JANUARI", "FEBRUARI", "MAC", "APRIL", "MEI", "JUN",
+    "JULAI", "OGOS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DISEMBER"];
+  var bahagian = String(iso).split("-");
+  if (bahagian.length !== 3) return "";
+  var tahun = bahagian[0];
+  var bln = parseInt(bahagian[1], 10);
+  var hari = parseInt(bahagian[2], 10);
+  if (isNaN(bln) || isNaN(hari) || bln < 1 || bln > 12) return "";
+  return hari + " " + bulan[bln - 1] + " " + tahun;
+}
+function buatKumpulanKosong() {
+  return {
+    skillId: "", kemahiranPemulihan: "", skIndex: "", standardIndex: "", objektif: "", objektifDipilih: [], kriteriaKejayaan: "",
+    setInduksi: "", langkah1: "", langkah2: "", langkah3: "", didikHibur: "", penutup: "", sp: [],
+    aiGenerated: false, userEdited: false
+  };
+}
+function idSubjekDaripadaNama(nama) {
+  var kunci = String(nama || "").trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  return kunci ? "subjek:" + kunci : "";
+}
+function salinKumpulanPedagogi(group) {
+  var sumber = group || {}, hasil = buatKumpulanKosong();
+  ["skillId","kemahiranPemulihan","skIndex","standardIndex","objektif","kriteriaKejayaan","setInduksi","langkah1","langkah2","langkah3","didikHibur","penutup","aiGenerated","userEdited"].forEach(function(k){
+    if (sumber[k] != null) hasil[k] = sumber[k];
+  });
+  hasil.sp = Array.isArray(sumber.sp) ? sumber.sp.slice() : [];
+  hasil.objektifDipilih = Array.isArray(sumber.objektifDipilih) ? sumber.objektifDipilih.slice() : [];
+  return hasil;
+}
+function buangFieldBbmAbm(obj) {
+  if (!obj || typeof obj !== "object") return obj;
+  ["bbm","abm","bbmAbm","abmBbm","teachingAids","teachingAid","materials","learningMaterials"].forEach(function(k){ delete obj[k]; });
+  return obj;
+}
+function buatHariKosong(tarikh, settings, slot) {
+  var s = settings || {};
+  var now = new Date().toISOString();
+  var bilanganKumpulan = Math.min(3, Math.max(1, (slot && slot.groupCount) || s.groupCount || 1));
+  var groups = [];
+  for (var i = 0; i < bilanganKumpulan; i++) groups.push(buatKumpulanKosong());
+  return {
+    id: idUnik(), tarikh: tarikh || "", hari: hariBM(tarikh), minggu: s.weekNumber, mondayDate: tarikh ? isninBagiTarikh(tarikh) : "", createdAt: now, updatedAt: now,
+    kelas: (slot && slot.kelas) || "", masa: (slot && slot.masa) || "", bilanganMurid: (slot && slot.studentCount) || "", mataPelajaran: (slot && slot.mataPelajaran) || "",
+    classId: (slot && slot.classId) || "", subjectId: (slot && slot.subjectId) || "", slotId: (slot && slot.id) || "",
+    refleksi: "", intervensi: "", kehadiran: "", kuasai: "", belumKuasai: "", kehadiranNota: "",
+    groupCount: bilanganKumpulan,
+    groupNames: ((slot && slot.groupNames) || s.groupNames || ["Kumpulan 1", "Kumpulan 2", "Kumpulan 3"]).slice(0, bilanganKumpulan),
+    groups: groups
+  };
+}
+function bilanganKumpulanHari(day) { return Math.min(3, Math.max(1, +(day && day.groupCount) || ((day && day.groups) ? day.groups.length : 1))); }
+function namaKumpulanHari(day) {
+  var bil = bilanganKumpulanHari(day), n = (day && day.groupNames) || [];
+  var hasil = n.slice(0, bil);
+  while (hasil.length < bil) hasil.push("Kumpulan " + (hasil.length + 1));
+  return hasil;
+}
+function selaraskanKumpulan(store) {
+  if (!store) return store;
+  var s = store.settings || (store.settings = {});
+  if (!Array.isArray(s.classes)) s.classes = [];
+  if (!Array.isArray(s.groups)) s.groups = [];
+  var bil = Math.min(3, Math.max(1, s.groupCount || 1));
+  s.groupCount = bil;
+  if (!s.groupNames) s.groupNames = [];
+  while (s.groupNames.length < bil) s.groupNames.push("Kumpulan " + (s.groupNames.length + 1));
+  if (s.groupNames.length > bil) s.groupNames.length = bil;
+  var days = store.days || [];
+  for (var i = 0; i < days.length; i++) {
+    var bilHari = Math.min(3, Math.max(1, days[i].groupCount || ((days[i].groups || []).length) || bil));
+    days[i].groupCount = bilHari;
+    days[i].groupNames = namaKumpulanHari(days[i]);
+    var g = days[i].groups || (days[i].groups = []);
+    while (g.length < bilHari) g.push(buatKumpulanKosong());
+    if (g.length > bilHari) g.length = bilHari;
+    if (days[i].kuasai == null) days[i].kuasai = "";
+    if (days[i].belumKuasai == null) days[i].belumKuasai = "";
+    if (days[i].intervensi == null) days[i].intervensi = "";
+    if (!Array.isArray(days[i].pdpcNotConductedReasons)) days[i].pdpcNotConductedReasons = [];
+    if (days[i].pdpcNotConducted && !days[i].pdpcStatus) days[i].pdpcStatus = "deferred";
+    if (!days[i].pdpcStatus) days[i].pdpcStatus = "scheduled";
+    if (!days[i].classId) {
+      var slotHari = ((s.timetable || {})[days[i].hari] || []).find(function(slot){
+        return (days[i].slotId && slot.id === days[i].slotId) || kunciPadananSlot(slot) === kunciPadananSlot(days[i]);
+      });
+      if (slotHari) days[i].classId = slotHari.classId || "";
+      if (!days[i].classId) {
+        var kelasKatalog = s.classes.find(function(c){return c.name === days[i].kelas && (!c.subject || c.subject === days[i].mataPelajaran);});
+        if (kelasKatalog) days[i].classId = kelasKatalog.id;
+      }
+    }
+    if (!days[i].subjectId) {
+      var slotSubjek = ((s.timetable || {})[days[i].hari] || []).find(function(slot){
+        return (days[i].slotId && slot.id === days[i].slotId) || kunciPadananSlot(slot) === kunciPadananSlot(days[i]);
+      });
+      days[i].subjectId = (slotSubjek && slotSubjek.subjectId) || idSubjekDaripadaNama(days[i].mataPelajaran);
+    }
+    buangFieldBbmAbm(days[i]);
+    for (var j = 0; j < g.length; j++) {
+      if (g[j].didikHibur == null) g[j].didikHibur = "";
+      buangFieldBbmAbm(g[j]);
+      if (g[j].standardIndex == null) g[j].standardIndex = "";
+      if (g[j].aiGenerated == null) g[j].aiGenerated = false;
+      if (g[j].userEdited == null) g[j].userEdited = false;
+      if (!Array.isArray(g[j].objektifDipilih)) g[j].objektifDipilih = [];
+      var items = kurikulum[days[i].mataPelajaran] || [];
+      if (!g[j].skillId && g[j].skIndex !== "" && items.length) {
+        var lama = +g[j].skIndex;
+        var migrated = items.find(function(item){ return +item.legacyIndex === lama; }) || items[lama];
+        if (migrated) {
+          g[j].skillId = migrated.id;
+          g[j].skIndex = items.indexOf(migrated);
+        }
+      }
+      var kemahiranDipilih = items.find(function(item){ return item.id === g[j].skillId; }) || items[g[j].skIndex];
+      g[j].kemahiranPemulihan = kemahiranDipilih ? kemahiranDipilih.skillCode + " - " + kemahiranDipilih.skill : "";
+    }
+  }
+  return store;
+}
+function prefillDariJadual(day, settings) {
+  if (!day || !settings || !settings.timetable) return day;
+  var senarai = settings.timetable[day.hari];
+  if (!senarai || senarai.length < 1) return day;
+  if (day.kelas) return day;
+  var slot = senarai[0];
+  if (!slot) return day;
+  if (!day.masa) day.masa = slot.masa || "";
+  if (!day.kelas) day.kelas = slot.kelas || "";
+  if (!day.mataPelajaran) day.mataPelajaran = slot.mataPelajaran || "";
+  return day;
+}
+function tambahHari(store, tarikh) {
+  var day = buatHariKosong(tarikh, store.settings);
+  prefillDariJadual(day, store.settings);
+  if (!store.days) store.days = [];
+  store.days.push(day);
+  store.activeDayId = day.id;
+  return day;
+}
+function padamHari(store, id) {
+  if (!store || !store.days) return store;
+  var wasActive = store.activeDayId === id;
+  var baki = [];
+  for (var i = 0; i < store.days.length; i++) if (store.days[i].id !== id) baki.push(store.days[i]);
+  store.days = baki;
+  if (wasActive) store.activeDayId = baki.length ? baki[baki.length - 1].id : null;
+  return store;
+}
+function hariAktif(store) {
+  if (!store || !store.days) return null;
+  for (var i = 0; i < store.days.length; i++) if (store.days[i].id === store.activeDayId) return store.days[i];
+  return null;
+}
+function tambahSlotJadual(store, hari, slot) {
+  if (!store) return store;
+  var s = store.settings || (store.settings = {});
+  if (!s.timetable) s.timetable = {};
+  if (!s.timetable[hari]) s.timetable[hari] = [];
+  s.timetable[hari].push({
+    id: idUnik(),
+    masa: (slot && slot.masa) || "", kelas: (slot && slot.kelas) || "",
+    mataPelajaran: (slot && slot.mataPelajaran) || "",
+    groupCount: Math.min(3, Math.max(1, (slot && slot.groupCount) || 1)),
+    groupNames: (slot && slot.groupNames) || ["Kumpulan 1", "Kumpulan 2", "Kumpulan 3"]
+  });
+  return store;
+}
+function padamSlotJadual(store, hari, index) {
+  if (!store || !store.settings || !store.settings.timetable) return store;
+  var senarai = store.settings.timetable[hari];
+  if (!senarai) return store;
+  if (index >= 0 && index < senarai.length) senarai.splice(index, 1);
+  return store;
+}
+function minitMula(masa) {
+  var m = String(masa || "").match(/(\d{1,2})(?:[\.:](\d{1,2}))?/);
+  if (!m) return 9999;
+  var jam = +m[1], minit = +(m[2] || 0);
+  if (jam >= 1 && jam <= 6) jam += 12;
+  return jam * 60 + minit;
+}
+function kunciPadananSlot(x) {
+  return [x && x.kelas, x && x.masa, x && x.mataPelajaran].map(function(v){return String(v || "").trim().toLowerCase();}).join("|");
+}
+function indeksSlotJadual(appStore, day) {
+  var slots = (((appStore || {}).settings || {}).timetable || {})[day && day.hari] || [];
+  var idx = slots.findIndex(function(slot){ return day && day.slotId && slot.id === day.slotId; });
+  if (idx < 0) idx = slots.findIndex(function(slot){ return kunciPadananSlot(slot) === kunciPadananSlot(day); });
+  return idx < 0 ? 9999 : idx;
+}
+function bandingRphMengikutJadual(a, b, appStore) {
+  var ta = (a && a.tarikh) || "", tb = (b && b.tarikh) || "";
+  if (ta !== tb) return ta.localeCompare(tb);
+  var ia = indeksSlotJadual(appStore, a), ib = indeksSlotJadual(appStore, b);
+  if (ia !== ib) return ia - ib;
+  var ma = minitMula(a && a.masa), mb = minitMula(b && b.masa);
+  if (ma !== mb) return ma - mb;
+  return String((a && a.id) || "").localeCompare(String((b && b.id) || ""));
+}
+function susunSlotJadualIkutMasa(appStore) {
+  var tt = appStore && appStore.settings && appStore.settings.timetable;
+  if (!tt) return;
+  HARI_LIST.forEach(function(h){
+    var slots = tt[h] || [];
+    tt[h] = slots.map(function(slot, i){return {slot:slot, i:i};}).sort(function(a,b){
+      var beza = minitMula(a.slot.masa) - minitMula(b.slot.masa);
+      return beza || a.i - b.i;
+    }).map(function(x){return x.slot;});
+  });
+}
+function susunHariIkutTarikh(store) {
+  if (!store || !store.days) return store;
+  var berindeks = store.days.map(function (d, i) { return { d: d, i: i }; });
+  berindeks.sort(function (a, b) {
+    return bandingRphMengikutJadual(a.d, b.d, store) || a.i - b.i;
+  });
+  store.days = berindeks.map(function (x) { return x.d; });
+  return store;
+}
+
+/* =====================================================================
+   ENJIN B — Tools: Delete & Copy  (dibina oleh subagent, teruji node)
+   ===================================================================== */
+var MEDAN_KUMPULAN = ["skillId", "kemahiranPemulihan", "skIndex", "standardIndex", "objektif", "objektifDipilih", "kriteriaKejayaan",
+  "setInduksi", "langkah1", "langkah2", "langkah3", "didikHibur", "penutup"];
+var MEDAN_AKTIVITI = ["setInduksi", "langkah1", "langkah2", "langkah3", "didikHibur", "penutup"];
+var MEDAN_HARI = ["kelas", "masa", "bilanganMurid", "mataPelajaran", "refleksi", "intervensi",
+  "kehadiran", "kuasai", "belumKuasai", "kehadiranNota"];
+
+function toolPadamKelas(day) { if (!day) return day; day.kelas = ""; return day; }
+function toolPadamAktiviti(day) {
+  if (!day || !day.groups) return day;
+  for (var i = 0; i < day.groups.length; i++) {
+    var g = day.groups[i]; if (!g) continue;
+    for (var j = 0; j < MEDAN_AKTIVITI.length; j++) g[MEDAN_AKTIVITI[j]] = "";
+  }
+  return day;
+}
+function toolPadamObjektif(day) {
+  if (!day || !day.groups) return day;
+  for (var i = 0; i < day.groups.length; i++) if (day.groups[i]) {
+    day.groups[i].objektif = "";
+    day.groups[i].objektifDipilih = [];
+    day.groups[i].kriteriaKejayaan = "";
+  }
+  return day;
+}
+function toolPadamKemahiran(day) {
+  if (!day || !day.groups) return day;
+  day.groups.forEach(function(g){ g.skillId=""; g.kemahiranPemulihan=""; g.skIndex=""; g.standardIndex=""; g.sp=[]; });
+  return day;
+}
+function resetBahagian(day, jenis) {
+  if (jenis === "objektif") toolPadamObjektif(day);
+  else if (jenis === "kemahiran") toolPadamKemahiran(day);
+  else if (jenis === "aktiviti") toolPadamAktiviti(day);
+  else if (jenis === "semua") { toolPadamKemahiran(day); toolPadamObjektif(day); toolPadamAktiviti(day); }
+  return day;
+}
+function toolPadamSemua(day) {
+  if (!day) return day;
+  for (var i = 0; i < MEDAN_HARI.length; i++) day[MEDAN_HARI[i]] = "";
+  if (day.groups) {
+    var baru = [];
+    for (var k = 0; k < day.groups.length; k++) baru.push(buatKumpulanKosong());
+    day.groups = baru;
+  }
+  return day;
+}
+function salinDalamHari(dariGroup, keGroup) {
+  if (!dariGroup || !keGroup) return keGroup;
+  for (var i = 0; i < MEDAN_KUMPULAN.length; i++) keGroup[MEDAN_KUMPULAN[i]] = dariGroup[MEDAN_KUMPULAN[i]];
+  var spBaru = [];
+  if (dariGroup.sp) for (var j = 0; j < dariGroup.sp.length; j++) spBaru.push(dariGroup.sp[j]);
+  keGroup.sp = spBaru;
+  keGroup.objektifDipilih = Array.isArray(dariGroup.objektifDipilih) ? dariGroup.objektifDipilih.slice() : [];
+  return keGroup;
+}
+function cariHariIkutId(store, dayId) {
+  if (!store || !store.days) return null;
+  for (var i = 0; i < store.days.length; i++) if (store.days[i] && store.days[i].id === dayId) return store.days[i];
+  return null;
+}
+function salinKandunganHari(sumber, sasaran) {
+  for (var i = 0; i < MEDAN_HARI.length; i++) sasaran[MEDAN_HARI[i]] = sumber[MEDAN_HARI[i]];
+  if (sasaran.groups && sumber.groups) {
+    var had = Math.min(sasaran.groups.length, sumber.groups.length);
+    for (var k = 0; k < had; k++) salinDalamHari(sumber.groups[k], sasaran.groups[k]);
+  }
+}
+function labelTarikh(iso) { return formatTarikhBM(iso) || iso; }
+function toolSalinMingguLalu(store, dayId) {
+  var sasaran = cariHariIkutId(store, dayId);
+  if (!sasaran) return { ok: false, mesej: "RPH sasaran tidak dijumpai." };
+  var sumberSamaHari = null, sumberMana2 = null;
+  for (var i = 0; i < store.days.length; i++) {
+    var d = store.days[i];
+    if (!d || d.id === sasaran.id) continue;
+    if (!d.tarikh || !sasaran.tarikh) continue;
+    if (d.tarikh >= sasaran.tarikh) continue;
+    if (!sumberMana2 || d.tarikh > sumberMana2.tarikh) sumberMana2 = d;
+    if (d.hari === sasaran.hari) {
+      if (!sumberSamaHari || d.tarikh > sumberSamaHari.tarikh) sumberSamaHari = d;
+    }
+  }
+  var sumber = sumberSamaHari || sumberMana2;
+  if (!sumber) return { ok: false, mesej: "Tiada RPH minggu lepas untuk disalin." };
+  salinKandunganHari(sumber, sasaran);
+  return { ok: true, mesej: "Disalin dari RPH " + labelTarikh(sumber.tarikh) + " (" + (sumber.hari || "-") + ")." };
+}
+function toolSalinHariSebelum(store, dayId) {
+  var sasaran = cariHariIkutId(store, dayId);
+  if (!sasaran) return { ok: false, mesej: "RPH sasaran tidak dijumpai." };
+  var sumber = null;
+  for (var i = 0; i < store.days.length; i++) {
+    var d = store.days[i];
+    if (!d || d.id === sasaran.id) continue;
+    if (!d.tarikh || !sasaran.tarikh) continue;
+    if (d.tarikh >= sasaran.tarikh) continue;
+    if (!sumber || d.tarikh > sumber.tarikh) sumber = d;
+  }
+  if (!sumber) return { ok: false, mesej: "Tiada RPH sebelum ini untuk disalin." };
+  salinKandunganHari(sumber, sasaran);
+  return { ok: true, mesej: "Disalin dari RPH " + labelTarikh(sumber.tarikh) + " (" + (sumber.hari || "-") + ")." };
+}
+
+/* =====================================================================
+   LAPISAN UI — store, render, settings, tools, AI  (integrasi enjin A & B)
+   ===================================================================== */
+const KUNCI = "erph_v3";
+const KUNCI_SUPABASE_CONFIG = "erph_supabase_config_v1";
+const KUNCI_SUPABASE_SESSION = "erph_supabase_session_v1";
+const KUNCI_SUPABASE_SYNC = "erph_supabase_sync_v1";
+const KUNCI_SUPABASE_META = "erph_supabase_meta_v1";
+const KUNCI_PEMULIHAN_CLOUD = "erph_cloud_recovery_v1";
+const SUPABASE_URL_ASAL = "https://tmpmqqumgvtsvdqgifob.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY_ASAL = "sb_publishable_GVoOUcuTKxw7hmXGoY3pmQ_t4B6WJq3";
+const HARI_LIST = ["Isnin","Selasa","Rabu","Khamis","Jumaat"];
+const SCHEMA_VERSION = 9;
+
+function esc(s){
+  return String(s==null?"":s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function $(id){ return document.getElementById(id); }
+
+/* ---------- STORE ---------- */
+function tarikhHariIniISO(){const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function isoSah(iso){return /^\d{4}-\d{2}-\d{2}$/.test(String(iso||""))&&!isNaN(new Date(iso+"T00:00:00").getTime());}
+function storeDefault(){
+  const monday=isninBagiTarikh(tarikhHariIniISO());
+  return {schemaVersion:SCHEMA_VERSION,settings:{weekNumber:1,mondayDate:monday,activeWeek:{weekNumber:1,mondayDate:monday},groupCount:1,groupNames:["Kumpulan 1"],classes:[],groups:[],timetable:{}},days:[],weekMetadata:{},activeDayId:null,ui:{view:"dashboard",viewedWeekMonday:monday,selectedDate:monday}};
+}
+let ralatMuatStore=null, dataRosakMentah=null, pemasaSimpanStore=null;
+function adaDataPenggunaRph(day){
+  if(!day)return false;
+  if([day.refleksi,day.intervensi,day.kehadiran,day.kuasai,day.belumKuasai,day.kehadiranNota].some(v=>String(v||'').trim()))return true;
+  return (day.groups||[]).some(g=>[g.objektif,g.kriteriaKejayaan,g.setInduksi,g.langkah1,g.langkah2,g.langkah3,g.didikHibur,g.penutup].some(v=>String(v||'').trim()));
+}
+function adaCatatanSelepasPdpc(day){return !!(day&&[day.refleksi,day.intervensi,day.kehadiran,day.kuasai,day.belumKuasai,day.kehadiranNota].some(v=>String(v||'').trim()));}
+function tandatanganPedagogi(day){return JSON.stringify((day&&day.groups||[]).map(salinKumpulanPedagogi));}
+function migrasiStoreV7(d){
+  const versiLama=+d.schemaVersion||0,s=d.settings||{},tt=s.timetable||{};if(versiLama>=7)return d;
+  (s.classes||[]).forEach(c=>{if(!c.subjectId)c.subjectId=idSubjekDaripadaNama(c.subject);});
+  HARI_LIST.forEach(h=>(tt[h]||[]).forEach(slot=>{
+    const cls=(s.classes||[]).find(c=>(slot.classId&&c.id===slot.classId)||(!slot.classId&&c.name===slot.kelas&&(!slot.mataPelajaran||c.subject===slot.mataPelajaran)));
+    if(cls){slot.classId=slot.classId||cls.id;slot.subjectId=slot.subjectId||cls.subjectId||idSubjekDaripadaNama(cls.subject);slot.kelas=slot.kelas||cls.name;slot.mataPelajaran=slot.mataPelajaran||cls.subject;}
+    slot.subjectId=slot.subjectId||idSubjekDaripadaNama(slot.mataPelajaran);buangFieldBbmAbm(slot);
+  }));
+  (d.days||[]).forEach(day=>{
+    const slot=((tt[day.hari]||[]).find(x=>(day.slotId&&x.id===day.slotId)||(day.tarikh&&kunciPadananSlot(x)===kunciPadananSlot(day))));
+    if(slot){day.classId=day.classId||slot.classId||'';day.subjectId=day.subjectId||slot.subjectId||idSubjekDaripadaNama(slot.mataPelajaran);}
+    day.subjectId=day.subjectId||idSubjekDaripadaNama(day.mataPelajaran);buangFieldBbmAbm(day);(day.groups||[]).forEach(buangFieldBbmAbm);
+  });
+  let placeholderDibuang=0,duplikatDibuang=0,duplikatDilepaskan=0;
+  d.days=(d.days||[]).filter(day=>{
+    const kosongMeta=!String(day.mataPelajaran||'').trim()&&!String(day.kelas||'').trim()&&!String(day.masa||'').trim()&&!day.classId&&!day.subjectId;
+    const source=day.deferredFromRphId&&d.days.find(x=>x.id===day.deferredFromRphId);
+    const destinasiTidakSah=!!(source&&(!day.classId||!day.subjectId||!isoSah(day.tarikh)||!masaJadualSah(day.masa))&&!adaCatatanSelepasPdpc(day)&&tandatanganPedagogi(day)===tandatanganPedagogi(source));
+    const jelasPlaceholder=!day.pdpcNotConducted&&((kosongMeta&&!adaDataPenggunaRph(day)&&(day.dariJadual||day.slotId))||destinasiTidakSah);
+    if(jelasPlaceholder){placeholderDibuang++;return false;}return true;
+  });
+  (d.days||[]).filter(x=>x&&x.pdpcNotConducted).forEach(source=>{
+    const direct=d.days.find(x=>x&&x.id!==source.id&&x.id===source.deferredToRphId);
+    if(direct&&!direct.deferredFromRphId){direct.deferredFromRphId=source.id;direct.deferredFromDate=source.tarikh;direct.isDeferred=true;if(!direct.pdpcNotConducted)direct.pdpcStatus='scheduled';}
+    let destinations=d.days.filter(x=>x&&x.deferredFromRphId===source.id).sort((a,b)=>bandingRphMengikutJadual(a,b,d));
+    let canonical=destinations.find(x=>x.id===source.deferredToRphId)||destinations[0]||null;
+    if(canonical){source.deferredToRphId=canonical.id;source.deferredToDate=canonical.tarikh;}
+    else if(source.deferredToRphId&&!d.days.some(x=>x.id===source.deferredToRphId)){delete source.deferredToRphId;delete source.deferredToDate;}
+    const sig=tandatanganPedagogi(source);
+    d.days=d.days.filter(x=>{
+      if(!canonical||x.id===canonical.id||x.deferredFromRphId!==source.id)return true;
+      const jelasSalinanAutomatik=!adaCatatanSelepasPdpc(x)&&tandatanganPedagogi(x)===sig;
+      if(jelasSalinanAutomatik){duplikatDibuang++;return false;}
+      delete x.deferredFromRphId;delete x.deferredFromDate;x.isDeferred=false;if(x.pdpcStatus==='deferred')x.pdpcStatus='scheduled';x.migrationReview='v7-duplikat-tangguh-dilepaskan';duplikatDilepaskan++;return true;
+    });
+  });
+  d.migrations=d.migrations||{};d.migrations.v7={migratedAt:new Date().toISOString(),placeholderDibuang,duplikatTangguhDibuang:duplikatDibuang,duplikatTangguhDilepaskan:duplikatDilepaskan};return d;
+}
+function kunciSebabTangguh(day){return JSON.stringify({reasons:(day&&day.pdpcNotConductedReasons||[]).slice().sort(),other:String(day&&day.pdpcNotConductedOtherReason||'').trim().toLowerCase()});}
+function metadataRphLengkap(day){return !!(day&&isoSah(day.tarikh)&&day.classId&&day.subjectId&&String(day.kelas||'').trim()&&String(day.mataPelajaran||'').trim()&&masaJadualSah(day.masa));}
+function pulihkanStatusDijadualkan(day){
+  if(!day)return;day.pdpcStatus='scheduled';day.pdpcNotConducted=false;day.pdpcNotConductedReasons=[];day.pdpcNotConductedOtherReason='';day.copyRphToNext=false;delete day.deferredToRphId;delete day.deferredToDate;
+}
+function migrasiStoreV8(d){
+  const versiLama=+d.schemaVersion||0;if(versiLama>=8)return d;
+  let placeholderDibuang=0,statusDipulihkan=0,duplikatSlotDibuang=0;const buang=new Set(),days=d.days||[];
+  days.forEach(day=>{
+    if(day&&day.pdpcNotConducted&&!metadataRphLengkap(day)&&!adaDataPenggunaRph(day)&&!adaCatatanSelepasPdpc(day)){buang.add(day.id);placeholderDibuang++;}
+  });
+  const targets=days.filter(x=>x&&x.deferredFromRphId&&!buang.has(x.id));
+  targets.forEach(target=>{
+    const source=days.find(x=>x&&x.id===target.deferredFromRphId&&!buang.has(x.id));if(!source)return;
+    source.pdpcStatus='deferred';source.pdpcNotConducted=true;source.deferredToRphId=target.id;source.deferredToDate=target.tarikh;
+    target.isDeferred=true;target.deferredFromDate=target.deferredFromDate||source.tarikh;if(target.pdpcNotConducted){pulihkanStatusDijadualkan(target);target.isDeferred=true;target.deferredFromRphId=source.id;target.deferredFromDate=source.tarikh;statusDipulihkan++;}
+    const sebab=kunciSebabTangguh(source),sig=tandatanganPedagogi(source);
+    days.forEach(day=>{
+      if(!day||buang.has(day.id)||day.id===source.id||day.id===target.id||day.tarikh!==target.tarikh||!day.pdpcNotConducted||kunciSebabTangguh(day)!==sebab)return;
+      const berkait=day.deferredFromRphId===source.id||day.deferredToRphId===target.id||!adaDataPenggunaRph(day)||(!adaCatatanSelepasPdpc(day)&&tandatanganPedagogi(day)===sig);
+      if(!berkait)return;
+      if(!metadataRphLengkap(day)&&!adaDataPenggunaRph(day)){buang.add(day.id);placeholderDibuang++;return;}
+      pulihkanStatusDijadualkan(day);if(day.deferredFromRphId===source.id){delete day.deferredFromRphId;delete day.deferredFromDate;day.isDeferred=false;}day.migrationReview='v8-status-tangguh-palsu-dipulihkan';statusDipulihkan++;
+    });
+  });
+  const slotGroups=new Map();
+  days.forEach(day=>{if(!day||buang.has(day.id)||!metadataRphLengkap(day))return;const key=day.tarikh+'|'+(day.slotId||[day.classId,day.subjectId,kunciTeks(day.masa)].join('|'));if(!slotGroups.has(key))slotGroups.set(key,[]);slotGroups.get(key).push(day);});
+  slotGroups.forEach(group=>{
+    if(group.length<2)return;const canonical=group.find(x=>targets.some(t=>t.id===x.id))||group.find(adaDataPenggunaRph)||group[0];
+    group.forEach(day=>{if(day.id===canonical.id)return;if(!adaDataPenggunaRph(day)&&!adaCatatanSelepasPdpc(day)){buang.add(day.id);duplikatSlotDibuang++;}else day.migrationReview=day.migrationReview||'v8-duplikat-slot-perlu-disemak';});
+  });
+  d.days=days.filter(day=>!buang.has(day.id));d.migrations=d.migrations||{};d.migrations.v8={migratedAt:new Date().toISOString(),placeholderTangguhDibuang:placeholderDibuang,statusTangguhDipulihkan:statusDipulihkan,duplikatSlotDibuang};return d;
+}
+function migrasiStoreV9(d){
+  const versiLama=+d.schemaVersion||0;if(versiLama>=9)return d;
+  const days=d.days||[],buang=new Set(),kumpulanSlot=new Map();let duplikatDigabung=0,perluSemak=0;
+  days.forEach(day=>{
+    if(!day||!isoSah(day.tarikh))return;
+    const slots=((((d||{}).settings||{}).timetable||{})[day.hari]||[]),slot=slots.find(x=>(day.slotId&&x.id===day.slotId)||kunciPadananSlot(x)===kunciPadananSlot(day));
+    const identitiSlot=(slot&&slot.id)||day.slotId||[day.classId||kunciTeks(day.kelas),day.subjectId||kunciTeks(day.mataPelajaran),kunciTeks(day.masa)].join('|');
+    if(!identitiSlot)return;
+    const key=day.tarikh+'|'+identitiSlot;if(!kumpulanSlot.has(key))kumpulanSlot.set(key,[]);kumpulanSlot.get(key).push(day);
+  });
+  kumpulanSlot.forEach(group=>{
+    if(group.length<2)return;
+    const canonical=group.find(x=>x.deferredFromRphId||x.isDeferred)||group.find(adaCatatanSelepasPdpc)||group.find(adaDataPenggunaRph)||group[0];
+    group.forEach(day=>{
+      if(day.id===canonical.id)return;
+      if(adaCatatanSelepasPdpc(day)){day.migrationReview=day.migrationReview||'v9-duplikat-slot-ada-refleksi';perluSemak++;return;}
+      if(day.deferredFromRphId&&!canonical.deferredFromRphId){canonical.deferredFromRphId=day.deferredFromRphId;canonical.deferredFromDate=day.deferredFromDate;canonical.isDeferred=true;}
+      const sourceId=day.deferredFromRphId||canonical.deferredFromRphId,source=sourceId&&days.find(x=>x.id===sourceId);
+      if(source){source.deferredToRphId=canonical.id;source.deferredToDate=canonical.tarikh;}
+      buang.add(day.id);duplikatDigabung++;
+    });
+  });
+  d.days=days.filter(day=>!buang.has(day.id));
+  if(buang.has(d.activeDayId)){const aktif=d.days.find(x=>x&&isoSah(x.tarikh));d.activeDayId=aktif?aktif.id:null;}
+  d.migrations=d.migrations||{};d.migrations.v9={migratedAt:new Date().toISOString(),duplikatSlotDigabung:duplikatDigabung,duplikatDenganRefleksiPerluSemak:perluSemak};return d;
+}
+function normalisasiStore(d){
+  if(!d||typeof d!=="object")d=storeDefault();
+  d.settings=d.settings||{};d.settings.groupNames=d.settings.groupNames||[];d.settings.timetable=d.settings.timetable||{};
+  if(!Array.isArray(d.settings.classes))d.settings.classes=[];if(!Array.isArray(d.settings.groups))d.settings.groups=[];
+  d.settings.groupCount=Math.min(3,Math.max(1,+d.settings.groupCount||1));d.settings.weekNumber=+d.settings.weekNumber||1;
+  if(!Array.isArray(d.days))d.days=[];d.weekMetadata=d.weekMetadata&&typeof d.weekMetadata==='object'?d.weekMetadata:{};d.ui=d.ui||{view:"dashboard"};
+  const activeRecord=d.days.find(x=>x&&x.id===d.activeDayId), latest=d.days.filter(x=>x&&isoSah(x.tarikh)).sort((a,b)=>b.tarikh.localeCompare(a.tarikh))[0];
+  let monday=d.settings.activeWeek&&d.settings.activeWeek.mondayDate;
+  if(!isoSah(monday))monday=isoSah(d.settings.mondayDate)?isninBagiTarikh(d.settings.mondayDate):isninBagiTarikh((activeRecord&&activeRecord.tarikh)||(latest&&latest.tarikh)||tarikhHariIniISO());
+  const nombor=+(d.settings.activeWeek&&d.settings.activeWeek.weekNumber)||+d.settings.weekNumber||+(activeRecord&&activeRecord.minggu)||1;
+  d.settings.activeWeek={weekNumber:nombor,mondayDate:monday};d.settings.weekNumber=nombor;d.settings.mondayDate=monday;
+  if(!isoSah(d.ui.viewedWeekMonday))d.ui.viewedWeekMonday=monday;else d.ui.viewedWeekMonday=isninBagiTarikh(d.ui.viewedWeekMonday);
+  if(!isoSah(d.ui.selectedDate)||isninBagiTarikh(d.ui.selectedDate)!==d.ui.viewedWeekMonday)d.ui.selectedDate=d.ui.viewedWeekMonday;
+  migrasiStoreV7(d);
+  migrasiStoreV8(d);
+  migrasiStoreV9(d);
+  d.days.forEach(day=>{if(!day||!isoSah(day.tarikh))return;day.mondayDate=isninBagiTarikh(day.tarikh);if(day.minggu==null)day.minggu=nomborMingguBagiMonday(day.mondayDate,d);if(!day.createdAt)day.createdAt=new Date().toISOString();if(!day.updatedAt)day.updatedAt=day.createdAt;});
+  d.schemaVersion=SCHEMA_VERSION;return d;
+}
+function muatStore(){
+  try{
+    const raw=localStorage.getItem(KUNCI);if(!raw)return storeDefault();dataRosakMentah=raw;const d=JSON.parse(raw);if(!d||!d.settings)throw new Error("Struktur data e-RPH tidak sah.");return normalisasiStore(d);
+  }catch(e){ralatMuatStore=e;console.error("e-RPH gagal membaca localStorage",e);}
+  return storeDefault();
+}
+let store = muatStore();
+let cloudVersion=null,cloudReady=false,pemasaCloud=null,cloudSedangSimpan=false,cloudPerluSimpanLagi=false;
+function bacaJSONTempatan(kunci,nilaiAsal=null){try{const raw=localStorage.getItem(kunci);return raw?JSON.parse(raw):nilaiAsal;}catch(e){return nilaiAsal;}}
+function configSupabase(){const cfg=bacaJSONTempatan(KUNCI_SUPABASE_CONFIG,{})||{};return {url:String(cfg.url||SUPABASE_URL_ASAL).replace(/\/+$/,''),key:String(cfg.key||SUPABASE_PUBLISHABLE_KEY_ASAL).trim()};}
+function sessionSupabase(){return bacaJSONTempatan(KUNCI_SUPABASE_SESSION,null);}
+function metaSupabase(){return bacaJSONTempatan(KUNCI_SUPABASE_META,null);}
+function simpanSessionSupabase(s){if(s)localStorage.setItem(KUNCI_SUPABASE_SESSION,JSON.stringify(s));else localStorage.removeItem(KUNCI_SUPABASE_SESSION);}
+function setCloudMeta(userId,version){cloudVersion=version==null?null:+version;localStorage.setItem(KUNCI_SUPABASE_META,JSON.stringify({userId,version:cloudVersion,updatedAt:new Date().toISOString()}));}
+function cloudMsg(teks,jenis=''){const el=$('cloudState');if(el){el.textContent=teks;el.className='cloud-state'+(jenis?' '+jenis:'');}}
+function cloudBadge(){const badge=$('cloudUserBadge'),s=sessionSupabase();if(!badge)return;if(s&&s.user){badge.textContent=s.user.email||'LOG MASUK';badge.className='status-pill status-complete';}else{badge.textContent='BELUM LOG MASUK';badge.className='status-pill';}}
+function dataUntukCloud(){const data=JSON.parse(JSON.stringify(store));delete data.ui;return data;}
+function dataCloudSama(a,b){try{return JSON.stringify(a)===JSON.stringify(b);}catch(e){return false;}}
+function simpanSnapshotPemulihan(sebab){try{localStorage.setItem(KUNCI_PEMULIHAN_CLOUD,JSON.stringify({savedAt:new Date().toISOString(),reason:sebab||'snapshot',data:store}));}catch(e){console.warn('Snapshot pemulihan tidak dapat disimpan',e);}}
+function hentikanSyncCloud(mesej){cloudReady=false;localStorage.setItem(KUNCI_SUPABASE_SYNC,'false');clearTimeout(pemasaCloud);if(mesej)cloudMsg(mesej,'err');}
+function simpanKonfigurasiSupabaseUI(){
+  const url=String(($('supabaseUrl')&&$('supabaseUrl').value)||'').trim().replace(/\/+$/,''),key=String(($('supabaseKey')&&$('supabaseKey').value)||'').trim();
+  if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){cloudMsg('Project URL Supabase tidak sah.','err');return false;}
+  if(!key){cloudMsg('Masukkan Publishable Key daripada Project Settings > API Keys.','err');return false;}
+  if(/^sb_secret_/i.test(key)){cloudMsg('Jangan gunakan Secret Key. Gunakan Publishable Key sahaja.','err');return false;}
+  localStorage.setItem(KUNCI_SUPABASE_CONFIG,JSON.stringify({url,key}));cloudMsg('Sambungan disimpan pada peranti ini. Sila daftar atau log masuk.','ok');return true;
+}
+async function responsSupabase(path,opt={}){
+  const cfg=configSupabase();if(!cfg.key)throw new Error('Publishable Key belum diisi.');
+  let s=sessionSupabase();
+  if(opt.auth!==false&&s&&s.refresh_token&&s.expires_at&&Date.now()/1000>s.expires_at-60){
+    const refresh=await fetch(cfg.url+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:cfg.key,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:s.refresh_token})});
+    const refreshed=await refresh.json().catch(()=>({}));if(!refresh.ok)throw new Error(refreshed.msg||refreshed.message||'Sesi tamat. Sila log masuk semula.');
+    refreshed.expires_at=Math.floor(Date.now()/1000)+(refreshed.expires_in||3600);s=refreshed;simpanSessionSupabase(s);
+  }
+  const headers=Object.assign({apikey:cfg.key,'Content-Type':'application/json'},opt.headers||{});if(opt.auth!==false){if(!s||!s.access_token)throw new Error('Sila log masuk Supabase dahulu.');headers.Authorization='Bearer '+s.access_token;}
+  const response=await fetch(cfg.url+path,{method:opt.method||'GET',headers,body:opt.body===undefined?undefined:JSON.stringify(opt.body)});
+  const text=await response.text();let data=null;try{data=text?JSON.parse(text):null;}catch(e){data=text;}
+  if(!response.ok){const mesej=(data&&((data.message||data.msg||data.error_description)||data.hint))||String(data||response.statusText);const err=new Error(mesej);err.status=response.status;err.payload=data;throw err;}
+  return data;
+}
+async function daftarSupabaseUI(){
+  if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
+  if(!email||password.length<6){cloudMsg('Masukkan e-mel dan kata laluan sekurang-kurangnya 6 aksara.','err');return;}
+  try{cloudMsg('Mendaftarkan akaun...');const data=await responsSupabase('/auth/v1/signup',{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);await mulaSesiCloud();cloudMsg('Akaun berjaya didaftarkan dan dilog masuk. Data tempatan belum dihantar.','ok');}else cloudMsg('Akaun didaftarkan. Semak e-mel untuk pengesahan, kemudian log masuk.','ok');}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
+}
+async function logMasukSupabaseUI(){
+  if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
+  if(!email||!password){cloudMsg('Masukkan e-mel dan kata laluan.','err');return;}
+  try{cloudMsg('Sedang log masuk...');const data=await responsSupabase('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email,password}});data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);$('supabasePassword').value='';await mulaSesiCloud();}catch(e){cloudMsg('Log masuk gagal: '+e.message,'err');}
+}
+async function logKeluarSupabaseUI(){
+  try{if(sessionSupabase())await responsSupabase('/auth/v1/logout',{method:'POST'});}catch(e){}
+  simpanSessionSupabase(null);localStorage.removeItem(KUNCI_SUPABASE_META);localStorage.setItem(KUNCI_SUPABASE_SYNC,'false');cloudVersion=null;cloudReady=false;cloudBadge();cloudMsg('Log keluar selesai. Data tempatan masih kekal pada peranti ini.');if($('cloudVersions'))$('cloudVersions').innerHTML='';
+}
+async function rekodCloudSemasa(){const list=await responsSupabase('/rest/v1/erph_state?select=data,version,updated_at&limit=1');return Array.isArray(list)&&list.length?list[0]:null;}
+async function mulaSesiCloud(){
+  cloudBadge();const s=sessionSupabase();if(!s||!s.user)return;
+  try{const remote=await rekodCloudSemasa(),meta=metaSupabase(),localData=dataUntukCloud();
+    if(!remote){cloudVersion=0;cloudReady=false;cloudMsg('Log masuk berjaya. Supabase masih kosong. Klik “Hantar Data Tempatan ke Supabase” untuk salinan pertama.','ok');return;}
+    cloudVersion=+remote.version;
+    if(dataCloudSama(localData,remote.data)){setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(KUNCI_SUPABASE_SYNC,'true');cloudMsg('Data tempatan dan Supabase adalah sama. Autosimpan cloud aktif (versi '+remote.version+').','ok');return;}
+    if(meta&&meta.userId===s.user.id&&+meta.version===+remote.version&&localStorage.getItem(KUNCI_SUPABASE_SYNC)==='true'){cloudReady=true;cloudMsg('Terdapat perubahan tempatan yang belum dihantar. Autosimpan cloud akan menyambung daripada versi '+remote.version+'.','ok');jadualkanCloudSave();return;}
+    hentikanSyncCloud('Data tempatan dan Supabase berbeza. Pilih “Muat Data Supabase” atau “Hantar Data Tempatan” selepas menyemak data. Tiada data ditindih secara automatik.');
+  }catch(e){hentikanSyncCloud('Sambungan Supabase belum sedia: '+e.message);}
+}
+async function simpanCloudSekarang(paksa=false){
+  if(cloudSedangSimpan){cloudPerluSimpanLagi=true;return false;}const s=sessionSupabase();if(!s||!s.user)return false;if(!cloudReady&&!paksa)return false;
+  cloudSedangSimpan=true;cloudPerluSimpanLagi=false;
+  try{
+    if(cloudVersion==null){const remote=await rekodCloudSemasa();cloudVersion=remote?+remote.version:0;}
+    const result=await responsSupabase('/rest/v1/rpc/save_erph_state',{method:'POST',headers:{Prefer:'return=representation'},body:{p_expected_version:cloudVersion||0,p_data:dataUntukCloud()}});
+    const row=Array.isArray(result)?result[0]:result,newVersion=row&&row.new_version!=null?+row.new_version:cloudVersion;setCloudMeta(s.user.id,newVersion);cloudReady=true;localStorage.setItem(KUNCI_SUPABASE_SYNC,'true');cloudMsg('✓ Disimpan ke Supabase • versi '+newVersion+' • '+new Date().toLocaleTimeString('ms-MY'),'ok');return true;
+  }catch(e){
+    simpanSnapshotPemulihan('konflik-atau-gagal-cloud');
+    if(/VERSION_CONFLICT|serialization|40001/i.test(e.message))hentikanSyncCloud('Konflik dikesan: data cloud lebih baharu. Autosimpan dihentikan supaya tiada data ditindih. Muat data Supabase atau eksport backup tempatan.');
+    else cloudMsg('Simpan cloud gagal; data tempatan masih selamat: '+e.message,'err');return false;
+  }finally{cloudSedangSimpan=false;if(cloudPerluSimpanLagi&&cloudReady)jadualkanCloudSave();}
+}
+function jadualkanCloudSave(){if(!cloudReady||localStorage.getItem(KUNCI_SUPABASE_SYNC)!=='true'||!sessionSupabase())return;clearTimeout(pemasaCloud);pemasaCloud=setTimeout(()=>simpanCloudSekarang(false),2500);}
+async function hantarDataTempatanKeCloudUI(){
+  if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const remote=await rekodCloudSemasa();cloudVersion=remote?+remote.version:0;const amaran=remote?'Supabase sudah mempunyai data versi '+remote.version+'. Data tempatan ini akan menjadi versi baharu.':'Ini akan membuat salinan pertama data tempatan di Supabase.';if(!confirm(amaran+'\n\nTeruskan?'))return;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok)paparToast('Data tempatan berjaya disalin ke Supabase.');}catch(e){hentikanSyncCloud('Data tidak dapat dihantar: '+e.message);}
+}
+function gunaDataCloud(remote,sebab){
+  simpanSnapshotPemulihan(sebab);const uiLama=store.ui;store=normalisasiStore(JSON.parse(JSON.stringify(remote.data)));store.ui=uiLama||store.ui||{view:'dashboard'};ralatMuatStore=null;dataRosakMentah=null;selaraskanKumpulan(store);migrateSettingsCatalog();tulisStore();buildSettingUI();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();
+}
+async function muatDataCloudKeTempatanUI(){
+  if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const remote=await rekodCloudSemasa();if(!remote){cloudMsg('Supabase masih belum mempunyai data.','err');return;}if(!confirm('Data Supabase versi '+remote.version+' akan menggantikan paparan tempatan. Snapshot pemulihan tempatan akan dibuat dahulu.\n\nTeruskan?'))return;cloudReady=false;gunaDataCloud(remote,'sebelum-muat-data-cloud');const s=sessionSupabase();setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(KUNCI_SUPABASE_SYNC,'true');cloudMsg('Data Supabase versi '+remote.version+' berjaya dimuat. Autosimpan cloud aktif.','ok');paparToast('Data Supabase berjaya dimuat.');}catch(e){hentikanSyncCloud('Data cloud tidak dapat dimuat: '+e.message);}
+}
+async function paparVersiCloudUI(){
+  if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const list=await responsSupabase('/rest/v1/erph_state_versions?select=id,version,created_at&order=version.desc&limit=20'),wrap=$('cloudVersions');wrap.innerHTML=list.length?'<h4>Versi terkini</h4>'+list.map(v=>`<div class="cloud-version-row"><span><b>Versi ${v.version}</b><br><small>${esc(new Date(v.created_at).toLocaleString('ms-MY'))}</small></span><button type="button" class="secondary kecil" onclick="pulihVersiCloudUI(${v.id})">Pulihkan</button></div>`).join(''):'<p class="muted">Belum ada versi cloud.</p>';cloudMsg(list.length+' versi cloud dipaparkan.','ok');}catch(e){cloudMsg('Versi cloud gagal dimuat: '+e.message,'err');}
+}
+async function pulihVersiCloudUI(id){
+  try{const list=await responsSupabase('/rest/v1/erph_state_versions?select=data,version&id=eq.'+encodeURIComponent(id)+'&limit=1'),lama=list&&list[0];if(!lama)throw new Error('Versi tidak ditemui.');const remote=await rekodCloudSemasa();if(!confirm('Pulihkan versi '+lama.version+' sebagai versi baharu? Snapshot data tempatan semasa akan dibuat dahulu.'))return;cloudReady=false;gunaDataCloud(lama,'sebelum-pulih-versi-'+lama.version);cloudVersion=remote?+remote.version:0;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok){paparToast('Versi '+lama.version+' dipulihkan sebagai versi cloud baharu.');paparVersiCloudUI();}}catch(e){hentikanSyncCloud('Versi tidak dapat dipulihkan: '+e.message);}
+}
+function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&cfg.key)mulaSesiCloud();else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk menyimpan RPH.','ok');}
+function setStatusSimpan(teks,ok=true){const el=$("autoSaveMsg");if(el){el.textContent=teks;el.className="ai-mesej "+(ok?"ok":"err");}}
+function tulisStore(){
+  try{
+    if(ralatMuatStore&&dataRosakMentah!=null){setStatusSimpan("Data rosak dilindungi. Import backup atau gunakan Zon Berisiko untuk memulakan semula.",false);return false;}
+    store.schemaVersion=SCHEMA_VERSION;
+    localStorage.setItem(KUNCI, JSON.stringify(store));
+    setStatusSimpan("✓ Disimpan " + new Date().toLocaleTimeString("ms-MY"),true);jadualkanCloudSave();return true;
+  }catch(e){console.error("e-RPH gagal menyimpan localStorage",e);setStatusSimpan("Data tidak dapat disimpan. Eksport backup dan semak ruang penyimpanan browser.",false);if($("appToast"))paparToast("Data tidak dapat disimpan. Sila eksport backup dan semak ruang penyimpanan browser.",false);return false;}
+}
+function simpanStore(){clearTimeout(pemasaSimpanStore);return tulisStore();}
+function autoSimpanStore(){clearTimeout(pemasaSimpanStore);setStatusSimpan("Menyimpan...",true);pemasaSimpanStore=setTimeout(()=>tulisStore(),450);}
+
+/* ---------- NAVIGASI, STATUS & DASHBOARD ---------- */
+function showView(view){
+  document.querySelectorAll('[data-view-panel]').forEach(el=>el.hidden=el.dataset.viewPanel!==view);
+  document.querySelectorAll('.nav-btn').forEach(el=>el.classList.toggle('aktif',el.dataset.view===view));
+  store.ui=store.ui||{}; store.ui.view=view; simpanStore();
+  if(view==='dashboard') renderDashboard();
+  if(view==='jana'){ renderWeekHeader();renderTabs();renderSessionCards();muatBorang(); }
+  if(view==='tools'){renderToolFilters();renderArkib();}
+  if(view==='settings') buildSettingUI();
+}
+function showSettingsTab(tab,button){
+  ['Kelas','Jadual','Kumpulan','Data'].forEach(n=>{ const el=$('settings'+n); if(el) el.hidden=n.toLowerCase()!==tab; });
+  document.querySelectorAll('.settings-tabs button').forEach(el=>el.classList.remove('aktif'));
+  if(button) button.classList.add('aktif');
+}
+function kumpulanSedia(g){ return !!(g && g.skillId && g.standardIndex!=='' && Array.isArray(g.sp) && g.sp.length); }
+function adaKandunganG(g){ return !!(g && [g.objektif,g.kriteriaKejayaan,g.setInduksi,g.langkah1,g.langkah2,g.didikHibur,g.penutup].some(v=>String(v||'').trim())); }
+function statusRph(day){
+  if(!day) return {key:'empty',label:'BELUM MULA',className:''};
+  if(day.pdpcNotConducted) return {key:'deferred',label:'DITANGGUHKAN',className:'status-deferred'};
+  if(day.isDeferred) return {key:'transferred',label:'RPH DIPINDAHKAN',className:'status-transferred'};
+  const groups=day.groups||[], ready=groups.length&&groups.every(kumpulanSedia);
+  const content=groups.length&&groups.every(g=>String(g.objektif||'').trim()&&String(g.setInduksi||'').trim()&&String(g.penutup||'').trim());
+  const edited=groups.some(g=>g.userEdited), generated=groups.some(g=>g.aiGenerated);
+  if(content && !String(day.refleksi||'').trim()) return {key:'reflection',label:'REFLEKSI BELUM DIISI',className:'status-reflection'};
+  if(content) return {key:'complete',label:'SELESAI',className:'status-complete'};
+  if(generated) return {key:'generated',label:'DIJANA',className:'status-generated'};
+  if(edited) return {key:'edited',label:'DIEDIT',className:'status-edited'};
+  if(ready) return {key:'ready',label:'SEDIA DIJANA',className:'status-ready'};
+  return {key:'empty',label:'BELUM MULA',className:''};
+}
+function notaPindahanRph(day){
+  if(!day)return "";
+  if(day.pdpcNotConducted){
+    const sebab=ringkasanSebabPdpc(day),target=day.deferredToRphId&&store.days.find(d=>d.id===day.deferredToRphId);
+    return `${sebab?esc(sebab)+"<br>":""}${target?`RPH disalin ke <span class="pdpc-link" onclick="event.stopPropagation();bukaRphCard('${target.id}')">${esc(formatTarikhBM(target.tarikh))}</span>`:""}`;
+  }
+  if(day.isDeferred){const source=day.deferredFromRphId&&store.days.find(d=>d.id===day.deferredFromRphId);return source?`Daripada RPH <span class="pdpc-link" onclick="event.stopPropagation();bukaRphCard('${source.id}')">${esc(formatTarikhBM(source.tarikh))}</span>`:"RPH yang dipindahkan";}
+  return "";
+}
+function renderSessionCards(){
+  const wrap=$('sessionCards'); if(!wrap) return;
+  const aktif=hariAktif(store),tarikh=tarikhTerpilih(),list=store.days.filter(d=>d.tarikh===tarikh).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  const kosong=$("emptyViewedWeek");if(kosong)kosong.hidden=mingguAktif().length>0;
+  if(!list.length){wrap.innerHTML='<div class="card"><p class="muted">Tiada sesi pada '+esc(formatTarikhBM(tarikh))+'. Jana RPH minggu ini daripada jadual jika diperlukan.</p></div>';return;}
+  wrap.innerHTML=list.map((d,i)=>{const s=statusRph(d),nota=notaPindahanRph(d);return `<article class="session-card${aktif&&d.id===aktif.id?' aktif':''}"><span class="status-pill ${s.className}">${s.label}</span><h3>${esc(d.mataPelajaran||'Mata pelajaran belum ditetapkan')}</h3><p>${esc(d.kelas||('RPH '+(i+1)))} &bull; ${esc(d.masa||'Masa belum ditetapkan')}</p>${nota?`<p class="session-note">${nota}</p>`:""}<div class="session-actions"><button class="kecil" onclick="bukaRphCard('${d.id}')">Buka RPH</button><button class="secondary kecil" onclick="janaRphLengkapHari('${d.id}')">Jana RPH</button></div></article>`}).join('');
+}
+function bukaRphCard(id){const day=store.days.find(d=>d.id===id);if(day){store.ui.viewedWeekMonday=isninBagiTarikh(day.tarikh);store.ui.selectedDate=day.tarikh;store.activeDayId=id;}showView('jana');renderWeekHeader();renderTabs();muatBorang();simpanStore();setTimeout(()=>$('editorWorkspace')&&$('editorWorkspace').scrollIntoView({behavior:'smooth',block:'start'}),40);}
+function renderDashboard(){
+  const stats=$('dashboardStats'), week=$('dashboardWeek'); if(!stats||!week) return;
+  const days=mingguAktif(), counts={all:days.length,complete:0,ready:0,pending:0};
+  days.forEach(d=>{const k=statusRph(d).key;if(k==='complete'||k==='reflection')counts.complete++;else if(k==='ready')counts.ready++;else counts.pending++;});
+  stats.innerHTML=[['Jumlah RPH',counts.all],['Siap / Kandungan Lengkap',counts.complete],['Sedia Dijana',counts.ready],['Belum Lengkap',counts.pending]].map(x=>`<div class="stat-card"><strong>${x[1]}</strong><span>${x[0]}</span></div>`).join('');
+  week.innerHTML=HARI_LIST.map(h=>{const list=days.filter(d=>d.hari===h);return `<div class="week-day"><h4>${h}</h4>${list.length?list.map(d=>{const s=statusRph(d),nota=notaPindahanRph(d);return `<div class="week-item" data-status="${s.key==='complete'?'complete':''}" onclick="bukaRphCard('${d.id}')"><b>${esc(d.mataPelajaran||'Belum ditetapkan')}</b><br>${esc(d.kelas||'RPH')} &bull; ${esc(d.masa||'-')}<br><small>${s.label}</small>${nota?`<br><small>${nota}</small>`:""}</div>`}).join(''):'<span class="sp-kosong">Tiada sesi</span>'}</div>`}).join('');
+}
+function renderShellSummaries(){renderSessionCards();renderDashboard();renderWeekHeader();const d=hariAktif(store),s=statusRph(d);if($('activeRphStatus')){$('activeRphStatus').textContent=s.label;$('activeRphStatus').className='status-pill '+s.className;}if($('activeRphTitle'))$('activeRphTitle').textContent=d?((d.mataPelajaran||'RPH')+' - '+(d.kelas||'Sesi')):'Maklumat RPH';}
+
+/* ---------- TAB HARI ---------- */
+function renderTabs(){
+  const wrap=$("dayTabs");
+  const mulaPaparan=viewedWeekMonday(),tarikhAktif=tarikhTerpilih(),hariPaparan=mingguAktif(),hariUnik=HARI_LIST.map((hari,i)=>({hari,tarikh:tambahHariISO(mulaPaparan,i)}));
+  wrap.innerHTML = hariUnik.map(d=>{
+    const tarikh = d.tarikh ? d.tarikh.split('-').reverse().join('/') : 'set tarikh';
+    const rekodTarikh=hariPaparan.filter(x=>x.tarikh===d.tarikh), penanda=rekodTarikh.some(x=>x.pdpcNotConducted)?' • Ditangguh':(rekodTarikh.some(x=>x.isDeferred)?' • Dipindah':''), lbl = (d.hari||'—')+' '+tarikh+penanda, kelasAktif=d.tarikh===tarikhAktif?' aktif':'';
+    return `<span class="day-tab${kelasAktif}" onclick="pilihTarikhUI('${d.tarikh}')">${esc(lbl)}</span>`;
+  }).join('');
+  buildSlotPicker();
+  renderSessionCards(); renderDashboard();
+}
+function pilihHari(id){const day=store.days.find(d=>d.id===id);if(!day)return;store.activeDayId=id;store.ui.selectedDate=day.tarikh;store.ui.viewedWeekMonday=isninBagiTarikh(day.tarikh);simpanStore();renderTabs();muatBorang();renderShellSummaries();}
+function pilihTarikhUI(tarikh){store.ui.selectedDate=tarikh;const sasaran=store.days.filter(d=>d.tarikh===tarikh).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=sasaran?sasaran.id:null;simpanStore();renderTabs();muatBorang();renderShellSummaries();}
+function buildSlotPicker(){
+  const aktif=hariAktif(store), pilih=$("rphSlotSelect"), padam=$("padamRphAktif"),slots=store.days.filter(d=>d.tarikh===tarikhTerpilih()).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  if(!slots.length){pilih.hidden=true;padam.hidden=true;return;}
+  pilih.innerHTML=slots.map((d,i)=>`<option value="${d.id}"${aktif&&d.id===aktif.id?' selected':''}>${esc((d.kelas||('RPH '+(i+1)))+(d.masa?' - '+d.masa:''))}</option>`).join('');
+  pilih.hidden=false;padam.hidden=!aktif;
+}
+function pilihSlotUI(id){ if(id) pilihHari(id); }
+function padamHariAktifUI(){ const d=hariAktif(store); if(d) padamHariUI(d.id); }
+function padamHariUI(id){
+  if(!confirm("Padam RPH hari ini?")) return;
+  padamHari(store,id); simpanStore(); renderTabs(); muatBorang();
+}
+function tambahHariUI(){
+  let iso = $("tambahTarikh").value;
+  if(!iso){ iso = new Date().toISOString().slice(0,10); }
+  tambahHari(store, iso);
+  susunHariIkutTarikh(store);
+  simpanStore(); renderTabs(); muatBorang();
+}
+
+function tambahHariISO(iso, bil){
+  const d=new Date(iso+"T00:00:00"); d.setDate(d.getDate()+bil);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+function isninBagiTarikh(iso){
+  const d=new Date(iso+"T00:00:00"), hari=d.getDay(), beza=hari===0?-6:1-hari;
+  d.setDate(d.getDate()+beza);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+}
+
+/* ---------- ACTIVE WEEK, VIEWED WEEK & TARIKH SELAMAT ---------- */
+function activeWeekData(appStore){const s=(appStore||store).settings||{},a=s.activeWeek||{};return {weekNumber:+a.weekNumber||+s.weekNumber||1,mondayDate:isninBagiTarikh(a.mondayDate||s.mondayDate||tarikhHariIniISO())};}
+function viewedWeekMonday(){const a=activeWeekData();return isoSah(store.ui&&store.ui.viewedWeekMonday)?isninBagiTarikh(store.ui.viewedWeekMonday):a.mondayDate;}
+function nomborMingguBagiMonday(monday,appStore){const a=activeWeekData(appStore),mula=new Date(a.mondayDate+"T00:00:00"),sasaran=new Date(isninBagiTarikh(monday)+"T00:00:00"),beza=Math.round((sasaran-mula)/(7*24*60*60*1000));return a.weekNumber+beza;}
+function getWeekDates(monday){const mula=isninBagiTarikh(monday),hasil={};HARI_LIST.forEach((h,i)=>hasil[h]=tambahHariISO(mula,i));return hasil;}
+function tarikhTerpilih(){const mula=viewedWeekMonday(),pilihan=store.ui&&store.ui.selectedDate;return isoSah(pilihan)&&isninBagiTarikh(pilihan)===mula?pilihan:mula;}
+function formatTarikhPaparan(iso){if(!isoSah(iso))return "";const nama=["Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"],p=iso.split('-').map(Number);return p[2]+" "+nama[p[1]-1]+" "+p[0];}
+function julatMingguPaparan(monday){return formatTarikhPaparan(monday)+" - "+formatTarikhPaparan(tambahHariISO(monday,4));}
+function setViewedWeek(monday){
+  const mula=isninBagiTarikh(monday);store.ui=store.ui||{};store.ui.viewedWeekMonday=mula;store.ui.selectedDate=mula;
+  const first=store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=tambahHariISO(mula,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;
+  simpanStore();renderWeekHeader();renderTabs();muatBorang();renderShellSummaries();
+}
+function navigasiMinggu(arah){setViewedWeek(tambahHariISO(viewedWeekMonday(),arah*7));}
+function kembaliMingguAktif(){setViewedWeek(activeWeekData().mondayDate);}
+function pergiKeMinggu(iso){if(isoSah(iso))setViewedWeek(isninBagiTarikh(iso));}
+function metadataMinggu(monday){store.weekMetadata=store.weekMetadata||{};return store.weekMetadata[monday]||null;}
+function renderWeekHeader(){
+  const title=$("viewedWeekTitle");if(!title)return;const monday=viewedWeekMonday(),active=activeWeekData(),meta=metadataMinggu(monday),isActive=monday===active.mondayDate;
+  title.textContent="Minggu "+nomborMingguBagiMonday(monday);$("viewedWeekRange").textContent=julatMingguPaparan(monday);$("activeWeekBadge").hidden=!isActive;$("completedWeekBadge").hidden=!(meta&&meta.status==='completed');$("backActiveWeek").hidden=isActive;$("goToWeekDate").value=monday;
+  const btn=$("toggleWeekComplete");btn.textContent=meta&&meta.status==='completed'?"Buka Semula Minggu":"Tandakan Minggu Siap";btn.className=meta&&meta.status==='completed'?"secondary kecil":"kecil";
+}
+function toggleMingguSiap(){
+  const monday=viewedWeekMonday(),nombor=nomborMingguBagiMonday(monday),lama=metadataMinggu(monday);store.weekMetadata=store.weekMetadata||{};
+  if(lama&&lama.status==='completed')store.weekMetadata[monday]={weekNumber:nombor,mondayDate:monday,status:'open',completedAt:null,reopenedAt:new Date().toISOString()};
+  else store.weekMetadata[monday]={weekNumber:nombor,mondayDate:monday,status:'completed',completedAt:new Date().toISOString()};
+  simpanStore();renderWeekHeader();renderArkib();paparToast(store.weekMetadata[monday].status==='completed'?"Minggu ditandakan siap.":"Minggu dibuka semula.");
+}
+function janaMingguDilihatUI(){const monday=viewedWeekMonday(),result=janaRekodMinggu(monday,nomborMingguBagiMonday(monday)),first=mingguAktif()[0];if(first){store.activeDayId=first.id;store.ui.selectedDate=first.tarikh;}simpanStore();renderTabs();muatBorang();renderShellSummaries();paparToast(result.ditambah?result.ditambah+" RPH berjaya dijana.":"RPH minggu ini sudah tersedia.",!!result.ditambah);}
+
+/* ---------- STATUS PDPC & SALINAN RPH DITANGGUHKAN ---------- */
+const SEBAB_PDPC={leave:"Cuti Umum / Cuti Sakit / CRK",course_meeting_workshop:"Kursus / Mesyuarat / Bengkel",external_activity:"Aktiviti Luar",school_program:"Program Sekolah",other:"Lain-lain"};
+let cadanganSalinDitangguh=null, pemasaToast=null;
+function kunciTeks(v){return String(v||"").trim().toLowerCase();}
+function masaJadualSah(masa){return (String(masa||'').match(/\d{1,2}(?:[\.:]\d{1,2})?/g)||[]).length>=2&&minitMula(masa)!==9999;}
+function slotPdpcSah(slot){return !!(slot&&slot.id&&slot.classId&&slot.subjectId&&String(slot.kelas||'').trim()&&String(slot.mataPelajaran||'').trim()&&masaJadualSah(slot.masa));}
+function validasiSumberPdpc(day){
+  if(!day||!day.id||!isoSah(day.tarikh)||!day.classId||!day.subjectId)return {ok:false,mesej:'RPH ini belum mempunyai maklumat kelas atau mata pelajaran yang lengkap.'};
+  const slot=((((store||{}).settings||{}).timetable||{})[day.hari]||[]).find(s=>day.slotId&&s.id===day.slotId);
+  if(!masaJadualSah(day.masa)&&!(slot&&slotPdpcSah(slot)))return {ok:false,mesej:'RPH ini belum mempunyai masa atau slot jadual yang sah.'};
+  return {ok:true};
+}
+function padanSlotSubjekKelas(slot,day){
+  return !!(slotPdpcSah(slot)&&day&&day.classId&&day.subjectId&&slot.classId===day.classId&&slot.subjectId===day.subjectId);
+}
+function indeksSumberDalamJadual(day){
+  const slots=((((store||{}).settings||{}).timetable||{})[day.hari]||[]);
+  let idx=slots.findIndex(s=>day.slotId&&s.id===day.slotId);
+  if(idx<0)idx=slots.findIndex(s=>kunciPadananSlot(s)===kunciPadananSlot(day));
+  return idx;
+}
+function calonSelepasRph(calon,rujukan){
+  if(calon.tarikh!==rujukan.tarikh)return calon.tarikh>rujukan.tarikh;
+  const m=minitMula(calon.slot.masa), mr=minitMula(rujukan.masa||((rujukan.slot||{}).masa));
+  if(m!==mr)return m>mr;
+  return calon.slotIndex>(rujukan.slotIndex==null?indeksSumberDalamJadual(rujukan):rujukan.slotIndex);
+}
+function cariSlotPdpcSeterusnya(day,selepasCalon){
+  if(!validasiSumberPdpc(day).ok)return null;
+  const rujukan=selepasCalon?{tarikh:selepasCalon.tarikh,masa:selepasCalon.slot.masa,slotIndex:selepasCalon.slotIndex}:day;
+  for(let beza=0;beza<=370;beza++){
+    const tarikh=tambahHariISO(day.tarikh,beza), hari=hariBM(tarikh);if(!HARI_LIST.includes(hari))continue;
+    const slots=((((store||{}).settings||{}).timetable||{})[hari]||[]).map((slot,index)=>({slot,index})).filter(x=>slotPdpcSah(x.slot)).sort((a,b)=>minitMula(a.slot.masa)-minitMula(b.slot.masa)||a.index-b.index);
+    for(const item of slots){const calon={tarikh,hari,slot:item.slot,slotIndex:item.index};if(padanSlotSubjekKelas(item.slot,day)&&calonSelepasRph(calon,rujukan))return calon;}
+  }
+  return null;
+}
+function cariRekodPadaCalon(calon,kecualiId){
+  if(!calon)return null;
+  const sepadan=store.days.filter(d=>d.id!==kecualiId&&d.tarikh===calon.tarikh&&((calon.slot.id&&d.slotId===calon.slot.id)||(kunciTeks(d.kelas)===kunciTeks(calon.slot.kelas)&&kunciTeks(d.mataPelajaran)===kunciTeks(calon.slot.mataPelajaran)&&kunciTeks(d.masa)===kunciTeks(calon.slot.masa))));
+  return sepadan.find(rekodAdaKandunganRph)||sepadan[0]||null;
+}
+function rekodAdaKandunganRph(day){return !!(day&&(day.pdpcNotConducted||day.isDeferred||String(day.refleksi||'').trim()||(day.groups||[]).some(g=>kumpulanSedia(g)||adaKandunganG(g))));}
+function cariRphPadaCalon(calon,kecualiId){const day=cariRekodPadaCalon(calon,kecualiId);return day&&rekodAdaKandunganRph(day)?day:null;}
+function cariSlotKosongSeterusnya(day,selepasCalon){
+  let calon=selepasCalon;
+  for(let i=0;i<100;i++){calon=cariSlotPdpcSeterusnya(day,calon);if(!calon)return null;if(!cariRphPadaCalon(calon,day.id))return calon;}
+  return null;
+}
+function ringkasanSebabPdpc(day){return !day?"":(day.pdpcNotConductedReasons||[]).map(k=>k==='other'?(day.pdpcNotConductedOtherReason||SEBAB_PDPC.other):(SEBAB_PDPC[k]||k)).filter(Boolean).join(", ");}
+function cariDestinasiTangguhSedia(source){
+  if(!source)return null;
+  const terus=source.deferredToRphId&&store.days.find(d=>d.id!==source.id&&d.id===source.deferredToRphId);
+  if(terus)return terus;
+  return store.days.filter(d=>d.id!==source.id&&d.deferredFromRphId===source.id).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0]||null;
+}
+function formatCalonPdpc(calon){return !calon?"":`<strong>${esc(calon.slot.mataPelajaran||"")}</strong><br>${esc(calon.slot.kelas||"")}<br>${esc(calon.hari)}, ${esc(formatTarikhBM(calon.tarikh))}<br>${esc(calon.slot.masa||"")}`;}
+function setDeferMsg(teks,ok){const el=$("deferMsg");if(el){el.textContent=teks||"";el.className="ai-mesej "+(ok?"ok":"err");}}
+function paparToast(teks,ok=true){const el=$("appToast");if(!el)return;clearTimeout(pemasaToast);el.textContent=teks;el.className="toast"+(ok?"":" err");el.hidden=false;pemasaToast=setTimeout(()=>{el.hidden=true;},5000);}
+function kemaskiniPratontonTangguh(){
+  const day=hariAktif(store),preview=$("deferPreview"),conflict=$("deferConflict"),button=$("confirmDeferCopy");cadanganSalinDitangguh=null;if(!preview||!conflict||!button)return;
+  preview.hidden=true;conflict.hidden=true;button.hidden=true;setDeferMsg("",true);if(!day||!day.pdpcNotConducted||!day.copyRphToNext)return;
+  const sah=validasiSumberPdpc(day);if(!sah.ok){preview.textContent=sah.mesej;preview.hidden=false;setDeferMsg(sah.mesej,false);return;}
+  const pernah=cariDestinasiTangguhSedia(day);
+  if(pernah){preview.innerHTML=`<strong>RPH ini telah disalin.</strong><br><span class="pdpc-link" onclick="bukaRphCard('${pernah.id}')">Buka RPH ${esc(pernah.hari)}, ${esc(formatTarikhBM(pernah.tarikh))}</span>`;preview.hidden=false;return;}
+  const pertama=cariSlotPdpcSeterusnya(day,null);
+  if(!pertama){preview.textContent="Tiada slot PdP seterusnya untuk kelas dan mata pelajaran yang sama dalam jadual semasa.";preview.hidden=false;setDeferMsg("Semak Settings Jadual sebelum menyalin RPH.",false);return;}
+  const sedia=cariRphPadaCalon(pertama,day.id),tindakan=$("deferConflictAction").value;let calon=pertama,replaceId=null,awalan="RPH ini akan disalin ke:";
+  if(sedia){conflict.hidden=false;if(tindakan==='cancel'){preview.innerHTML="<strong>Salinan dibatalkan.</strong> Pilih tindakan lain untuk meneruskan.";preview.hidden=false;return;}
+    replaceId=sedia.id;awalan="Kandungan PdPc tertangguh akan dimasukkan ke RPH jadual sedia ada ini. Tiada RPH tambahan akan dicipta:";}
+  if(!replaceId){const placeholder=cariRekodPadaCalon(calon,day.id);if(placeholder)replaceId=placeholder.id;}
+  cadanganSalinDitangguh={sourceId:day.id,calon,replaceId};preview.innerHTML=`${esc(awalan)}<br><br>${formatCalonPdpc(calon)}`;preview.hidden=false;button.hidden=false;
+}
+function mingguBagiSalinan(source,tarikh){return nomborMingguBagiMonday(isninBagiTarikh(tarikh));}
+function salinKandunganKeSlot(source,calon,replaceId){
+  const pernah=cariDestinasiTangguhSedia(source);if(pernah)return pernah;
+  if(!validasiSumberPdpc(source).ok||!calon||!slotPdpcSah(calon.slot))throw new Error('Source atau slot destinasi tangguhan tidak lengkap.');
+  const slot=calon.slot,lama=replaceId?store.days.find(d=>d.id===replaceId):null;
+  if(lama&&lama.deferredFromRphId){const sumberLama=store.days.find(d=>d.id===lama.deferredFromRphId);if(sumberLama&&sumberLama.deferredToRphId===lama.id){delete sumberLama.deferredToRphId;delete sumberLama.deferredToDate;}}
+  const target=lama||buatHariKosong(calon.tarikh,store.settings,slot),now=new Date().toISOString();target.tarikh=calon.tarikh;target.hari=calon.hari;target.mondayDate=isninBagiTarikh(calon.tarikh);target.minggu=mingguBagiSalinan(source,calon.tarikh);
+  target.kelas=slot.kelas||"";target.masa=slot.masa||"";target.mataPelajaran=slot.mataPelajaran||"";target.classId=slot.classId||source.classId||"";target.subjectId=slot.subjectId||source.subjectId||"";target.slotId=slot.id||"";target.slotJadual=calon.hari+":"+calon.slotIndex;target.dariJadual=true;
+  target.bilanganMurid=slot.studentCount||(lama&&lama.bilanganMurid)||source.bilanganMurid||"";target.groupCount=bilanganKumpulanHari(source);target.groupNames=namaKumpulanHari(source).slice();target.groups=(source.groups||[]).map(salinKumpulanPedagogi);
+  target.refleksi="";target.intervensi="";target.kehadiran="";target.kuasai="";target.belumKuasai="";target.kehadiranNota="";target.pdpcStatus="scheduled";target.pdpcNotConducted=false;target.pdpcNotConductedReasons=[];target.pdpcNotConductedOtherReason="";target.copyRphToNext=false;
+  target.isDeferred=true;target.deferredFromRphId=source.id;target.deferredFromDate=source.tarikh;delete target.deferredToRphId;delete target.deferredToDate;target.createdAt=target.createdAt||now;target.updatedAt=now;if(!lama)store.days.push(target);
+  source.pdpcStatus="deferred";source.pdpcNotConducted=true;source.copyRphToNext=true;source.deferredToRphId=target.id;source.deferredToDate=target.tarikh;source.updatedAt=now;return target;
+}
+function sahkanSalinRphDitangguh(){
+  const source=hariAktif(store);if(!source||!cadanganSalinDitangguh||cadanganSalinDitangguh.sourceId!==source.id)return;const sebab=source.pdpcNotConductedReasons||[];
+  const sah=validasiSumberPdpc(source);if(!sah.ok){setDeferMsg(sah.mesej,false);return;}
+  if(!sebab.length){setDeferMsg("Pilih sekurang-kurangnya satu sebab PdPc tidak dapat dijalankan.",false);return;}if(sebab.includes('other')&&!String(source.pdpcNotConductedOtherReason||"").trim()){setDeferMsg("Nyatakan sebab bagi pilihan Lain-lain.",false);return;}
+  const sedia=cariDestinasiTangguhSedia(source);if(sedia){source.deferredToRphId=sedia.id;source.deferredToDate=sedia.tarikh;if(!sedia.deferredFromRphId){sedia.deferredFromRphId=source.id;sedia.deferredFromDate=source.tarikh;sedia.isDeferred=true;if(!sedia.pdpcNotConducted)sedia.pdpcStatus='scheduled';}simpanStore();setDeferMsg("RPH ini telah dipindahkan ke "+formatTarikhBM(sedia.tarikh)+". Tiada salinan baharu dibuat.",true);kemaskiniPratontonTangguh();return;}
+  const c=cadanganSalinDitangguh.calon,ayat=`RPH ini akan disalin ke ${c.slot.mataPelajaran} ${c.slot.kelas}, ${c.hari} ${formatTarikhBM(c.tarikh)}, ${c.slot.masa}. Teruskan?`;if(!confirm(ayat))return;
+  const target=salinKandunganKeSlot(source,c,cadanganSalinDitangguh.replaceId);susunHariIkutTarikh(store);simpanStore();muatBorang();renderTabs();renderShellSummaries();paparToast(`RPH berjaya disalin ke PdP ${target.mataPelajaran} ${target.kelas} pada ${formatTarikhBM(target.tarikh)}.`);
+}
+function muatStatusPdpc(day){
+  const utama=$("pdpcNotConducted"),options=$("pdpcDeferredOptions"),lain=$("pdpcOtherWrap"),copy=$("copyRphToNext"),summary=$("pdpcStatusSummary");if(!utama||!options)return;
+  utama.disabled=!day;utama.checked=!!(day&&day.pdpcNotConducted);options.hidden=!utama.checked;const dipilih=(day&&day.pdpcNotConductedReasons)||[];
+  document.querySelectorAll('[data-pdpc-reason]').forEach(el=>{el.checked=dipilih.includes(el.dataset.pdpcReason);el.disabled=!day;});lain.hidden=!dipilih.includes('other');$("pdpcOtherReason").value=day&&day.pdpcNotConductedOtherReason||"";copy.checked=!!(day&&day.copyRphToNext);copy.disabled=!day;
+  summary.textContent=day&&day.pdpcNotConducted?("Ditangguhkan"+(ringkasanSebabPdpc(day)?" - "+ringkasanSebabPdpc(day):"")):(day&&day.isDeferred?"RPH Dipindahkan":"Dijadualkan");kemaskiniPratontonTangguh();
+}
+
+function janaRekodMinggu(mula,nombor){
+  mula=isninBagiTarikh(mula);migrateSettingsCatalog();susunSlotJadualIkutMasa(store);let ditambah=0,dikemasKini=0;
+  HARI_LIST.forEach((h,offset)=>{
+    const tarikh=tambahHariISO(mula,offset), slots=((store.settings.timetable||{})[h]||[]).filter(slotPdpcSah);
+    slots.forEach((slot,slotIndex)=>{
+      if(!slot.id)slot.id=idUnik();
+      let day=store.days.find(d=>d.tarikh===tarikh&&d.slotId===slot.id);
+      if(!day)day=store.days.find(d=>d.tarikh===tarikh&&kunciPadananSlot(d)===kunciPadananSlot(slot));
+      if(!day){day=buatHariKosong(tarikh,store.settings,slot);day.createdAt=new Date().toISOString();store.days.push(day);ditambah++;}else dikemasKini++;
+      day.tarikh=tarikh;day.hari=h;day.minggu=nombor;day.mondayDate=mula;day.kelas=slot.kelas||day.kelas||'';day.masa=slot.masa||day.masa||'';day.mataPelajaran=slot.mataPelajaran||day.mataPelajaran||'';day.bilanganMurid=slot.studentCount||day.bilanganMurid||'';
+      day.classId=slot.classId||day.classId||'';day.subjectId=slot.subjectId||day.subjectId||'';day.slotId=slot.id;day.slotJadual=h+":"+slotIndex;day.dariJadual=true;day.updatedAt=day.updatedAt||day.createdAt||new Date().toISOString();
+    });
+  });
+  susunHariIkutTarikh(store);return {ditambah,dikemasKini};
+}
+function binaMingguUI(){
+  const inputMula=$("mulaMinggu").value,mesej=$("janaMingguMsg"),nombor=Math.max(1,parseInt($("setMinggu").value,10)||0);
+  if(!isoSah(inputMula)||!nombor){if(mesej){mesej.textContent="Masukkan Minggu Semasa dan Tarikh Isnin yang sah.";mesej.className="ai-mesej err";}return;}
+  const mula=isninBagiTarikh(inputMula);store.settings.activeWeek={weekNumber:nombor,mondayDate:mula};store.settings.weekNumber=nombor;store.settings.mondayDate=mula;store.ui.viewedWeekMonday=mula;store.ui.selectedDate=mula;
+  const result=janaRekodMinggu(mula,nombor),first=store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=tambahHariISO(mula,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;
+  store.weekMetadata=store.weekMetadata||{};if(!store.weekMetadata[mula])store.weekMetadata[mula]={weekNumber:nombor,mondayDate:mula,status:'open',completedAt:null};
+  simpanStore();renderWeekHeader();renderTabs();muatBorang();renderShellSummaries();
+  if(mesej){mesej.textContent="Jadual berjaya disimpan. Minggu "+nombor+" ("+julatMingguPaparan(mula)+") kini menjadi minggu aktif. "+result.ditambah+" RPH baharu dijana.";mesej.className="ai-mesej ok";}
+}
+
+function kemaskiniMingguDariJadual(gunaTarikhSettings){
+  const mula=gunaTarikhSettings?activeWeekData().mondayDate:viewedWeekMonday();
+  const mesej=gunaTarikhSettings?$('janaMingguMsg'):$('batchMsg');
+  if(!mula){if(mesej){mesej.hidden=false;mesej.textContent='Tarikh minggu tidak dapat ditentukan.';mesej.className='notice err';}return;}
+  if(!confirm('Kemaskini metadata slot minggu ini daripada Settings Jadual? Kandungan dan sejarah RPH sedia ada akan dikekalkan.'))return;
+  const result=janaRekodMinggu(mula,nomborMingguBagiMonday(mula));selaraskanKumpulan(store);
+  if(!hariAktif(store)&&viewedWeekMonday()===mula){const pertama=mingguAktif()[0];store.activeDayId=pertama?pertama.id:null;}
+  simpanStore();renderTabs();muatBorang();renderShellSummaries();
+  const teks='Kemaskini selesai: '+result.ditambah+' ditambah, '+result.dikemasKini+' dikekalkan/dikemas kini. Tiada RPH lama dipadam.';
+  if(mesej){mesej.hidden=false;mesej.textContent=teks;mesej.className=gunaTarikhSettings?'ai-mesej ok':'notice';}
+}
+
+function mingguAktif(){
+  const mula=viewedWeekMonday(),akhir=tambahHariISO(mula,4);
+  return store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=akhir&&HARI_LIST.includes(d.hari)).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+}
+function sediakanMingguDepanUI(){
+  const sumber=mingguAktif(), jenis=$("resetMingguDepan").value;
+  if(!sumber.length){ dataMsg("Tiada RPH dalam minggu dipilih.",false); return; }
+  const mondayBaru=tambahHariISO(viewedWeekMonday(),7),nomborBaru=nomborMingguBagiMonday(mondayBaru);
+  const sebelum=new Set(store.days.filter(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4)).map(d=>d.id));
+  janaRekodMinggu(mondayBaru,nomborBaru);let tambah=0;
+  const sasaran=store.days.filter(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4)&&!sebelum.has(d.id));
+  sasaran.forEach(baru=>{
+    const calon=sumber.filter(d=>(baru.slotId&&d.slotId===baru.slotId)||(d.hari===baru.hari&&kunciPadananSlot(d)===kunciPadananSlot(baru)));
+    const asal=calon.find(d=>d.isDeferred||d.deferredFromRphId)||calon.find(adaDataPenggunaRph)||calon[0];
+    if(asal){baru.groupCount=bilanganKumpulanHari(asal);baru.groupNames=namaKumpulanHari(asal).slice();baru.groups=(asal.groups||[]).map(salinKumpulanPedagogi);baru.copiedFromRphId=asal.id;baru.copiedFromDate=asal.tarikh;resetBahagian(baru,jenis);}
+    buangFieldBbmAbm(baru);baru.refleksi="";baru.intervensi="";baru.kehadiran="";baru.kuasai="";baru.belumKuasai="";baru.kehadiranNota="";baru.pdpcStatus="scheduled";baru.pdpcNotConducted=false;baru.pdpcNotConductedReasons=[];baru.pdpcNotConductedOtherReason="";baru.copyRphToNext=false;baru.isDeferred=false;delete baru.deferredFromRphId;delete baru.deferredFromDate;delete baru.deferredToRphId;delete baru.deferredToDate;baru.updatedAt=new Date().toISOString();tambah++;
+  });
+  store.ui.viewedWeekMonday=mondayBaru;susunHariIkutTarikh(store);const pertamaBaru=store.days.find(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4));store.activeDayId=pertamaBaru?pertamaBaru.id:null;store.ui.selectedDate=pertamaBaru?pertamaBaru.tarikh:mondayBaru;simpanStore();renderWeekHeader();renderTabs();muatBorang();
+  dataMsg(tambah?tambah+" RPH minggu "+nomborBaru+" telah disediakan mengikut slot jadual tanpa pendua.":"RPH minggu depan sudah wujud.",!!tambah);
+}
+function namaFail(ext){
+  const d=mingguAktif(), m=d.length?(d[0].minggu||nomborMingguBagiMonday(viewedWeekMonday())):nomborMingguBagiMonday(viewedWeekMonday());
+  return "e-RPH-minggu-"+m+"."+ext;
+}
+function muatTurun(teks,nama,jenis){
+  const blob=new Blob([teks],{type:jenis}), url=URL.createObjectURL(blob), a=document.createElement("a");
+  a.href=url; a.download=nama; a.click(); setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportMingguJSON(){
+  const days=mingguAktif(); if(!days.length){dataMsg("Tiada RPH untuk dieksport.",false);return;}
+  muatTurun(JSON.stringify({format:"erph-pemulihan",version:9,schemaVersion:SCHEMA_VERSION,exportedAt:new Date().toISOString(),mondayDate:viewedWeekMonday(),settings:store.settings,days:days},null,2),namaFail("json"),"application/json");
+  dataMsg("Fail JSON minggu berjaya disediakan.",true);
+}
+function csvSel(v){ const s=String(v==null?"":v); return /[\",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; }
+function exportMingguCSV(){
+  const days=mingguAktif(); if(!days.length){dataMsg("Tiada RPH untuk dieksport.",false);return;}
+  const kepala=["Tarikh","Hari","Minggu","Kelas","Masa","Mata Pelajaran","Bilangan Murid","Kumpulan","Kemahiran","Standard Pembelajaran","Objektif","Kriteria Kejayaan","Set Induksi","Langkah 1","Langkah 2","Langkah 3","Didik Hibur","Penutup","Refleksi","Intervensi","Kehadiran","Kuasai","Belum Kuasai"];
+  const rows=[kepala].concat(days.flatMap(d=>d.groups.map((g,i)=>[d.tarikh,d.hari,d.minggu,d.kelas,d.masa,d.mataPelajaran,d.bilanganMurid,namaKumpulanHari(d)[i]||"",g.kemahiranPemulihan,(g.sp||[]).join(" | "),g.objektif,g.kriteriaKejayaan,g.setInduksi,g.langkah1,g.langkah2,g.langkah3,g.didikHibur,g.penutup,d.refleksi,d.intervensi,d.kehadiran,d.kuasai,d.belumKuasai])));
+  muatTurun("\ufeff"+rows.map(r=>r.map(csvSel).join(",")).join("\r\n"),namaFail("csv"),"text/csv;charset=utf-8"); dataMsg("Fail CSV minggu berjaya disediakan.",true);
+}
+function bukaCetakRph(days,tajuk){
+  if(!days.length){dataMsg("Tiada RPH untuk dicetak.",false);return;}
+  const w=window.open("","_blank"); if(!w){dataMsg("Benarkan pop-up untuk export PDF.",false);return;}
+  const tables=days.map(d=>`<section><table>${binaRphHTML(d)}</table></section>`).join("");
+  w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(tajuk)}</title><style>body{font-family:Arial,sans-serif;color:#000}section{page-break-after:always}section:last-child{page-break-after:auto}table{border-collapse:collapse;width:100%;font-size:11px;table-layout:fixed}td{border:1.3px solid #d98c1f;padding:5px 7px;vertical-align:top;white-space:pre-wrap;word-wrap:break-word}.rph-title,.rph-acthdr{background:#f6c62b;text-align:center;font-weight:bold}.rph-kumpulan{background:#fce9b8;text-align:center;font-weight:bold}.rph-label,.rph-rlabel,.rph-step{font-weight:bold}.rph-center{text-align:center}@page{size:A4;margin:10mm}</style></head><body>${tables}<script>window.onload=()=>setTimeout(()=>window.print(),250)<\/script></body></html>`);
+  w.document.close(); dataMsg("Dialog cetak dibuka. Pilih 'Save as PDF'.",true);
+}
+function cetakHariPDF(){
+  const aktif=hariAktif(store); if(!aktif){dataMsg("Pilih hari dahulu.",false);return;}
+  const days=store.days.filter(d=>d.tarikh===aktif.tarikh).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  bukaCetakRph(days,"e-RPH "+aktif.hari+" "+aktif.tarikh);
+}
+function cetakRphAktif(){const aktif=hariAktif(store);if(!aktif){dataMsg("Pilih RPH dahulu.",false);return;}bukaCetakRph([aktif],"e-RPH "+(aktif.kelas||aktif.hari)+" "+aktif.tarikh);}
+function exportMingguPDF(){ bukaCetakRph(mingguAktif(),namaFail("pdf")); }
+function dataMsg(t,ok){ [$("dataMsg"),$("printMsg")].filter(Boolean).forEach(el=>{el.textContent=t;el.className="ai-mesej "+(ok?"ok":"err");}); }
+function importJSONFail(file){
+  const reader=new FileReader(); reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result), masuk=Array.isArray(data)?data:data.days;
+      if(!Array.isArray(masuk)||!masuk.length) throw new Error("Fail tidak mengandungi RPH.");
+      const mode=$("importMode").value, aktif=hariAktif(store); let pilihan=[];
+      if(mode==="day"){
+        if(!aktif) throw new Error("Pilih hari sasaran dahulu.");
+        const sumber=masuk.find(x=>x.hari===aktif.hari)||masuk[0], simpan={id:aktif.id,tarikh:aktif.tarikh,hari:aktif.hari,minggu:aktif.minggu,kelas:aktif.kelas,masa:aktif.masa};
+        Object.assign(aktif,JSON.parse(JSON.stringify(sumber)),simpan); pilihan=[aktif];
+      } else if(mode==="class"){
+        if(!aktif||!aktif.kelas) throw new Error("Pilih RPH yang mempunyai kelas sasaran.");
+        const sumberKelas=masuk.filter(x=>String(x.kelas).toLowerCase()===String(aktif.kelas).toLowerCase());
+        if(!sumberKelas.length) throw new Error("Kelas "+aktif.kelas+" tiada dalam fail.");
+        const sasaranKelas=mingguAktif().filter(x=>String(x.kelas).toLowerCase()===String(aktif.kelas).toLowerCase());
+        if(sasaranKelas.length){
+          sasaranKelas.forEach((sasaran,i)=>{
+            const sumber=sumberKelas.find(x=>x.hari===sasaran.hari && (!x.masa||x.masa===sasaran.masa))||sumberKelas[i%sumberKelas.length];
+            const meta={id:sasaran.id,tarikh:sasaran.tarikh,hari:sasaran.hari,minggu:sasaran.minggu,kelas:sasaran.kelas,masa:sasaran.masa};
+            Object.assign(sasaran,JSON.parse(JSON.stringify(sumber)),meta); pilihan.push(sasaran);
+          });
+        } else {
+          pilihan=sumberKelas.map(x=>{const y=JSON.parse(JSON.stringify(x));y.id=idUnik();return y;}); store.days=store.days.concat(pilihan);
+        }
+      } else {
+        masuk.forEach(x=>{const wujud=store.days.some(d=>d.tarikh===x.tarikh&&((x.slotId&&d.slotId===x.slotId)||kunciPadananSlot(d)===kunciPadananSlot(x)));if(!wujud){const y=JSON.parse(JSON.stringify(x));y.id=idUnik();y.createdAt=new Date().toISOString();y.updatedAt=y.createdAt;pilihan.push(y);}});store.days=store.days.concat(pilihan);
+      }
+      selaraskanKumpulan(store); susunHariIkutTarikh(store); if(pilihan.length) store.activeDayId=pilihan[pilihan.length-1].id;
+      simpanStore(); renderTabs(); muatBorang(); dataMsg(pilihan.length+" RPH berjaya diimport.",true);
+    }catch(e){dataMsg("Import gagal: "+e.message,false);} finally{$("importFile").value="";}
+  }; reader.readAsText(file);
+}
+function setBackupMsg(teks,ok){const el=$("backupMsg");if(el){el.textContent=teks;el.className="ai-mesej "+(ok?"ok":"err");}}
+function exportBackupPenuh(){
+  const backup={format:'erph-pemulihan-backup',schemaVersion:SCHEMA_VERSION,exportedAt:new Date().toISOString(),activeWeek:activeWeekData(),settings:store.settings,classes:store.settings.classes,timetable:store.settings.timetable,groups:store.settings.groups,rphRecords:store.days,weekMetadata:store.weekMetadata,appData:store};
+  muatTurun(JSON.stringify(backup,null,2),'eRPH-backup-'+tarikhHariIniISO()+'.json','application/json');setBackupMsg('Backup penuh berjaya disediakan.',true);
+}
+function importBackupPenuh(file){
+  const reader=new FileReader();reader.onload=()=>{const sebelum=store,ralatSebelum=ralatMuatStore,mentahSebelum=dataRosakMentah;try{const parsed=JSON.parse(reader.result);if(!parsed||parsed.format!=='erph-pemulihan-backup'||!parsed.appData||!parsed.appData.settings||!Array.isArray(parsed.appData.days))throw new Error('Fail bukan backup penuh e-RPH yang sah.');const calon=normalisasiStore(JSON.parse(JSON.stringify(parsed.appData)));if(!confirm('Import backup akan menggantikan data aplikasi semasa. Teruskan?'))return;store=calon;ralatMuatStore=null;dataRosakMentah=null;if(!simpanStore())throw new Error('Data backup tidak dapat ditulis ke localStorage.');selaraskanKumpulan(store);migrateSettingsCatalog();buildSettingUI();renderTabs();muatBorang();renderShellSummaries();renderArkib();setBackupMsg('Backup berjaya dipulihkan.',true);paparToast('Backup e-RPH berjaya dipulihkan.');}catch(e){store=sebelum;ralatMuatStore=ralatSebelum;dataRosakMentah=mentahSebelum;console.error('Import backup gagal',e);setBackupMsg('Import backup gagal: '+e.message,false);}finally{$("backupImportFile").value='';}};reader.onerror=()=>setBackupMsg('Fail backup tidak dapat dibaca.',false);reader.readAsText(file);
+}
+function padamSemuaDataUI(){
+  if(!confirm('AMARAN: Semua Settings, jadual, RPH dan arkib dalam pelayar ini akan dipadam. Teruskan?'))return;
+  if(!confirm('Pengesahan akhir: data yang belum dieksport tidak boleh dipulihkan. Padam semua data?'))return;
+  try{localStorage.removeItem(KUNCI);ralatMuatStore=null;dataRosakMentah=null;store=storeDefault();simpanStore();buildSettingUI();renderTabs();muatBorang();renderShellSummaries();renderArkib();paparToast('Semua data e-RPH telah dipadam.');}catch(e){console.error('Reset data gagal',e);setBackupMsg('Data tidak dapat dipadam: '+e.message,false);}
+}
+
+/* ---------- MASTER DATA, DROPDOWN BERGANTUNG & AI ---------- */
+function itemKumpulan(day,g){
+  const list=kurikulum[(day&&day.mataPelajaran)||""]||[];
+  return list.find(item=>item.id===g.skillId)||list[g.skIndex]||null;
+}
+function optionsSK(mp,selectedId){
+  const list=kurikulum[mp]||[];
+  return '<option value="">- Pilih Kemahiran -</option>'+list.map(item=>
+    `<option value="${esc(item.id)}"${String(selectedId)===String(item.id)?' selected':''}>${esc(item.skillCode+' - '+item.skill)}</option>`
+  ).join('');
+}
+function filterSkills(input,i){
+  const q=input.value.trim().toLowerCase(),select=document.querySelector('.g-sk[data-g="'+i+'"]');if(!select)return;
+  Array.from(select.options).forEach((o,idx)=>{o.hidden=idx>0&&q&&!o.text.toLowerCase().includes(q);});
+}
+function standardOptions(item,selected){
+  if(!item)return '<option value="">Pilih kemahiran dahulu</option>';
+  return '<option value="">- Pilih Standard Kandungan -</option>'+item.standardContent.map((sk,i)=>
+    `<option value="${i}"${String(selected)===String(i)?' selected':''}>${esc(sk.content)}</option>`
+  ).join('');
+}
+function spCheckboxes(item,standardIndex,selected){
+  const sk=item&&item.standardContent&&item.standardContent[standardIndex];
+  if(!sk)return '<span class="sp-kosong">Pilih Standard Kandungan dahulu.</span>';
+  const list=sk.learning||[],picked=selected||[];
+  if(!list.length)return '<span class="sp-kosong">Tiada SP khusus yang dapat dipadankan untuk SK ini.</span>';
+  return list.map(sp=>`<label><input type="checkbox" class="sp-cb" value="${esc(sp)}"${picked.includes(sp)?' checked':''}> ${esc(sp)}</label>`).join('');
+}
+function skillSummary(item){
+  if(!item)return '';
+  return `<div class="skill-summary"><b>${esc(item.skillCode)} - ${esc(item.skill)}</b><br><span>Fokus: ${esc(item.focus||'Rujuk objektif dan aktiviti panduan di bawah.')}</span></div>`;
+}
+function guideOptions(items,label){
+  return '<option value="">- '+label+' -</option>'+((items||[]).map((x,i)=>`<option value="${i}">${esc(String(x).replace(/\n/g,' ').slice(0,115))}</option>`).join(''));
+}
+function pilihKemahiranUI(i,id){
+  const day=hariAktif(store),g=day&&day.groups[i],list=day?(kurikulum[day.mataPelajaran]||[]):[];if(!g)return;
+  const item=list.find(x=>x.id===id);g.skillId=id;g.skIndex=item?list.indexOf(item):"";g.standardIndex="";g.sp=[];
+  g.kemahiranPemulihan=item?item.skillCode+' - '+item.skill:'';g.objektifDipilih=[];g.objektif="";g.kriteriaKejayaan="";
+  g.userEdited=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();
+}
+function pilihStandardUI(i,value){const day=hariAktif(store),g=day&&day.groups[i];if(!g)return;g.standardIndex=value;g.sp=[];g.userEdited=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();}
+function objektifCheckboxes(item,g,i){
+  const senarai=item&&Array.isArray(item.suggestedObjectives)?item.suggestedObjectives:[];
+  if(!senarai.length)return '<span class="sp-kosong">Tiada cadangan objektif khusus untuk kemahiran ini.</span>';
+  const dipilih=Array.isArray(g.objektifDipilih)?g.objektifDipilih:[];
+  const objektifLama=String(g.objektif||'').split(/\n+/).map(ringkasPanduan).filter(Boolean);
+  return senarai.map((obj,index)=>{const checked=dipilih.includes(obj)||(!dipilih.length&&objektifLama.includes(ringkasPanduan(obj)));return `<label><input type="checkbox" class="objektif-cb" data-g="${i}" value="${esc(obj)}"${checked?' checked':''}> <span>${esc(obj)}</span></label>`;}).join('');
+}
+function kemaskiniObjektifDipilih(i){
+  const day=hariAktif(store),g=day&&day.groups[i];if(!g)return;
+  const box=document.querySelector('.objektif-box[data-g="'+i+'"]');if(!box)return;
+  g.objektifDipilih=Array.from(box.querySelectorAll('.objektif-cb:checked')).map(x=>x.value);
+  g.objektif=g.objektifDipilih.map((obj,index)=>(index+1)+'. '+ringkasPanduan(obj)).join('\n');
+  g.kriteriaKejayaan="";g.userEdited=true;simpanStore();
+  const textarea=document.querySelector('textarea[data-g="'+i+'"][data-field="objektif"]');if(textarea)textarea.value=g.objektif;
+  const kriteria=document.querySelector('textarea[data-g="'+i+'"][data-field="kriteriaKejayaan"]');if(kriteria)kriteria.value="";
+  renderPreview();renderShellSummaries();
+}
+function gunaCadanganAktiviti(i,field,index){
+  if(index==='')return;const day=hariAktif(store),g=day&&day.groups[i],item=g&&itemKumpulan(day,g);if(!item)return;
+  const value=item.suggestedActivities[+index]||'';if(g[field]&&!confirm('Medan ini telah diisi. Gantikan dengan cadangan panduan?'))return;
+  g[field]=value;g.userEdited=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();
+}
+function isiSemuaPanduan(i){
+  const day=hariAktif(store),g=day&&day.groups[i],item=g&&itemKumpulan(day,g);if(!item||!kumpulanSedia(g)){aiMsg(i,'Pilih Kemahiran, SK dan sekurang-kurangnya satu SP dahulu.',false);return;}
+  if(!g.objektif){const pertama=(item.suggestedObjectives||[])[0]||'';g.objektifDipilih=pertama?[pertama]:[];g.objektif=pertama?'1. '+ringkasPanduan(pertama):'';}
+  const acts=item.suggestedActivities||[];['setInduksi','langkah1','langkah2','didikHibur','penutup'].forEach((f,idx)=>{if(!g[f]&&acts.length)g[f]=acts[Math.min(idx,acts.length-1)];});
+  simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();
+}
+function aiContext(day,i){
+  const g=day.groups[i],item=itemKumpulan(day,g),sk=item&&item.standardContent[g.standardIndex];
+  return {subject:day.mataPelajaran,className:day.kelas,group:namaKumpulanHari(day)[i],studentCount:day.bilanganMurid,skill:item?item.skill:'',skillCode:item?item.skillCode:'',standardContent:sk?sk.content:'',standardLearning:(g.sp||[]),guideObjective:item?(item.suggestedObjectives||[]):[],guideActivity:item?(item.suggestedActivities||[]):[],objective:g.objektif,current:salinKumpulanPedagogi(g)};
+}
+function ringkasPanduan(value){return String(value||'').replace(/^\d+\.\s*/,'').replace(/\s+/g,' ').trim();}
+function localAiGenerate(field,ctx){
+  const activities=(ctx.guideActivity||[]).map(ringkasPanduan).filter(Boolean),guide=activities[field==='setInduksi'?0:field==='langkah1'?1:field==='langkah2'?2:field==='didikHibur'?3:4]||activities[0]||'';
+  const skill=(ctx.skillCode?ctx.skillCode+' - ':'')+ctx.skill,group=ctx.group||'kumpulan kecil';
+  if(field==='objektif')return ringkasPanduan((ctx.guideObjective||[])[0])||('Murid dapat menguasai '+ctx.skill+' dengan bimbingan guru.');
+  if(field==='kriteriaKejayaan'){
+    const objektif=String(ctx.objective||'').split(/\n+/).map(ringkasPanduan).filter(Boolean);
+    return objektif.length?objektif.map((obj,index)=>(index+1)+'. Murid '+group+' berjaya menunjukkan penguasaan bagi "'+obj+'" melalui sekurang-kurangnya 4 daripada 5 tugasan dengan betul.').join('\n'):'Murid '+group+' berjaya melaksanakan sekurang-kurangnya 4 daripada 5 tugasan berkaitan '+ctx.skill+' dengan betul.';
+  }
+  if(field==='setInduksi')return 'Guru menunjukkan bahan visual atau maujud berkaitan '+skill+'. Murid memberi respons ringkas berdasarkan pengetahuan sedia ada.';
+  if(field==='langkah1')return guide||('Guru membimbing murid mengenal dan meneroka '+skill+' menggunakan bahan konkrit secara berperingkat.');
+  if(field==='langkah2')return guide||('Murid menjalankan aktiviti padanan atau latihan berpandu berkaitan '+skill+' dengan arahan mudah dan pengulangan.');
+  if(field==='didikHibur')return 'Murid menjalankan permainan ringkas secara '+group+' menggunakan kad atau bahan visual yang hanya melibatkan '+skill+'.';
+  if(field==='penutup')return 'Murid menyatakan semula perkara yang dipelajari dan menjawab dua soalan pengukuhan berkaitan '+skill+'.';
+  if(field==='intervensi')return 'Guru menjalankan bimbingan individu dan latihan pengukuhan menggunakan bahan konkrit, kad serta pengulangan khusus untuk '+skill+'.';
+  return guide;
+}
+async function requestAi(field,ctx){
+  if(typeof window.ERPH_AI_GENERATOR==='function')return await window.ERPH_AI_GENERATOR({field,context:ctx,hierarchy:['Buku Panduan','Kemahiran','SK','SP','Cadangan Panduan','Maklumat Kelas']});
+  await new Promise(resolve=>setTimeout(resolve,180));return localAiGenerate(field,ctx);
+}
+function aiMsg(i,text,ok=true){const el=document.querySelector('.ai-status[data-g="'+i+'"]');if(el){el.textContent=text;el.className='ai-mesej ai-status '+(ok?'ok':'err');}}
+async function janaFieldAI(i,field,button){
+  const day=hariAktif(store),g=day&&day.groups[i];if(!g||!kumpulanSedia(g)){aiMsg(i,'Lengkapkan Kemahiran, SK dan SP dahulu.',false);return;}
+  if(field==='kriteriaKejayaan'&&!String(g.objektif||'').trim()){aiMsg(i,'Pilih sekurang-kurangnya satu objektif dahulu supaya kriteria boleh diselaraskan.',false);return;}
+  if(g[field]&&!confirm('Medan ini telah mempunyai kandungan. Gantikan dengan hasil baharu?'))return;
+  const old=button&&button.textContent;if(button){button.disabled=true;button.textContent='Sedang menjana...';}
+  try{const value=await requestAi(field,aiContext(day,i));if(value)g[field]=String(value);g.aiGenerated=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();aiMsg(i,'Kandungan berjaya dimasukkan ke medan.',true);}catch(e){aiMsg(i,'Kandungan gagal dijana. Sila cuba semula.',false);}finally{if(button){button.disabled=false;button.textContent=old;}}
+}
+async function janaRphLengkap(i,button){
+  const day=hariAktif(store),g=day&&day.groups[i];if(!g||!kumpulanSedia(g)){aiMsg(i,'Lengkapkan Kemahiran, SK dan SP dahulu.',false);return false;}
+  const old=button&&button.textContent;if(button){button.disabled=true;button.textContent='Sedang menjana RPH...';}
+  try{for(const field of ['objektif','kriteriaKejayaan','setInduksi','langkah1','langkah2','didikHibur','penutup'])if(!String(g[field]||'').trim())g[field]=String(await requestAi(field,aiContext(day,i))||'');g.aiGenerated=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();aiMsg(i,'RPH lengkap dijana. Kandungan sedia ada dikekalkan.',true);return true;}catch(e){aiMsg(i,'RPH gagal dijana. Kandungan lama tidak diubah.',false);return false;}finally{if(button){button.disabled=false;button.textContent=old;}}
+}
+async function janaRphLengkapHari(id){const day=store.days.find(d=>d.id===id);if(!day)return;store.activeDayId=id;let ok=0,skip=0;for(let i=0;i<day.groups.length;i++){if(kumpulanSedia(day.groups[i])){if(await janaRphLengkap(i))ok++;}else skip++;}batchMessage(ok+' kumpulan berjaya dijana. '+skip+' belum lengkap.');}
+function batchMessage(text,error=false){const el=$('batchMsg');if(!el)return;el.hidden=false;el.textContent=text;el.className='notice'+(error?' err':'');}
+async function runBatch(days,label){let ok=0,skip=0;for(const day of days){store.activeDayId=day.id;for(let i=0;i<day.groups.length;i++){if(kumpulanSedia(day.groups[i])){if(await janaRphLengkap(i))ok++;}else skip++;}}renderTabs();muatBorang();batchMessage(ok+' RPH/kumpulan '+label+' berjaya dijana. '+skip+' tidak dijana kerana Kemahiran / SK / SP belum lengkap.');}
+function janaBatchHari(){const aktif=hariAktif(store);if(!aktif){batchMessage('Pilih hari dahulu.',true);return;}runBatch(store.days.filter(d=>d.tarikh===aktif.tarikh),'hari ini');}
+function janaBatchMinggu(){runBatch(mingguAktif(),'minggu ini');}
+function fieldEditor(i,g,item,field,label){return `<label>${label}</label><div class="field-tools"><div><select onchange="gunaCadanganAktiviti(${i},'${field}',this.value)">${guideOptions(item?item.suggestedActivities:[],'Cadangan Panduan')}</select></div><button type="button" class="secondary kecil" onclick="janaFieldAI(${i},'${field}',this)">Jana AI</button></div><textarea data-g="${i}" data-field="${field}">${esc(g[field])}</textarea>`;}
+
+/* ---------- BINA BLOK KUMPULAN (borang kiri) ---------- */
+function buildGroupBlocks(bukaIndex){
+  const wrap=$("groupEditWrap"),day=hariAktif(store);if(!day){wrap.innerHTML="";return;}
+  const kumpulanTerbuka=new Set(Array.from(wrap.querySelectorAll('details.group-block[open]')).map(el=>+el.dataset.g));
+  if(Number.isInteger(bukaIndex))kumpulanTerbuka.add(bukaIndex);
+  const names=namaKumpulanHari(day);
+  wrap.innerHTML=day.groups.map((g,i)=>{
+    const item=itemKumpulan(day,g),title=names[i]||('Kumpulan '+(i+1)),status=kumpulanSedia(g)?'SK & SP lengkap':'Pilih Kemahiran, SK & SP';
+    const dibuka=kumpulanTerbuka.size?kumpulanTerbuka.has(i):i===0;
+    return `<details class="card group-block" data-g="${i}" ${dibuka?'open':''}>
+      <summary><span>${esc(title)} - ${esc(item?item.skill:'Kemahiran belum dipilih')}</span><small>${status}</small></summary>
+      <div class="details-body">
+        <label>Cari Kemahiran</label><input class="search-input" type="search" placeholder="Taip KV, nombor, wang..." oninput="filterSkills(this,${i})">
+        <label>Kemahiran</label><select class="g-sk" data-g="${i}" onchange="pilihKemahiranUI(${i},this.value)">${optionsSK(day.mataPelajaran,g.skillId)}</select>
+        ${skillSummary(item)}
+        <label>Standard Kandungan</label><select class="g-standard" data-g="${i}" onchange="pilihStandardUI(${i},this.value)">${standardOptions(item,g.standardIndex)}</select>
+        <label>Standard Pembelajaran</label><div class="sp-box g-spbox" data-g="${i}">${spCheckboxes(item,g.standardIndex,g.sp)}</div>
+        <label>Objektif Pembelajaran <small class="muted">(boleh pilih lebih daripada satu)</small></label><div class="sp-box objektif-box" data-g="${i}">${objektifCheckboxes(item,g,i)}</div><textarea data-g="${i}" data-field="objektif" placeholder="Objektif dipilih akan digabungkan di sini dan masih boleh disunting.">${esc(g.objektif)}</textarea>
+        <label>Kriteria Kejayaan</label><div class="inline-actions"><button type="button" class="secondary kecil" onclick="janaFieldAI(${i},'kriteriaKejayaan',this)">Jana AI</button></div><textarea data-g="${i}" data-field="kriteriaKejayaan">${esc(g.kriteriaKejayaan)}</textarea>
+        <div class="section-head activity-head"><div><h3>Aktiviti Pembelajaran</h3><p>Cadangan buku panduan boleh dipilih dan disunting.</p></div><button type="button" onclick="janaRphLengkap(${i},this)">Jana RPH Lengkap</button></div>
+        ${fieldEditor(i,g,item,'setInduksi','Set Induksi')}
+        ${fieldEditor(i,g,item,'langkah1','Langkah 1')}
+        ${fieldEditor(i,g,item,'langkah2','Langkah 2')}
+        ${fieldEditor(i,g,item,'didikHibur','Didik Hibur')}
+        ${fieldEditor(i,g,item,'penutup','Penutup')}
+        <div class="inline-actions"><button type="button" class="secondary kecil" onclick="isiSemuaPanduan(${i})">Isi Medan Kosong daripada Panduan</button></div>
+        <section class="external-ai-card" aria-label="Jana arahan dan import hasil AI">
+          <h4>Guna ChatGPT / Model AI Lain</h4>
+          <p>Jana arahan berdasarkan Kemahiran, SK, SP dan semua Objektif yang dipilih. Salin ke model AI pilihan anda, kemudian tampal jawapannya untuk diimport terus.</p>
+          <span class="ai-step">1. JANA &amp; SALIN ARAHAN</span>
+          <div class="external-ai-actions"><button type="button" onclick="janaCommand(${i})">Jana Arahan AI</button><button type="button" class="secondary" onclick="salinPrompt(${i})">Salin Arahan</button></div>
+          <textarea class="ai-prompt" data-g="${i}" readonly placeholder="Klik Jana Arahan AI..."></textarea>
+          <span class="ai-step">2. TAMPAL HASIL AI</span>
+          <textarea class="ai-jawapan" data-g="${i}" placeholder="Tampal jawapan daripada ChatGPT, Gemini atau model AI lain di sini..."></textarea>
+          <button type="button" class="hijau" onclick="autoIsi(${i})">Import Hasil ke RPH</button>
+        </section>
+        <span class="ai-mesej ai-status" data-g="${i}"></span>
+      </div>
+    </details>`;
+  }).join('');
+}
+
+/* ---------- MUAT hari aktif ke borang ---------- */
+const MEDAN_SHARED = ["tarikh","hari","minggu","kelas","masa","bilanganMurid",
+                      "mataPelajaran","refleksi","intervensi","kehadiran","kuasai","belumKuasai","kehadiranNota"];
+function janaRefleksiAuto(day){
+  if(!day)return;
+  const jumlah=Math.max(0,parseInt(day.bilanganMurid,10)||0),hadir=Math.min(jumlah||999,Math.max(0,parseInt(day.kehadiran,10)||0));
+  let kuasai=Math.min(hadir,Math.max(0,parseInt(day.kuasai,10)||0)),belum=Math.max(0,parseInt(day.belumKuasai,10)||0);
+  if(kuasai+belum>hadir)belum=Math.max(0,hadir-kuasai);
+  day.kehadiran=hadir||"";day.kuasai=kuasai||"";day.belumKuasai=belum||"";
+}
+function janaRefleksiUI(){
+  const day=hariAktif(store);if(!day)return;janaRefleksiAuto(day);
+  const hadir=+day.kehadiran||0,kuasai=+day.kuasai||0,belum=+day.belumKuasai||Math.max(0,hadir-kuasai);
+  day.belumKuasai=belum;day.refleksi=kuasai+" daripada "+hadir+" murid berjaya mencapai objektif pembelajaran manakala "+belum+" murid masih memerlukan bimbingan lanjut.";
+  simpanStore();muatBorang();reflectionMsg('Refleksi berjaya dijana.',true);
+}
+async function janaIntervensiUI(){
+  const day=hariAktif(store);if(!day||!(+day.belumKuasai)){reflectionMsg('Tiada murid belum menguasai direkodkan.',false);return;}
+  const i=(day.groups||[]).findIndex(kumpulanSedia);if(i<0){reflectionMsg('Lengkapkan Kemahiran, SK dan SP dahulu.',false);return;}
+  try{day.intervensi=await requestAi('intervensi',aiContext(day,i));simpanStore();muatBorang();reflectionMsg('Intervensi dimasukkan ke medan.',true);}catch(e){reflectionMsg('Intervensi gagal dijana. Kandungan lama dikekalkan.',false);}
+}
+function reflectionMsg(text,ok){const el=$('reflectionMsg');if(el){el.textContent=text;el.className='ai-mesej '+(ok?'ok':'err');}}
+function muatBorang(){
+  const day=hariAktif(store);
+  MEDAN_SHARED.forEach(f=>{
+    const el=$("f_"+f);
+    if(el) el.value = day ? (day[f]==null?"":day[f]) : "";
+  });
+  buildGroupBlocks();
+  muatStatusPdpc(day);
+  renderPreview();
+  renderShellSummaries();
+}
+
+/* ---------- RENDER PRATONTON BORANG ---------- */
+function binaRphHTML(day){
+  if(!day){
+    return '<tr><td class="rph-title" colspan="6">RANCANGAN PENGAJARAN HARIAN PROGRAM PEMULIHAN KHAS</td></tr>'+ 
+      '<tr><td colspan="6" class="rph-center" style="padding:24px">Tekan <b>"Tambah Hari"</b> di atas untuk mula bina RPH.</td></tr>';
+  }
+  const gc=bilanganKumpulanHari(day);
+  const val=v=>(v!=null && String(v).trim()!=="") ? esc(v) : "&nbsp;";
+  const km=[];
+  if(day.kelas && day.kelas.trim()) km.push(day.kelas.trim().toUpperCase());
+  if(day.masa && day.masa.trim()) km.push(day.masa.trim());
+  if(String(day.bilanganMurid).trim()) km.push(day.bilanganMurid+" Orang murid");
+
+  let h="";
+  h+=`<tr><td class="rph-title" colspan="6">RANCANGAN PENGAJARAN HARIAN PROGRAM PEMULIHAN KHAS</td></tr>`;
+  h+=`<tr><td class="rph-label">TARIKH / HARI / MINGGU</td>`+
+     `<td class="rph-center">${val(formatTarikhBM(day.tarikh))}</td>`+
+     `<td class="rph-center">${val((day.hari||'').toUpperCase())}</td>`+
+     `<td class="rph-center">${val(day.minggu)}</td>`+
+     `<td class="rph-rlabel">KELAS / MASA</td>`+
+     `<td class="rph-center rph-val" rowspan="2">${km.length?esc(km.join("\n")):"&nbsp;"}</td></tr>`;
+  h+=`<tr><td class="rph-label">MATA PELAJARAN</td>`+
+     `<td class="rph-center rph-val" colspan="3">${day.mataPelajaran?esc(day.mataPelajaran+" Pemulihan Khas"):"&nbsp;"}</td>`+
+     `<td class="rph-rlabel">&nbsp;</td></tr>`;
+  if(day.pdpcNotConducted){
+    const sasaran=day.deferredToDate?` RPH disalin ke ${formatTarikhBM(day.deferredToDate)}.`:"";
+    h+=`<tr><td class="rph-label">STATUS PDPC</td><td class="rph-val" colspan="5"><b>DITANGGUHKAN</b>${ringkasanSebabPdpc(day)?" - "+esc(ringkasanSebabPdpc(day)):""}.${esc(sasaran)}</td></tr>`;
+  }else if(day.isDeferred){
+    h+=`<tr><td class="rph-label">STATUS PDPC</td><td class="rph-val" colspan="5"><b>RPH DIPINDAHKAN</b>${day.deferredFromDate?" daripada "+esc(formatTarikhBM(day.deferredFromDate)):""}</td></tr>`;
+  }
+
+  day.groups.forEach((g,i)=>{
+    if(gc>1) h+=`<tr><td class="rph-kumpulan" colspan="6">${esc(namaKumpulanHari(day)[i]||('KUMPULAN '+(i+1)))}</td></tr>`;
+    const item=itemKumpulan(day,g),standard=item&&item.standardContent[g.standardIndex];
+    h+=`<tr><td class="rph-label">STANDARD KANDUNGAN</td><td class="rph-val" colspan="5">${standard?val(standard.content):"&nbsp;"}</td></tr>`;
+    h+=`<tr><td class="rph-label">STANDARD PEMBELAJARAN</td><td class="rph-val" colspan="5">${(g.sp&&g.sp.length)?esc(g.sp.join("\n")):"&nbsp;"}</td></tr>`;
+    h+=`<tr><td class="rph-label">KEMAHIRAN PEMULIHAN</td><td class="rph-val" colspan="5">${val(g.kemahiranPemulihan)}</td></tr>`;
+    const obj = (g.objektif && g.objektif.trim()) ? "Pada akhir PdP, murid berupaya:\n"+g.objektif : "";
+    h+=`<tr><td class="rph-label">OBJEKTIF PEMBELAJARAN</td><td class="rph-val" colspan="5">${obj?esc(obj):"&nbsp;"}</td></tr>`;
+    h+=`<tr><td class="rph-label">KRITERIA KEJAYAAN</td><td class="rph-val" colspan="5">${val(g.kriteriaKejayaan)}</td></tr>`;
+    h+=`<tr><td class="rph-acthdr" colspan="6">AKTIVITI PEMBELAJARAN DAN PEMUDAHCARAAN (pDpC)</td></tr>`;
+    h+=`<tr><td class="rph-step">Set Induksi</td><td class="rph-act-cell" colspan="5">${val(g.setInduksi)}</td></tr>`;
+    h+=`<tr><td class="rph-step">Langkah 1</td><td class="rph-act-cell" colspan="5">${val(g.langkah1)}</td></tr>`;
+    h+=`<tr><td class="rph-step">Langkah 2</td><td class="rph-act-cell" colspan="5">${val(g.langkah2)}</td></tr>`;
+    if(String(g.langkah3||'').trim()) h+=`<tr><td class="rph-step">Langkah 3</td><td class="rph-act-cell" colspan="5">${val(g.langkah3)}</td></tr>`;
+    h+=`<tr><td class="rph-step">Didik Hibur</td><td class="rph-act-cell" colspan="5">${val(g.didikHibur)}</td></tr>`;
+    h+=`<tr><td class="rph-step">Penutup</td><td class="rph-act-cell" colspan="5">${val(g.penutup)}</td></tr>`;
+  });
+
+  h+=`<tr><td class="rph-label">REFLEKSI / IMPAK</td><td class="rph-val" colspan="5">${val(day.refleksi)}</td></tr>`;
+  h+=`<tr><td class="rph-label">INTERVENSI</td><td class="rph-val" colspan="5">${val(day.intervensi)}</td></tr>`;
+  h+=`<tr><td class="rph-label">KEHADIRAN</td><td class="rph-kbox">${val(day.kehadiran)}</td>`+
+     `<td class="rph-val" colspan="4">${val(day.kehadiranNota)}</td></tr>`;
+  return h;
+}
+function renderPreview(){
+  $("rphBody").innerHTML=binaRphHTML(hariAktif(store));
+}
+
+/* ---------- COMMAND AI (per kumpulan) ---------- */
+function janaCommand(i){
+  const day=hariAktif(store); if(!day) return;
+  const g=day.groups[i]; if(!g) return;
+  const m=document.querySelector('.ai-status[data-g="'+i+'"]');
+  if(!kumpulanSedia(g)){
+    if(m){m.textContent="Lengkapkan Kemahiran, Standard Kandungan dan Standard Pembelajaran dahulu.";m.className="ai-mesej ai-status err";}
+    return;
+  }
+  if(!String(g.objektif||'').trim()){
+    if(m){m.textContent="Pilih sekurang-kurangnya satu Objektif Pembelajaran dahulu.";m.className="ai-mesej ai-status err";}
+    return;
+  }
+  const mp=day.mataPelajaran||"(belum pilih)";
+  const item=itemKumpulan(day,g),standard=item&&item.standardContent[g.standardIndex];
+  const skTeks=standard?standard.content:"(belum pilih)";
+  const kemahiran=(g.kemahiranPemulihan||"").trim()||(item?item.kemahiran:"(belum diisi)");
+  const objektif=(g.objektif||"").trim()||"(belum diisi)";
+  const spTeks=(g.sp&&g.sp.length)?g.sp.map(s=>"- "+s).join("\n"):"(belum pilih)";
+  const prompt=
+`Anda pembantu guru Pemulihan Khas. Bina aktiviti pengajaran ringkas, sesuai dan berperingkat untuk murid pemulihan.
+
+Mata Pelajaran: ${mp}
+Kemahiran Pemulihan: ${kemahiran}
+Standard Kandungan: ${skTeks}
+Standard Pembelajaran:
+${spTeks}
+Objektif Pembelajaran yang dipilih:
+${objektif}
+
+Balas TEPAT dalam format berikut SAHAJA. Jangan tambah sebarang teks lain, tajuk, atau penjelasan.
+Gunakan semua objektif yang dipilih sebagai asas. Jana satu set kriteria kejayaan yang boleh diukur dan selaras dengan setiap objektif. Pastikan aktiviti ringkas, konkrit, visual, berulang dan sesuai untuk kumpulan kecil:
+KRITERIA_KEJAYAAN: [kriteria yang boleh diukur berdasarkan semua objektif dipilih]
+SET_INDUKSI: [aktiviti set induksi]
+LANGKAH_1: [aktiviti langkah 1]
+LANGKAH_2: [aktiviti langkah 2]
+DIDIK_HIBUR: [permainan atau aktiviti didik hibur yang terikat pada kemahiran]
+PENUTUP: [aktiviti penutup]`;
+  const ta=document.querySelector('.ai-prompt[data-g="'+i+'"]');
+  if(ta) ta.value=prompt;
+  if(m){m.textContent="Arahan sedia untuk disalin ke ChatGPT atau model AI lain.";m.className="ai-mesej ai-status ok";}
+}
+function salinPrompt(i){
+  const ta=document.querySelector('.ai-prompt[data-g="'+i+'"]');
+  const m=document.querySelector('.ai-status[data-g="'+i+'"]');
+  if(!ta || !ta.value){ if(m){m.textContent="Jana arahan dahulu.";m.className="ai-mesej ai-status err";} return; }
+  const ok=()=>{ if(m){m.textContent="Arahan berjaya disalin. Tampal ke model AI pilihan anda.";m.className="ai-mesej ai-status ok";} };
+  const fb=()=>{ ta.focus();ta.select(); try{document.execCommand("copy");ok();}catch(e){ if(m){m.textContent="Sila salin manual.";m.className="ai-mesej ai-status err";} } };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(ta.value).then(ok).catch(fb);
+  else fb();
+}
+function autoIsi(i){
+  const day=hariAktif(store); if(!day) return;
+  const g=day.groups[i]; if(!g) return;
+  const ta=document.querySelector('.ai-jawapan[data-g="'+i+'"]');
+  const m=document.querySelector('.ai-status[data-g="'+i+'"]');
+  const teks=(ta?ta.value:"").replace(/```(?:text|markdown|md)?/gi,"").replace(/\*\*/g,"").trim();
+  if(!teks){if(m){m.textContent="Tampal jawapan AI dahulu.";m.className="ai-mesej ai-status err";}return;}
+  const ambil=(label,akhir)=>{
+    const re=new RegExp(label+"\\s*:\\s*([\\s\\S]*?)(?="+akhir+")","i");
+    const mm=teks.match(re); return mm?mm[1].trim().replace(/^\[|\]$/g,"").trim():null;
+  };
+  const kriteria=ambil("KRITERIA[_\\s-]*KEJAYAAN","SET[_\\s-]*INDUKSI\\s*:|LANGKAH[_\\s-]*1\\s*:|LANGKAH[_\\s-]*2\\s*:|DIDIK[_\\s-]*HIBUR\\s*:|PENUTUP\\s*:|$");
+  const set=ambil("SET[_\\s-]*INDUKSI","LANGKAH[_\\s-]*1\\s*:|LANGKAH[_\\s-]*2\\s*:|DIDIK[_\\s-]*HIBUR\\s*:|PENUTUP\\s*:|$");
+  const l1 =ambil("LANGKAH[_\\s-]*1","LANGKAH[_\\s-]*2\\s*:|DIDIK[_\\s-]*HIBUR\\s*:|PENUTUP\\s*:|$");
+  const l2 =ambil("LANGKAH[_\\s-]*2","DIDIK[_\\s-]*HIBUR\\s*:|PENUTUP\\s*:|$");
+  const didik=ambil("DIDIK[_\\s-]*HIBUR","PENUTUP\\s*:|$");
+  const pen=ambil("PENUTUP","$");
+  if(kriteria===null||set===null||l1===null||l2===null||didik===null||pen===null){
+    if(m){m.textContent="Format jawapan tidak dikenali. Pastikan label KRITERIA_KEJAYAAN, SET_INDUKSI, LANGKAH_1, LANGKAH_2, DIDIK_HIBUR dan PENUTUP dikekalkan.";m.className="ai-mesej ai-status err";}
+    return;
+  }
+  g.kriteriaKejayaan=kriteria;g.setInduksi=set; g.langkah1=l1; g.langkah2=l2; g.didikHibur=didik; g.penutup=pen;g.aiGenerated=true;
+  // Kemas kini textarea kumpulan ini tanpa bina semula (kekalkan fokus/mesej)
+  const setVal=(f,v)=>{ const e=document.querySelector('textarea[data-g="'+i+'"][data-field="'+f+'"]'); if(e) e.value=v; };
+  setVal("kriteriaKejayaan",kriteria);setVal("setInduksi",set); setVal("langkah1",l1); setVal("langkah2",l2); setVal("didikHibur",didik); setVal("penutup",pen);
+  simpanStore(); renderPreview();
+  if(m){m.textContent="Hasil AI berjaya diimport ke dalam RPH dan disimpan.";m.className="ai-mesej ai-status ok";}
+}
+
+/* ---------- TOOLS ---------- */
+function toolUI(jenis){
+  const day=hariAktif(store);
+  if(!day){ toolMsg("Tiada RPH dipilih. Tambah hari dahulu.","err"); return; }
+  let mesej="", ok=true;
+  if(jenis==='kelas'){ toolPadamKelas(day); mesej="Kelas dipadam."; }
+  else if(jenis==='aktiviti'){ toolPadamAktiviti(day); mesej="Aktiviti (semua kumpulan) dipadam."; }
+  else if(jenis==='objektif'){ toolPadamObjektif(day); mesej="Objektif (semua kumpulan) dipadam."; }
+  else if(jenis==='kemahiran'){ toolPadamKemahiran(day); mesej="Kemahiran dan standard (semua kumpulan) dipadam."; }
+  else if(jenis==='semua'){ if(!confirm("Padam SEMUA kandungan RPH hari ini? (tarikh & hari dikekalkan)")) return; toolPadamSemua(day); mesej="Semua kandungan dipadam."; }
+  else if(jenis==='mingguLalu'){ const r=toolSalinMingguLalu(store,day.id); ok=r.ok; mesej=r.mesej; }
+  else if(jenis==='hariSebelum'){ const r=toolSalinHariSebelum(store,day.id); ok=r.ok; mesej=r.mesej; }
+  simpanStore(); muatBorang(); toolMsg(mesej, ok?"ok":"err");
+}
+function toolMsg(t,j){ const el=$("toolMsg"); if(el){ el.textContent=t; el.className="ai-mesej "+(j==='ok'?'ok':'err'); } }
+
+/* ---------- ARKIB, RUJUKAN & COPY RPH LAMA ---------- */
+let copySourceId=null,copyDestinations=[];
+function bukaArkib(){showView('tools');renderArkib();setTimeout(()=>$("archiveCard")&&$("archiveCard").scrollIntoView({behavior:'smooth',block:'start'}),40);}
+function teksCarianRph(day){return [day.hari,day.kelas,day.mataPelajaran,day.refleksi,day.intervensi].concat((day.groups||[]).flatMap(g=>[g.kemahiranPemulihan,g.objektif,g.kriteriaKejayaan,g.setInduksi,g.langkah1,g.langkah2,g.langkah3,g.didikHibur,g.penutup,(g.sp||[]).join(' ')])).join(' ').toLowerCase();}
+function ringkasanKemahiran(day){return (day.groups||[]).map(g=>g.kemahiranPemulihan).filter(Boolean).join(' • ')||'Kemahiran belum diisi';}
+function mingguArkib(){
+  const map=new Map();store.days.filter(d=>isoSah(d.tarikh)).forEach(d=>{const monday=isninBagiTarikh(d.tarikh);if(!map.has(monday))map.set(monday,[]);map.get(monday).push(d);});
+  return Array.from(map,([monday,days])=>{const meta=metadataMinggu(monday);return {monday,weekNumber:+((meta&&meta.weekNumber)||(days[0]&&days[0].minggu))||nomborMingguBagiMonday(monday),days:days.sort((a,b)=>bandingRphMengikutJadual(a,b,store)),meta};}).sort((a,b)=>b.monday.localeCompare(a.monday));
+}
+function renderArkib(){
+  const wrap=$("archiveList"),classSelect=$("archiveClass"),weekSelect=$("archiveWeek");if(!wrap||!classSelect||!weekSelect)return;
+  const weeks=mingguArkib(),selectedWeek=weekSelect.value;weekSelect.innerHTML='<option value="">Semua</option>'+weeks.map(w=>`<option value="${w.monday}"${w.monday===selectedWeek?' selected':''}>Minggu ${w.weekNumber} • ${esc(julatMingguPaparan(w.monday))}</option>`).join('');
+  const selectedClass=classSelect.value,classes=Array.from(new Set(store.days.map(d=>d.kelas).filter(Boolean))).sort();classSelect.innerHTML='<option value="">Semua</option>'+classes.map(c=>`<option value="${esc(c)}"${c===selectedClass?' selected':''}>${esc(c)}</option>`).join('');
+  const q=kunciTeks($("archiveSearch").value),subject=$("archiveSubject").value,kelas=classSelect.value,hari=$("archiveDay").value,status=$("archiveStatus").value;
+  const html=weeks.map(week=>{
+    if(selectedWeek&&week.monday!==selectedWeek)return '';
+    const weekStatus=week.meta&&week.meta.status==='completed'?'completed':'open';if(status&&status!==weekStatus)return '';
+    const days=week.days.filter(d=>(!subject||d.mataPelajaran===subject)&&(!kelas||d.kelas===kelas)&&(!hari||d.hari===hari)&&(!q||teksCarianRph(d).includes(q)));if(!days.length)return '';
+    const badge=weekStatus==='completed'?'<span class="week-done-badge">✓ SIAP</span>':'<span class="status-pill">BELUM SIAP</span>';
+    const statuses=week.days.map(statusRph),selesai=statuses.filter(s=>s.key==='complete').length,ditangguhkan=statuses.filter(s=>s.key==='deferred').length;
+    return `<section class="archive-week"><div class="archive-week-head"><div><h4>Minggu ${week.weekNumber}</h4><p class="muted">${esc(julatMingguPaparan(week.monday))} • ${week.days.length} RPH • ${selesai} Selesai • ${ditangguhkan} Ditangguhkan</p></div><div>${badge}<button class="secondary kecil" onclick="bukaMingguArkib('${week.monday}')">Buka Minggu</button></div></div><div class="archive-rph-grid">${days.map(d=>{const s=statusRph(d);return `<article class="archive-rph"><span class="status-pill ${s.className}">${s.label}</span><h5>${esc(d.mataPelajaran||'RPH')} • ${esc(d.kelas||'')}</h5><p>${esc(d.hari)}, ${esc(formatTarikhPaparan(d.tarikh))} • ${esc(d.masa||'')}</p><p><b>${esc(ringkasanKemahiran(d))}</b></p>${d.refleksi?`<p>Refleksi: ${esc(d.refleksi)}</p>`:''}<button class="kecil" onclick="bukaRphCard('${d.id}')">Lihat RPH</button><button class="secondary kecil" onclick="gunaSebagaiTemplate('${d.id}')">Gunakan Sebagai Template</button><button class="secondary kecil" onclick="bukaDialogSalinRph('${d.id}')">Salin RPH</button></article>`}).join('')}</div></section>`;
+  }).join('');wrap.innerHTML=html||'<div class="empty-week">Tiada RPH sepadan dengan carian atau filter ini.</div>';
+}
+function bukaMingguArkib(monday){setViewedWeek(monday);showView('jana');}
+function gunaSebagaiTemplate(sourceId){
+  const source=store.days.find(d=>d.id===sourceId),target=hariAktif(store);
+  if(!source){paparToast('RPH sumber tidak ditemui.');return;}
+  if(!target){paparToast('Buka RPH sasaran dahulu sebelum menggunakan template.');return;}
+  if(source.id===target.id){paparToast('Pilih RPH lama yang berbeza daripada RPH semasa.');return;}
+  const label=(source.mataPelajaran||'RPH')+' '+(source.kelas||'')+' pada '+formatTarikhPaparan(source.tarikh);
+  if(!confirm('Gunakan kandungan pedagogi daripada '+label+' sebagai template untuk RPH semasa?\n\nKandungan kumpulan semasa akan digantikan. Tarikh, masa, kelas, refleksi dan status RPH semasa dikekalkan.'))return;
+  target.groupCount=bilanganKumpulanHari(source);target.groupNames=namaKumpulanHari(source).slice();target.groups=(source.groups||[]).map(salinKumpulanPedagogi);target.copiedFromRphId=source.id;target.copiedFromDate=source.tarikh;target.updatedAt=new Date().toISOString();
+  simpanStore();showView('jana');muatBorang();renderSessionCards();renderShellSummaries();paparToast('Template dimuatkan ke RPH semasa. Metadata dan status dikekalkan.');
+}
+function senaraiPilihanMingguCopy(){
+  const active=activeWeekData(),set=new Set(mingguArkib().map(w=>w.monday));for(let i=-8;i<=12;i++)set.add(tambahHariISO(active.mondayDate,i*7));
+  return Array.from(set).sort().map(m=>({monday:m,weekNumber:nomborMingguBagiMonday(m)}));
+}
+function bukaDialogSalinRph(id){
+  const source=store.days.find(d=>d.id===id);if(!source)return;copySourceId=id;$("copyRphSource").innerHTML=`<b>Dari:</b><br>${esc(source.mataPelajaran)} ${esc(source.kelas)}<br>${esc(source.hari)}, ${esc(formatTarikhPaparan(source.tarikh))}`;
+  const weeks=senaraiPilihanMingguCopy();$("copyWeekSelect").innerHTML=weeks.map(w=>`<option value="${w.monday}"${w.monday===activeWeekData().mondayDate?' selected':''}>Minggu ${w.weekNumber} • ${esc(julatMingguPaparan(w.monday))}</option>`).join('');$("copyRphMsg").textContent='';renderSlotDestinasiCopy();$("copyRphDialog").showModal();
+}
+function tutupDialogSalinRph(){copySourceId=null;copyDestinations=[];$("copyRphDialog").close();}
+function renderSlotDestinasiCopy(){
+  const source=store.days.find(d=>d.id===copySourceId),monday=$("copyWeekSelect").value,select=$("copySlotSelect");copyDestinations=[];if(!source||!isoSah(monday)){select.innerHTML='<option>Tiada slot</option>';return;}
+  HARI_LIST.forEach((hari,offset)=>{const tarikh=tambahHariISO(monday,offset);((store.settings.timetable||{})[hari]||[]).forEach((slot,slotIndex)=>{if(padanSlotSubjekKelas(slot,source))copyDestinations.push({tarikh,hari,slot,slotIndex});});});
+  select.innerHTML=copyDestinations.length?copyDestinations.map((c,i)=>{const existing=cariRekodPadaCalon(c,source.id),occupied=existing&&rekodAdaKandunganRph(existing);return `<option value="${i}">${esc(c.hari+' '+formatTarikhPaparan(c.tarikh)+' • '+(c.slot.masa||''))}${occupied?' • SUDAH ADA RPH':''}</option>`}).join(''):'<option value="">Tiada slot kelas + subjek yang sepadan</option>';semakKonflikCopy();
+}
+function semakKonflikCopy(){const source=store.days.find(d=>d.id===copySourceId),c=copyDestinations[+$("copySlotSelect").value],existing=c&&cariRekodPadaCalon(c,source&&source.id),occupied=existing&&rekodAdaKandunganRph(existing);$("copyConflictWrap").hidden=!occupied;$("copyRphMsg").textContent=c?'':'Tiada slot destinasi yang sepadan.';}
+function salinRphLamaKeSlot(source,c,target){
+  const slot=c.slot,now=new Date().toISOString();target=target||buatHariKosong(c.tarikh,store.settings,slot);target.tarikh=c.tarikh;target.hari=c.hari;target.mondayDate=isninBagiTarikh(c.tarikh);target.minggu=nomborMingguBagiMonday(target.mondayDate);target.kelas=slot.kelas||'';target.masa=slot.masa||'';target.mataPelajaran=slot.mataPelajaran||'';target.classId=slot.classId||source.classId||'';target.subjectId=slot.subjectId||source.subjectId||'';target.slotId=slot.id||'';target.slotJadual=c.hari+':'+c.slotIndex;target.dariJadual=true;target.bilanganMurid=slot.studentCount||target.bilanganMurid||source.bilanganMurid||'';
+  target.groupCount=bilanganKumpulanHari(source);target.groupNames=namaKumpulanHari(source).slice();target.groups=(source.groups||[]).map(salinKumpulanPedagogi);target.refleksi='';target.intervensi='';target.kehadiran='';target.kuasai='';target.belumKuasai='';target.kehadiranNota='';target.pdpcStatus='scheduled';target.pdpcNotConducted=false;target.pdpcNotConductedReasons=[];target.pdpcNotConductedOtherReason='';target.copyRphToNext=false;target.isDeferred=false;delete target.deferredFromRphId;delete target.deferredFromDate;delete target.deferredToRphId;delete target.deferredToDate;target.copiedFromRphId=source.id;target.copiedFromDate=source.tarikh;target.createdAt=target.createdAt||now;target.updatedAt=now;if(!store.days.some(d=>d.id===target.id))store.days.push(target);return target;
+}
+function sahkanSalinRphLama(){
+  const source=store.days.find(d=>d.id===copySourceId),c=copyDestinations[+$("copySlotSelect").value];if(!source||!c){$("copyRphMsg").textContent='Pilih slot destinasi yang sah.';return;}
+  const existing=cariRekodPadaCalon(c,source.id),occupied=existing&&rekodAdaKandunganRph(existing);if(occupied&&$("copyConflictAction").value!=='replace'){$("copyRphMsg").textContent='Pilih slot lain atau pilih Gantikan Kandungan.';return;}
+  const target=salinRphLamaKeSlot(source,c,existing||null);susunHariIkutTarikh(store);store.ui.viewedWeekMonday=isninBagiTarikh(target.tarikh);store.ui.selectedDate=target.tarikh;store.activeDayId=target.id;simpanStore();tutupDialogSalinRph();showView('jana');renderWeekHeader();renderTabs();muatBorang();paparToast('RPH berjaya disalin sebagai snapshot bebas.');
+}
+
+/* ---------- SETTINGS KELAS / JADUAL / KUMPULAN ---------- */
+function migrateSettingsCatalog(){
+  const s=store.settings;s.classes=s.classes||[];s.groups=s.groups||[];
+  if(!s.classes.length){const seen=new Set();HARI_LIST.forEach(h=>(s.timetable[h]||[]).forEach(slot=>{const key=(slot.kelas||'')+'|'+(slot.mataPelajaran||'');if(slot.kelas&&!seen.has(key)){seen.add(key);s.classes.push({id:idUnik(),name:slot.kelas,year:'',subject:slot.mataPelajaran||'',studentCount:slot.studentCount||'',notes:''});}}));}
+  if(!s.groups.length){(s.groupNames||[]).forEach(name=>s.groups.push({id:idUnik(),name,level:'',students:[],skillNote:'',note:''}));}
+  s.classes.forEach(c=>{c.subjectId=idSubjekDaripadaNama(c.subject);});
+  HARI_LIST.forEach(h=>(s.timetable[h]||[]).forEach(slot=>{if(!slot.id)slot.id=idUnik();const cls=s.classes.find(c=>(slot.classId&&c.id===slot.classId)||(!slot.classId&&c.name===slot.kelas&&(!slot.mataPelajaran||c.subject===slot.mataPelajaran)));if(cls){slot.classId=cls.id;slot.subjectId=cls.subjectId;slot.kelas=cls.name;slot.mataPelajaran=cls.subject;slot.studentCount=cls.studentCount||slot.studentCount;}else slot.subjectId=slot.subjectId||idSubjekDaripadaNama(slot.mataPelajaran);}));
+  (store.days||[]).forEach(day=>{const slot=((s.timetable||{})[day.hari]||[]).find(x=>(day.slotId&&x.id===day.slotId)||kunciPadananSlot(x)===kunciPadananSlot(day));if(slot){day.classId=day.classId||slot.classId||'';day.subjectId=day.subjectId||slot.subjectId||idSubjekDaripadaNama(slot.mataPelajaran);}});
+}
+function buildSettingUI(){
+  migrateSettingsCatalog();const active=activeWeekData();$('setMinggu').value=active.weekNumber;$('mulaMinggu').value=active.mondayDate;
+  buildKelasSettings();buildKumpulanSettings();buildJadual();
+}
+function tambahKelasUI(){store.settings.classes.push({id:idUnik(),name:'',year:'',subject:'Bahasa Melayu',subjectId:idSubjekDaripadaNama('Bahasa Melayu'),studentCount:'',notes:''});simpanStore();buildKelasSettings();}
+function padamKelasSettingUI(id){if(!confirm('Padam kelas ini daripada Settings? Jadual lama tidak akan dipadam.'))return;store.settings.classes=store.settings.classes.filter(c=>c.id!==id);simpanStore();buildKelasSettings();buildJadual();}
+function buildKelasSettings(){const w=$('kelasSettingWrap');if(!w)return;w.innerHTML=store.settings.classes.length?store.settings.classes.map(c=>`<div class="settings-row" data-class-id="${c.id}"><div><label>Nama Kelas</label><input data-ck="name" value="${esc(c.name)}"></div><div><label>Tahun</label><input data-ck="year" value="${esc(c.year)}"></div><div><label>Mata Pelajaran</label><select data-ck="subject"><option value="Bahasa Melayu"${c.subject==='Bahasa Melayu'?' selected':''}>Bahasa Melayu</option><option value="Matematik"${c.subject==='Matematik'?' selected':''}>Matematik</option></select></div><div><label>Bil. Murid</label><input type="number" min="0" data-ck="studentCount" value="${esc(c.studentCount)}"></div><div><label>Catatan</label><input data-ck="notes" value="${esc(c.notes)}"></div><button class="danger kecil" onclick="padamKelasSettingUI('${c.id}')">Padam</button></div>`).join(''):'<p class="muted">Belum ada kelas. Klik Tambah Kelas.</p>';}
+function tambahKumpulanSettingUI(){store.settings.groups.push({id:idUnik(),name:'',level:'',students:[],skillNote:'',note:''});simpanStore();buildKumpulanSettings();}
+function padamKumpulanSettingUI(id){if(!confirm('Padam kumpulan ini daripada Settings?'))return;store.settings.groups=store.settings.groups.filter(g=>g.id!==id);simpanStore();buildKumpulanSettings();buildJadual();}
+function buildKumpulanSettings(){const w=$('kumpulanSettingWrap');if(!w)return;w.innerHTML=store.settings.groups.length?store.settings.groups.map(g=>`<div class="settings-row groups" data-group-id="${g.id}"><div><label>Nama Kumpulan</label><input data-gk="name" value="${esc(g.name)}"></div><div><label>Tahap</label><input data-gk="level" value="${esc(g.level)}" placeholder="Lemah / Sederhana"></div><div><label>Senarai Murid</label><input data-gk="students" value="${esc((g.students||[]).join(', '))}" placeholder="Ali, Siti, Kumar"></div><div><label>Kemahiran Semasa</label><input data-gk="skillNote" value="${esc(g.skillNote)}"></div><div><label>Catatan</label><input data-gk="note" value="${esc(g.note)}"></div><button class="danger kecil" onclick="padamKumpulanSettingUI('${g.id}')">Padam</button></div>`).join(''):'<p class="muted">Belum ada kumpulan. Klik Tambah Kumpulan.</p>';}
+function classOptions(selected){return '<option value="">Pilih kelas</option>'+store.settings.classes.map(c=>`<option value="${c.id}"${selected===c.id?' selected':''}>${esc(c.name||'Kelas belum dinamakan')} - ${esc(c.subject||'')}</option>`).join('');}
+function groupNameOptions(selected,index){const names=store.settings.groups.map(g=>g.name).filter(Boolean);if(selected&&!names.includes(selected))names.push(selected);return '<option value="">Kumpulan '+(index+1)+'</option>'+names.map(n=>`<option value="${esc(n)}"${selected===n?' selected':''}>${esc(n)}</option>`).join('');}
+function buildJadual(){const tt=store.settings.timetable||{};$('jadualWrap').innerHTML=HARI_LIST.map(h=>{const slots=tt[h]||[];const rows=slots.map((s,idx)=>`<div class="slot-baris"><input type="text" value="${esc(s.masa)}" placeholder="8.00 - 9.00 pagi" data-h="${h}" data-idx="${idx}" data-k="masa"><select data-h="${h}" data-idx="${idx}" data-k="classId">${classOptions(s.classId)}</select><select data-h="${h}" data-idx="${idx}" data-k="groupCount"><option value="1"${+s.groupCount===1?' selected':''}>1 kumpulan</option><option value="2"${+s.groupCount===2?' selected':''}>2 kumpulan</option><option value="3"${+s.groupCount===3?' selected':''}>3 kumpulan</option></select><div class="slot-kumpulan"><select data-h="${h}" data-idx="${idx}" data-k="g1">${groupNameOptions((s.groupNames||[])[0],0)}</select>${+s.groupCount>=2?`<select data-h="${h}" data-idx="${idx}" data-k="g2">${groupNameOptions((s.groupNames||[])[1],1)}</select>`:''}${+s.groupCount===3?`<select data-h="${h}" data-idx="${idx}" data-k="g3">${groupNameOptions((s.groupNames||[])[2],2)}</select>`:''}</div><button class="danger kecil" onclick="padamSlotUI('${h}',${idx})">&times;</button></div>`).join('');return `<div class="jadual-hari"><h3>${h}</h3>${rows||'<span class="sp-kosong">Tiada slot.</span>'}<div><button class="kecil" onclick="tambahSlotUI('${h}')">+ Slot</button></div></div>`;}).join('');}
+function tambahSlotUI(h){tambahSlotJadual(store,h,{});buildJadual();simpanStore();}
+function padamSlotUI(h,idx){if(!confirm('Padam slot jadual ini?'))return;padamSlotJadual(store,h,idx);buildJadual();simpanStore();}
+
+/* ---------- TOOLS BERSKOP ---------- */
+function renderToolFilters(){const scope=$('toolScope')?$('toolScope').value:'all',w=$('toolFilterWrap');if(!w)return;const active=hariAktif(store);if(scope==='day')w.innerHTML='<label>Hari</label><select id="toolDay">'+HARI_LIST.map(h=>`<option value="${h}"${active&&active.hari===h?' selected':''}>${h}</option>`).join('')+'</select>';else if(scope==='subject')w.innerHTML='<label>Mata Pelajaran</label><select id="toolSubject"><option>Bahasa Melayu</option><option>Matematik</option></select>';else if(scope==='rph')w.innerHTML='<label>RPH</label><select id="toolRph">'+store.days.map(d=>`<option value="${d.id}"${active&&active.id===d.id?' selected':''}>${esc(d.hari+' - '+(d.kelas||'RPH')+' - '+(d.masa||''))}</option>`).join('')+'</select>';else w.innerHTML='<p class="muted">Semua rekod RPH dalam simpanan tempatan.</p>';}
+function toolTargets(){const scope=$('toolScope').value;if(scope==='day')return store.days.filter(d=>d.hari===$('toolDay').value);if(scope==='subject')return store.days.filter(d=>d.mataPelajaran===$('toolSubject').value);if(scope==='rph')return store.days.filter(d=>d.id===$('toolRph').value);return store.days.slice();}
+function jalankanBulkTool(){const action=$('toolAction').value,targets=toolTargets();if(!targets.length){toolMsg('Tiada RPH dalam skop dipilih.','err');return;}if(!confirm('Jalankan tindakan "'+$('toolAction').selectedOptions[0].text+'" pada '+targets.length+' RPH?'))return;targets.forEach(day=>{if(action==='aktiviti')toolPadamAktiviti(day);else if(action==='objektif')toolPadamObjektif(day);else if(action==='refleksi')day.refleksi='';else if(action==='intervensi')day.intervensi='';else if(action==='semua')toolPadamSemua(day);});simpanStore();muatBorang();renderShellSummaries();toolMsg(targets.length+' RPH berjaya dikemas kini.','ok');}
+
+/* ---------- EVENT ---------- */
+document.addEventListener("DOMContentLoaded",()=>{
+  migrateSettingsCatalog();selaraskanKumpulan(store);
+  const current=hariAktif(store),viewed=viewedWeekMonday();if(!current||isninBagiTarikh(current.tarikh)!==viewed){const first=store.days.filter(d=>d.tarikh>=viewed&&d.tarikh<=tambahHariISO(viewed,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;store.ui.selectedDate=first?first.tarikh:viewed;}else store.ui.selectedDate=current.tarikh;
+  buildSettingUI();
+
+  const form=$('borangEdit');
+  form.addEventListener('input',e=>{
+    const el=e.target,field=el.dataset.field;if(!field)return;const day=hariAktif(store);if(!day)return;
+    const groupIndex=el.dataset.g;
+    if(groupIndex!==undefined&&groupIndex!==''){const g=day.groups[+groupIndex];g[field]=el.value;g.userEdited=true;}
+    else{day[field]=el.value;if(['bilanganMurid','kehadiran','kuasai','belumKuasai'].includes(field)){janaRefleksiAuto(day);MEDAN_SHARED.forEach(f=>{const input=$('f_'+f);if(input&&['kehadiran','kuasai','belumKuasai'].includes(f))input.value=day[f]||'';});}}
+    day.updatedAt=new Date().toISOString();autoSimpanStore();renderPreview();renderShellSummaries();
+  });
+  form.addEventListener('change',e=>{
+    const el=e.target,day=hariAktif(store);if(!day)return;
+    if(el.classList.contains('sp-cb')){const box=el.closest('.g-spbox'),i=+box.dataset.g,g=day.groups[i];g.sp=Array.from(box.querySelectorAll('.sp-cb:checked')).map(x=>x.value);g.userEdited=true;day.updatedAt=new Date().toISOString();autoSimpanStore();renderPreview();renderShellSummaries();}
+    if(el.classList.contains('objektif-cb')){kemaskiniObjektifDipilih(+el.dataset.g);day.updatedAt=new Date().toISOString();}
+  });
+
+  $('pdpcNotConducted').addEventListener('change',e=>{
+    const day=hariAktif(store);if(!day)return;
+    if(!e.target.checked&&day.deferredToRphId&&store.days.some(d=>d.id===day.deferredToRphId)){
+      e.target.checked=true;setDeferMsg('Status tidak boleh dibuang kerana RPH salinan masih dipautkan. RPH asal dikekalkan.',false);return;
+    }
+    day.pdpcNotConducted=e.target.checked;day.pdpcStatus=e.target.checked?'deferred':'scheduled';
+    if(!e.target.checked)day.copyRphToNext=false;
+    simpanStore();muatStatusPdpc(day);renderPreview();renderShellSummaries();
+  });
+  document.querySelectorAll('[data-pdpc-reason]').forEach(el=>el.addEventListener('change',()=>{
+    const day=hariAktif(store);if(!day)return;
+    day.pdpcNotConductedReasons=Array.from(document.querySelectorAll('[data-pdpc-reason]:checked')).map(x=>x.dataset.pdpcReason);
+    simpanStore();muatStatusPdpc(day);renderPreview();renderShellSummaries();
+  }));
+  $('pdpcOtherReason').addEventListener('input',e=>{const day=hariAktif(store);if(!day)return;day.pdpcNotConductedOtherReason=e.target.value;simpanStore();renderPreview();renderShellSummaries();});
+  $('copyRphToNext').addEventListener('change',e=>{const day=hariAktif(store);if(!day)return;day.copyRphToNext=e.target.checked;simpanStore();kemaskiniPratontonTangguh();});
+  $('deferConflictAction').addEventListener('change',kemaskiniPratontonTangguh);
+
+  const settings=$('settingsView');
+  const settingsHandler=e=>{
+    const el=e.target;
+    if(el.id==='setMinggu'||el.id==='mulaMinggu')return;
+    const classRow=el.closest('[data-class-id]');if(classRow&&el.dataset.ck){const item=store.settings.classes.find(c=>c.id===classRow.dataset.classId);if(item){item[el.dataset.ck]=el.value;if(el.dataset.ck==='subject')item.subjectId=idSubjekDaripadaNama(el.value);autoSimpanStore();buildJadual();}return;}
+    const groupRow=el.closest('[data-group-id]');if(groupRow&&el.dataset.gk){const item=store.settings.groups.find(g=>g.id===groupRow.dataset.groupId);if(item){item[el.dataset.gk]=el.dataset.gk==='students'?el.value.split(',').map(x=>x.trim()).filter(Boolean):el.value;autoSimpanStore();}return;}
+    if(el.dataset.h!==undefined&&el.dataset.k){const slot=store.settings.timetable[el.dataset.h][+el.dataset.idx],key=el.dataset.k;
+      if(key==='masa')slot.masa=el.value;
+      else if(key==='classId'){slot.classId=el.value;const cls=store.settings.classes.find(c=>c.id===el.value);if(cls){slot.kelas=cls.name;slot.mataPelajaran=cls.subject;slot.subjectId=cls.subjectId||idSubjekDaripadaNama(cls.subject);slot.studentCount=cls.studentCount;}else{slot.kelas='';slot.mataPelajaran='';slot.subjectId='';}}
+      else if(key==='groupCount'){slot.groupCount=Math.min(3,Math.max(1,+el.value||1));slot.groupNames=slot.groupNames||[];buildJadual();}
+      else if(['g1','g2','g3'].includes(key)){slot.groupNames=slot.groupNames||[];slot.groupNames[{g1:0,g2:1,g3:2}[key]]=el.value;}
+      autoSimpanStore();
+    }
+  };
+  settings.addEventListener('input',settingsHandler);settings.addEventListener('change',settingsHandler);
+  $('importFile').addEventListener('change',e=>{if(e.target.files[0])importJSONFail(e.target.files[0]);});
+  $('backupImportFile').addEventListener('change',e=>{if(e.target.files[0])importBackupPenuh(e.target.files[0]);});
+
+  if(!ralatMuatStore)simpanStore();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();initSupabaseUI();
+  const initial=store.ui&&['dashboard','jana','tools','cetak','settings'].includes(store.ui.view)?store.ui.view:'dashboard';showView(initial);
+  const bersih=store.migrations&&store.migrations.v8,jumlahBersih=bersih?((bersih.placeholderTangguhDibuang||0)+(bersih.statusTangguhDipulihkan||0)+(bersih.duplikatSlotDibuang||0)):0;
+  if(jumlahBersih&&!(store.ui&&store.ui.migrasiV8Dimaklumkan)){store.ui=store.ui||{};store.ui.migrasiV8Dimaklumkan=true;simpanStore();paparToast('Pembersihan selesai: '+(bersih.placeholderTangguhDibuang||0)+' rekod rosak dibuang, '+(bersih.statusTangguhDipulihkan||0)+' status dipulihkan dan '+(bersih.duplikatSlotDibuang||0)+' duplicate slot dibuang.');}
+  if(ralatMuatStore)paparToast('Data lama tidak dapat dibaca. Data rosak tidak ditindih; import backup yang sah untuk memulihkan data.',false);
+});
+</script>
+</body>
+</html>

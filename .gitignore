@@ -1,0 +1,18 @@
+# Fail pembangunan dan sandaran tempatan
+*_backup_*.html
+index_backup*.html
+Screenshot*.png
+
+# Projek/rujukan lain yang bukan sebahagian daripada aplikasi e-RPH utama
+dunia-masa-waktu/
+reference/
+
+# Kebergantungan dan fail sistem
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Rahsia tempatan
+.env
+.env.*
+!.env.example
