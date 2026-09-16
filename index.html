@@ -139,7 +139,7 @@
   .auth-card{width:min(440px,100%);background:#fff;border:1px solid #d8e4ee;border-radius:20px;padding:24px;box-shadow:0 22px 65px rgba(24,55,82,.18)}
   .auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:18px}.auth-brand img{width:126px;height:62px;object-fit:contain;border-radius:11px;background:#fff}.auth-brand h1{margin:0;color:var(--navy);font-size:1.28rem}.auth-brand p{margin:3px 0 0;color:var(--muted);font-size:.8rem}
   .auth-card input[type=email],.auth-card input[type=password]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font:inherit}.auth-card input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
-  .auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.auth-actions button{margin:0}.auth-actions .auth-forgot{grid-column:1/-1;background:transparent;color:var(--primary);padding:7px}.auth-note{margin:14px 0 0;color:var(--muted);font-size:.77rem;text-align:center}.auth-state{margin-top:12px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.auth-state.ok{background:#e5f5ed;color:#237253}.auth-state.err{background:#fff0ef;color:#a44646}.reset-password-form input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font:inherit}
+  .auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.auth-actions button{margin:0}.auth-actions .auth-forgot{grid-column:1/-1;background:transparent;color:var(--primary);padding:7px}.auth-divider{grid-column:1/-1;display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.75rem;text-transform:uppercase}.auth-divider::before,.auth-divider::after{content:"";height:1px;background:#dce5ed;flex:1}.auth-actions .auth-google{grid-column:1/-1;background:#fff;color:#243447;border:1px solid #cbd7e2;box-shadow:0 1px 2px rgba(20,45,70,.08)}.auth-actions .auth-google:hover{background:#f7f9fb}.google-mark{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:7px;border-radius:50%;background:conic-gradient(from -45deg,#4285f4 0 25%,#34a853 0 42%,#fbbc05 0 67%,#ea4335 0 82%,#4285f4 0);color:#fff;font-weight:900;font-size:.8rem}.auth-note{margin:14px 0 0;color:var(--muted);font-size:.77rem;text-align:center}.auth-state{margin-top:12px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.auth-state.ok{background:#e5f5ed;color:#237253}.auth-state.err{background:#fff0ef;color:#a44646}.reset-password-form input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font:inherit}
   body.auth-locked>header.app,body.auth-locked>nav.app-nav,body.auth-locked>main.workspace,body.auth-locked>footer{visibility:hidden}.account-chip{margin-left:auto;display:flex;align-items:center;gap:8px}.account-chip span{max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.78rem;font-weight:700}.account-chip button{margin:0;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.45);padding:7px 10px}
   @media(max-width:1050px){.stat-grid{grid-template-columns:repeat(2,1fr)}.week-overview{grid-template-columns:repeat(5,220px)}.tool-layout{grid-template-columns:1fr 1fr}.settings-row,.settings-row.groups{grid-template-columns:repeat(2,1fr)}.print-grid{grid-template-columns:1fr}}
   @media(max-width:720px){header.app{padding:12px}.brand{gap:10px;flex-wrap:wrap}.brand-logo-wrap{width:132px;height:58px}.account-chip{width:100%;margin-left:0;justify-content:space-between}.workspace{padding:16px 10px}.app-nav{overflow:auto}.page-heading{align-items:flex-start;flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}.session-grid{grid-template-columns:1fr}.app-body{flex-direction:column}.panel-preview{min-width:0}.settings-row,.settings-row.groups,.tool-layout,.cloud-grid{grid-template-columns:1fr}.cloud-grid .wide{grid-column:auto}.day-workbar{align-items:stretch;flex-direction:column}.print-grid{grid-template-columns:1fr}.pdpc-reasons{grid-template-columns:1fr}.week-navigator{grid-template-columns:1fr}.archive-filters{grid-template-columns:1fr}.archive-week-head{flex-direction:column}.auth-actions{grid-template-columns:1fr}}
@@ -179,7 +179,7 @@
     <div class="auth-brand"><img src="assets/redox-logo.png" alt="Logo REDOX"><div><h1 id="authTitle">e-RPH Pemulihan Khas</h1><p>Log masuk untuk membuka ruang kerja RPH anda.</p></div></div>
     <label for="authEmail">E-mel</label><input id="authEmail" type="email" autocomplete="username" placeholder="nama@email.com">
     <label for="authPassword">Kata laluan</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Sekurang-kurangnya 6 aksara">
-    <div class="auth-actions"><button type="button" onclick="logMasukGateUI()">Log Masuk</button><button type="button" class="secondary" onclick="daftarGateUI()">Daftar Akaun</button><button type="button" class="auth-forgot" onclick="mintaResetKataLaluanUI()">Lupa Kata Laluan?</button></div>
+    <div class="auth-actions"><button type="button" onclick="logMasukGateUI()">Log Masuk</button><button type="button" class="secondary" onclick="daftarGateUI()">Daftar Akaun</button><button type="button" class="auth-forgot" onclick="mintaResetKataLaluanUI()">Lupa Kata Laluan?</button><div class="auth-divider"><span>atau</span></div><button type="button" class="auth-google" onclick="logMasukGoogleUI()"><span class="google-mark" aria-hidden="true">G</span>Teruskan dengan Google</button></div>
     <div id="authState" class="auth-state">Setiap guru mempunyai data RPH yang berasingan dan dilindungi.</div>
     <p class="auth-note">Gunakan Publishable Key sahaja. Kata laluan diuruskan oleh Supabase Auth.</p>
   </div>
@@ -925,6 +925,12 @@ function salinGateKeTetapan(){
   if($('supabasePassword'))$('supabasePassword').value=String(($('authPassword')&&$('authPassword').value)||'');
 }
 async function logMasukGateUI(){salinGateKeTetapan();authMsg('Sedang log masuk...');await logMasukSupabaseUI();}
+function logMasukGoogleUI(){
+  const cfg=configSupabase();
+  if(!cfg.url||!cfg.key){authMsg('Sambungan Supabase belum tersedia.','err');return;}
+  authMsg('Membuka log masuk Google...');
+  location.assign(cfg.url+'/auth/v1/authorize?provider=google&redirect_to='+encodeURIComponent(URL_APP_PRODUKSI));
+}
 async function daftarGateUI(){salinGateKeTetapan();authMsg('Sedang mendaftarkan akaun...');await daftarSupabaseUI();}
 async function mintaResetKataLaluanUI(){
   const email=String(($('authEmail')&&$('authEmail').value)||'').trim();
@@ -1001,8 +1007,8 @@ async function prosesPengesahanEmailRedirect(){
     const cfg=configSupabase(),response=await fetch(cfg.url+'/auth/v1/user',{headers:{apikey:cfg.key,Authorization:'Bearer '+accessToken}}),user=await response.json();
     if(!response.ok||!user||!user.id)throw new Error(user.message||'Sesi pengesahan tidak sah.');
     const session={access_token:accessToken,refresh_token:params.get('refresh_token')||'',expires_in:expiresIn,expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:params.get('token_type')||'bearer',user};
-    simpanSessionSupabase(session);const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('E-mel disahkan dan anda telah log masuk.','ok');return true;
-  }catch(e){cloudMsg('E-mel telah disahkan. Sila log masuk menggunakan akaun anda.','ok');return true;}
+    simpanSessionSupabase(session);const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('Log masuk berjaya.','ok');return true;
+  }catch(e){cloudMsg('Pengesahan berjaya. Sila log masuk menggunakan akaun anda.','ok');return true;}
 }
 function batalPemulihanKataLaluanUI(){sessionPemulihanKataLaluan=null;const dialog=$('resetPasswordDialog');if(dialog&&dialog.open)dialog.close();authMsg('Pemulihan dibatalkan. Minta pautan baharu jika diperlukan.');}
 async function kemasKiniKataLaluanUI(){
