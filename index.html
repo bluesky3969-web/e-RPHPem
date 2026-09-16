@@ -704,6 +704,7 @@ const KUNCI_SUPABASE_META = "erph_supabase_meta_v1";
 const KUNCI_PEMULIHAN_CLOUD = "erph_cloud_recovery_v1";
 const SUPABASE_URL_ASAL = "https://tmpmqqumgvtsvdqgifob.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY_ASAL = "sb_publishable_GVoOUcuTKxw7hmXGoY3pmQ_t4B6WJq3";
+const URL_APP_PRODUKSI = "https://e-rphpem.vercel.app/";
 const HARI_LIST = ["Isnin","Selasa","Rabu","Khamis","Jumaat"];
 const SCHEMA_VERSION = 9;
 
@@ -918,7 +919,7 @@ async function daftarGateUI(){salinGateKeTetapan();authMsg('Sedang mendaftarkan 
 async function daftarSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
   if(!email||password.length<6){cloudMsg('Masukkan e-mel dan kata laluan sekurang-kurangnya 6 aksara.','err');return;}
-  try{cloudMsg('Mendaftarkan akaun...');const data=await responsSupabase('/auth/v1/signup',{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg(konteks.dataLegasiDituntut?'Akaun berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.':'Akaun berjaya didaftarkan dan dilog masuk.','ok');}else cloudMsg('Akaun didaftarkan. Semak e-mel untuk pengesahan, kemudian log masuk.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
+  try{cloudMsg('Mendaftarkan akaun...');const redirectTo=URL_APP_PRODUKSI;const data=await responsSupabase('/auth/v1/signup?redirect_to='+encodeURIComponent(redirectTo),{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg(konteks.dataLegasiDituntut?'Akaun berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.':'Akaun berjaya didaftarkan dan dilog masuk.','ok');}else cloudMsg('Akaun didaftarkan. Semak e-mel untuk pengesahan; pautan akan kembali ke aplikasi e-RPH ini.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
 }
 async function logMasukSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
@@ -972,7 +973,19 @@ async function paparVersiCloudUI(){
 async function pulihVersiCloudUI(id){
   try{const list=await responsSupabase('/rest/v1/erph_state_versions?select=data,version&id=eq.'+encodeURIComponent(id)+'&limit=1'),lama=list&&list[0];if(!lama)throw new Error('Versi tidak ditemui.');const remote=await rekodCloudSemasa();if(!confirm('Pulihkan versi '+lama.version+' sebagai versi baharu? Snapshot data tempatan semasa akan dibuat dahulu.'))return;cloudReady=false;gunaDataCloud(lama,'sebelum-pulih-versi-'+lama.version);cloudVersion=remote?+remote.version:0;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok){paparToast('Versi '+lama.version+' dipulihkan sebagai versi cloud baharu.');paparVersiCloudUI();}}catch(e){hentikanSyncCloud('Versi tidak dapat dipulihkan: '+e.message);}
 }
-function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&s.user&&cfg.key){const konteks=aktifkanStorePengguna(s.user.id);mulaSesiCloud(konteks);}else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk membuka aplikasi.','ok');}
+async function prosesPengesahanEmailRedirect(){
+  const params=new URLSearchParams(location.hash.replace(/^#/,'')),accessToken=params.get('access_token'),ralat=params.get('error_description');
+  if(!accessToken&&!ralat)return false;
+  history.replaceState({},document.title,location.pathname+location.search);
+  if(ralat){cloudMsg('Pengesahan e-mel gagal: '+ralat.replace(/\+/g,' '),'err');return true;}
+  try{
+    const cfg=configSupabase(),response=await fetch(cfg.url+'/auth/v1/user',{headers:{apikey:cfg.key,Authorization:'Bearer '+accessToken}}),user=await response.json();
+    if(!response.ok||!user||!user.id)throw new Error(user.message||'Sesi pengesahan tidak sah.');
+    const expiresIn=Number(params.get('expires_in'))||3600,session={access_token:accessToken,refresh_token:params.get('refresh_token')||'',expires_in:expiresIn,expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:params.get('token_type')||'bearer',user};
+    simpanSessionSupabase(session);const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('E-mel disahkan dan anda telah log masuk.','ok');return true;
+  }catch(e){cloudMsg('E-mel telah disahkan. Sila log masuk menggunakan akaun anda.','ok');return true;}
+}
+async function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;if(await prosesPengesahanEmailRedirect())return;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&s.user&&cfg.key){const konteks=aktifkanStorePengguna(s.user.id);mulaSesiCloud(konteks);}else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk membuka aplikasi.','ok');}
 function setStatusSimpan(teks,ok=true){const el=$("autoSaveMsg");if(el){el.textContent=teks;el.className="ai-mesej "+(ok?"ok":"err");}}
 function tulisStore(){
   try{
