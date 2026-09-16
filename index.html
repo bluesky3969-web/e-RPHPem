@@ -139,7 +139,7 @@
   .auth-card{width:min(440px,100%);background:#fff;border:1px solid #d8e4ee;border-radius:20px;padding:24px;box-shadow:0 22px 65px rgba(24,55,82,.18)}
   .auth-brand{display:flex;align-items:center;gap:14px;margin-bottom:18px}.auth-brand img{width:126px;height:62px;object-fit:contain;border-radius:11px;background:#fff}.auth-brand h1{margin:0;color:var(--navy);font-size:1.28rem}.auth-brand p{margin:3px 0 0;color:var(--muted);font-size:.8rem}
   .auth-card input[type=email],.auth-card input[type=password]{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font:inherit}.auth-card input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
-  .auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.auth-actions button{margin:0}.auth-note{margin:14px 0 0;color:var(--muted);font-size:.77rem;text-align:center}.auth-state{margin-top:12px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.auth-state.ok{background:#e5f5ed;color:#237253}.auth-state.err{background:#fff0ef;color:#a44646}
+  .auth-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.auth-actions button{margin:0}.auth-actions .auth-forgot{grid-column:1/-1;background:transparent;color:var(--primary);padding:7px}.auth-note{margin:14px 0 0;color:var(--muted);font-size:.77rem;text-align:center}.auth-state{margin-top:12px;padding:9px 11px;border-radius:9px;background:#f2f6f9;color:#4b6173;font-size:.8rem}.auth-state.ok{background:#e5f5ed;color:#237253}.auth-state.err{background:#fff0ef;color:#a44646}.reset-password-form input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;font:inherit}
   body.auth-locked>header.app,body.auth-locked>nav.app-nav,body.auth-locked>main.workspace,body.auth-locked>footer{visibility:hidden}.account-chip{margin-left:auto;display:flex;align-items:center;gap:8px}.account-chip span{max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.78rem;font-weight:700}.account-chip button{margin:0;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.45);padding:7px 10px}
   @media(max-width:1050px){.stat-grid{grid-template-columns:repeat(2,1fr)}.week-overview{grid-template-columns:repeat(5,220px)}.tool-layout{grid-template-columns:1fr 1fr}.settings-row,.settings-row.groups{grid-template-columns:repeat(2,1fr)}.print-grid{grid-template-columns:1fr}}
   @media(max-width:720px){header.app{padding:12px}.brand{gap:10px;flex-wrap:wrap}.brand-logo-wrap{width:132px;height:58px}.account-chip{width:100%;margin-left:0;justify-content:space-between}.workspace{padding:16px 10px}.app-nav{overflow:auto}.page-heading{align-items:flex-start;flex-direction:column}.stat-grid{grid-template-columns:1fr 1fr}.session-grid{grid-template-columns:1fr}.app-body{flex-direction:column}.panel-preview{min-width:0}.settings-row,.settings-row.groups,.tool-layout,.cloud-grid{grid-template-columns:1fr}.cloud-grid .wide{grid-column:auto}.day-workbar{align-items:stretch;flex-direction:column}.print-grid{grid-template-columns:1fr}.pdpc-reasons{grid-template-columns:1fr}.week-navigator{grid-template-columns:1fr}.archive-filters{grid-template-columns:1fr}.archive-week-head{flex-direction:column}.auth-actions{grid-template-columns:1fr}}
@@ -179,11 +179,21 @@
     <div class="auth-brand"><img src="assets/redox-logo.png" alt="Logo REDOX"><div><h1 id="authTitle">e-RPH Pemulihan Khas</h1><p>Log masuk untuk membuka ruang kerja RPH anda.</p></div></div>
     <label for="authEmail">E-mel</label><input id="authEmail" type="email" autocomplete="username" placeholder="nama@email.com">
     <label for="authPassword">Kata laluan</label><input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="Sekurang-kurangnya 6 aksara">
-    <div class="auth-actions"><button type="button" onclick="logMasukGateUI()">Log Masuk</button><button type="button" class="secondary" onclick="daftarGateUI()">Daftar Akaun</button></div>
+    <div class="auth-actions"><button type="button" onclick="logMasukGateUI()">Log Masuk</button><button type="button" class="secondary" onclick="daftarGateUI()">Daftar Akaun</button><button type="button" class="auth-forgot" onclick="mintaResetKataLaluanUI()">Lupa Kata Laluan?</button></div>
     <div id="authState" class="auth-state">Setiap guru mempunyai data RPH yang berasingan dan dilindungi.</div>
     <p class="auth-note">Gunakan Publishable Key sahaja. Kata laluan diuruskan oleh Supabase Auth.</p>
   </div>
 </section>
+<dialog id="resetPasswordDialog" class="copy-dialog no-print">
+  <div class="copy-dialog-body reset-password-form">
+    <h3>Tetapkan Kata Laluan Baharu</h3>
+    <p class="muted">Masukkan kata laluan baharu sekurang-kurangnya 6 aksara.</p>
+    <label for="resetPasswordBaru">Kata laluan baharu</label><input id="resetPasswordBaru" type="password" autocomplete="new-password" minlength="6">
+    <label for="resetPasswordSah">Ulang kata laluan baharu</label><input id="resetPasswordSah" type="password" autocomplete="new-password" minlength="6">
+    <div id="resetPasswordState" class="auth-state">Pautan pemulihan telah disahkan.</div>
+    <div class="copy-dialog-actions"><button type="button" class="secondary" onclick="batalPemulihanKataLaluanUI()">Batal</button><button type="button" onclick="kemasKiniKataLaluanUI()">Simpan Kata Laluan</button></div>
+  </div>
+</dialog>
 <header class="app no-print">
   <div class="brand"><div class="brand-logo-wrap"><img class="brand-logo" src="assets/redox-logo.png" alt="Logo RedoX Pemulihan SK. Semangar"></div><div><h1>e-RPH Pemulihan Khas</h1><p>Rancang, jana, semak dan cetak RPH berasaskan buku panduan rasmi.</p></div><div class="account-chip"><span id="headerUserEmail">Pengguna</span><button type="button" onclick="logKeluarSupabaseUI()">Log Keluar</button></div></div>
 </header>
@@ -858,7 +868,7 @@ function muatStore(kunciOverride){
   return storeDefault();
 }
 let store = muatStore();
-let cloudVersion=null,cloudReady=false,pemasaCloud=null,cloudSedangSimpan=false,cloudPerluSimpanLagi=false;
+let cloudVersion=null,cloudReady=false,pemasaCloud=null,cloudSedangSimpan=false,cloudPerluSimpanLagi=false,sessionPemulihanKataLaluan=null;
 function bacaJSONTempatan(kunci,nilaiAsal=null){try{const raw=localStorage.getItem(kunci);return raw?JSON.parse(raw):nilaiAsal;}catch(e){return nilaiAsal;}}
 function configSupabase(){const cfg=bacaJSONTempatan(KUNCI_SUPABASE_CONFIG,{})||{};return {url:String(cfg.url||SUPABASE_URL_ASAL).replace(/\/+$/,''),key:String(cfg.key||SUPABASE_PUBLISHABLE_KEY_ASAL).trim()};}
 function sessionSupabase(){return bacaJSONTempatan(KUNCI_SUPABASE_SESSION,null);}
@@ -916,10 +926,15 @@ function salinGateKeTetapan(){
 }
 async function logMasukGateUI(){salinGateKeTetapan();authMsg('Sedang log masuk...');await logMasukSupabaseUI();}
 async function daftarGateUI(){salinGateKeTetapan();authMsg('Sedang mendaftarkan akaun...');await daftarSupabaseUI();}
+async function mintaResetKataLaluanUI(){
+  const email=String(($('authEmail')&&$('authEmail').value)||'').trim();
+  if(!email){authMsg('Masukkan alamat e-mel dahulu.','err');return;}
+  try{authMsg('Menghantar pautan pemulihan...');await responsSupabase('/auth/v1/recover?redirect_to='+encodeURIComponent(URL_APP_PRODUKSI),{method:'POST',auth:false,body:{email}});authMsg('Jika akaun wujud, pautan pemulihan telah dihantar. Semak Inbox dan Spam.','ok');}catch(e){authMsg('Pautan pemulihan gagal dihantar: '+e.message,'err');}
+}
 async function daftarSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
   if(!email||password.length<6){cloudMsg('Masukkan e-mel dan kata laluan sekurang-kurangnya 6 aksara.','err');return;}
-  try{cloudMsg('Mendaftarkan akaun...');const redirectTo=URL_APP_PRODUKSI;const data=await responsSupabase('/auth/v1/signup?redirect_to='+encodeURIComponent(redirectTo),{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg(konteks.dataLegasiDituntut?'Akaun berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.':'Akaun berjaya didaftarkan dan dilog masuk.','ok');}else cloudMsg('Akaun didaftarkan. Semak e-mel untuk pengesahan; pautan akan kembali ke aplikasi e-RPH ini.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
+  try{cloudMsg('Mendaftarkan akaun...');const redirectTo=URL_APP_PRODUKSI;const data=await responsSupabase('/auth/v1/signup?redirect_to='+encodeURIComponent(redirectTo),{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg(konteks.dataLegasiDituntut?'Akaun berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.':'Akaun berjaya didaftarkan dan dilog masuk.','ok');}else cloudMsg('Jika ini akaun baharu, semak e-mel untuk pengesahan. Jika pernah daftar, gunakan Log Masuk atau Lupa Kata Laluan.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
 }
 async function logMasukSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
@@ -974,16 +989,33 @@ async function pulihVersiCloudUI(id){
   try{const list=await responsSupabase('/rest/v1/erph_state_versions?select=data,version&id=eq.'+encodeURIComponent(id)+'&limit=1'),lama=list&&list[0];if(!lama)throw new Error('Versi tidak ditemui.');const remote=await rekodCloudSemasa();if(!confirm('Pulihkan versi '+lama.version+' sebagai versi baharu? Snapshot data tempatan semasa akan dibuat dahulu.'))return;cloudReady=false;gunaDataCloud(lama,'sebelum-pulih-versi-'+lama.version);cloudVersion=remote?+remote.version:0;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok){paparToast('Versi '+lama.version+' dipulihkan sebagai versi cloud baharu.');paparVersiCloudUI();}}catch(e){hentikanSyncCloud('Versi tidak dapat dipulihkan: '+e.message);}
 }
 async function prosesPengesahanEmailRedirect(){
-  const params=new URLSearchParams(location.hash.replace(/^#/,'')),accessToken=params.get('access_token'),ralat=params.get('error_description');
+  const params=new URLSearchParams(location.hash.replace(/^#/,'')),accessToken=params.get('access_token'),ralat=params.get('error_description'),jenis=params.get('type');
   if(!accessToken&&!ralat)return false;
   history.replaceState({},document.title,location.pathname+location.search);
   if(ralat){cloudMsg('Pengesahan e-mel gagal: '+ralat.replace(/\+/g,' '),'err');return true;}
+  const expiresIn=Number(params.get('expires_in'))||3600;
+  if(jenis==='recovery'){
+    try{const cfg=configSupabase(),response=await fetch(cfg.url+'/auth/v1/user',{headers:{apikey:cfg.key,Authorization:'Bearer '+accessToken}}),user=await response.json();if(!response.ok||!user||!user.id)throw new Error(user.message||'Sesi pemulihan tidak sah.');sessionPemulihanKataLaluan={access_token:accessToken,refresh_token:params.get('refresh_token')||'',expires_in:expiresIn,expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:params.get('token_type')||'bearer',user};authMsg('Pautan pemulihan disahkan. Tetapkan kata laluan baharu.','ok');const dialog=$('resetPasswordDialog');if(dialog&&!dialog.open)dialog.showModal();}catch(e){sessionPemulihanKataLaluan=null;authMsg('Pautan pemulihan tidak sah atau telah tamat. Minta pautan baharu.','err');}return true;
+  }
   try{
     const cfg=configSupabase(),response=await fetch(cfg.url+'/auth/v1/user',{headers:{apikey:cfg.key,Authorization:'Bearer '+accessToken}}),user=await response.json();
     if(!response.ok||!user||!user.id)throw new Error(user.message||'Sesi pengesahan tidak sah.');
-    const expiresIn=Number(params.get('expires_in'))||3600,session={access_token:accessToken,refresh_token:params.get('refresh_token')||'',expires_in:expiresIn,expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:params.get('token_type')||'bearer',user};
+    const session={access_token:accessToken,refresh_token:params.get('refresh_token')||'',expires_in:expiresIn,expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:params.get('token_type')||'bearer',user};
     simpanSessionSupabase(session);const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('E-mel disahkan dan anda telah log masuk.','ok');return true;
   }catch(e){cloudMsg('E-mel telah disahkan. Sila log masuk menggunakan akaun anda.','ok');return true;}
+}
+function batalPemulihanKataLaluanUI(){sessionPemulihanKataLaluan=null;const dialog=$('resetPasswordDialog');if(dialog&&dialog.open)dialog.close();authMsg('Pemulihan dibatalkan. Minta pautan baharu jika diperlukan.');}
+async function kemasKiniKataLaluanUI(){
+  const baharu=String(($('resetPasswordBaru')&&$('resetPasswordBaru').value)||''),sah=String(($('resetPasswordSah')&&$('resetPasswordSah').value)||''),state=$('resetPasswordState');
+  const mesej=(teks,jenis='')=>{if(state){state.textContent=teks;state.className='auth-state'+(jenis?' '+jenis:'');}};
+  if(!sessionPemulihanKataLaluan){mesej('Sesi pemulihan tamat. Minta pautan baharu.','err');return;}
+  if(baharu.length<6){mesej('Kata laluan mesti sekurang-kurangnya 6 aksara.','err');return;}
+  if(baharu!==sah){mesej('Kedua-dua kata laluan tidak sepadan.','err');return;}
+  try{
+    mesej('Menyimpan kata laluan baharu...');const cfg=configSupabase(),pemulihan=sessionPemulihanKataLaluan,response=await fetch(cfg.url+'/auth/v1/user',{method:'PUT',headers:{apikey:cfg.key,Authorization:'Bearer '+pemulihan.access_token,'Content-Type':'application/json'},body:JSON.stringify({password:baharu})}),user=await response.json();
+    if(!response.ok||!user||!user.id)throw new Error(user.message||'Kata laluan tidak dapat dikemas kini.');
+    pemulihan.user=user;simpanSessionSupabase(pemulihan);sessionPemulihanKataLaluan=null;if($('resetPasswordBaru'))$('resetPasswordBaru').value='';if($('resetPasswordSah'))$('resetPasswordSah').value='';const dialog=$('resetPasswordDialog');if(dialog&&dialog.open)dialog.close();const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('Kata laluan berjaya ditukar dan anda telah log masuk.','ok');
+  }catch(e){mesej('Gagal menukar kata laluan: '+e.message,'err');}
 }
 async function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;if(await prosesPengesahanEmailRedirect())return;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&s.user&&cfg.key){const konteks=aktifkanStorePengguna(s.user.id);mulaSesiCloud(konteks);}else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk membuka aplikasi.','ok');}
 function setStatusSimpan(teks,ok=true){const el=$("autoSaveMsg");if(el){el.textContent=teks;el.className="ai-mesej "+(ok?"ok":"err");}}
