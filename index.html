@@ -1055,7 +1055,7 @@ function showSettingsTab(tab,button){
   document.querySelectorAll('.settings-tabs button').forEach(el=>el.classList.remove('aktif'));
   if(button) button.classList.add('aktif');
 }
-function kumpulanSedia(g){ return !!(g && g.skillId && g.standardIndex!=='' && Array.isArray(g.sp) && g.sp.length); }
+function kumpulanSedia(g){ return !!(g && g.skillId && g.standardIndex!=='' && (g.skillId==='MM-K01' || (Array.isArray(g.sp) && g.sp.length))); }
 function adaKandunganG(g){ return !!(g && [g.objektif,g.kriteriaKejayaan,g.setInduksi,g.langkah1,g.langkah2,g.didikHibur,g.penutup].some(v=>String(v||'').trim())); }
 function statusRph(day){
   if(!day) return {key:'empty',label:'BELUM MULA',className:''};
@@ -1435,7 +1435,7 @@ function spCheckboxes(item,standardIndex,selected){
   const sk=item&&item.standardContent&&item.standardContent[standardIndex];
   if(!sk)return '<span class="sp-kosong">Pilih Standard Kandungan dahulu.</span>';
   const list=sk.learning||[],picked=selected||[];
-  if(!list.length)return '<span class="sp-kosong">Tiada SP khusus yang dapat dipadankan untuk SK ini.</span>';
+  if(!list.length&&!picked.length)return `<span class="sp-kosong">${sk.notApplicable?'Buku panduan tidak menetapkan SK/SP untuk Pra Nombor. Pilih objektif rasmi di bawah.':'Tiada SP khusus yang dapat dipadankan untuk SK ini.'}</span>`;
   const lama=picked.filter(sp=>!list.includes(sp));
   const warning=lama.length?'<div class="notice">SP tersimpan daripada pemetaan lama dikekalkan. Semak dan pilih semula SP rasmi mengikut tahun di bawah sebelum menjana RPH.</div>':'';
   return warning+[...lama,...list].map(sp=>`<label><input type="checkbox" class="sp-cb" value="${esc(sp)}"${picked.includes(sp)?' checked':''}> ${lama.includes(sp)?'[SP lama — perlu semak] ':''}${esc(sp)}</label>`).join('');
@@ -1449,26 +1449,36 @@ function guideOptions(items,label){
 }
 function pilihKemahiranUI(i,id){
   const day=hariAktif(store),g=day&&day.groups[i],list=day?(kurikulum[day.mataPelajaran]||[]):[];if(!g)return;
-  const item=list.find(x=>x.id===id);g.skillId=id;g.skIndex=item?list.indexOf(item):"";g.standardIndex="";g.sp=[];
+  const item=list.find(x=>x.id===id);g.skillId=id;g.skIndex=item?list.indexOf(item):"";g.standardIndex=item&&item.standardsNotApplicable?'0':"";g.sp=[];
   g.kemahiranPemulihan=item?item.skillCode+' - '+item.skill:'';g.objektifDipilih=[];g.objektif="";g.kriteriaKejayaan="";
   g.userEdited=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();
 }
-function pilihStandardUI(i,value){const day=hariAktif(store),g=day&&day.groups[i];if(!g)return;g.standardIndex=value;g.sp=[];g.userEdited=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();}
+function pilihStandardUI(i,value){const day=hariAktif(store),g=day&&day.groups[i];if(!g)return;g.standardIndex=value;g.sp=[];g.objektifDipilih=[];g.objektif="";g.kriteriaKejayaan="";g.userEdited=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();}
+function sumberObjektifRasmi(item,g){
+  const sumber=item&&item.objectiveSources||[];
+  const sk=item&&item.standardContent&&item.standardContent[g&&g.standardIndex];
+  if(sk&&sk.year){const ikutTahun=sumber.filter(s=>s.objectiveYear===sk.year);if(ikutTahun.length)return ikutTahun;}
+  return sumber;
+}
 function objektifCheckboxes(item,g,i){
-  const senarai=item&&Array.isArray(item.suggestedObjectives)?item.suggestedObjectives:[];
+  const sumber=sumberObjektifRasmi(item,g);
+  const semua=sumber.length?sumber.map(s=>s.text):(item&&Array.isArray(item.suggestedObjectives)?item.suggestedObjectives:[]);
+  const senarai=semua.filter((obj,index)=>semua.findIndex(x=>ringkasPanduan(x)===ringkasPanduan(obj))===index);
   if(!senarai.length)return '<span class="sp-kosong">Tiada cadangan objektif khusus untuk kemahiran ini.</span>';
   const dipilih=Array.isArray(g.objektifDipilih)?g.objektifDipilih:[];
   const objektifLama=String(g.objektif||'').split(/\n+/).map(ringkasPanduan).filter(Boolean);
-  const sumber=item.objectiveSources||[],halaman=[...new Set(sumber.map(x=>x.bookPage))];
-  const nota=halaman.length?`<div class="small">Objektif rasmi ${esc(item.skillCode)} · Buku Panduan BM 2019, hlm. ${halaman.join(', ')}. Pilih objektif yang sesuai dengan SK/SP dipilih. Buku menyenaraikan objektif mengikut kemahiran, bukan padanan satu-ke-satu bagi setiap SP.</div>`:'';
-  return nota+senarai.map((obj,index)=>{const checked=dipilih.map(ringkasPanduan).includes(ringkasPanduan(obj))||(!dipilih.length&&objektifLama.includes(ringkasPanduan(obj)));return `<label><input type="checkbox" class="objektif-cb" data-g="${i}" value="${esc(obj)}"${checked?' checked':''}> <span>${esc(obj)}</span></label>`;}).join('');
+  const halaman=[...new Set(sumber.map(x=>x.bookPage))];
+  const nota=halaman.length?`<div class="small">Objektif rasmi ${esc(item.skillCode)} · Buku Panduan ${item.subject==='Matematik'?'Matematik':'BM'} 2019, hlm. ${halaman.join(', ')}. Pilih objektif yang sesuai dengan SK/SP dipilih. Tiada padanan satu-ke-satu SP–objektif ditambah melalui andaian.</div>`:'';
+  return nota+senarai.map((obj,index)=>{const checked=dipilih.map(ringkasPanduan).includes(ringkasPanduan(obj))||(!dipilih.length&&objektifLama.includes(ringkasPanduan(obj)));const refs=sumber.filter(s=>ringkasPanduan(s.text)===ringkasPanduan(obj));const ref=item.subject==='Matematik'&&refs.length?' (hlm. '+[...new Set(refs.map(s=>s.bookPage))].join(', ')+')':'';return `<label><input type="checkbox" class="objektif-cb" data-g="${i}" value="${esc(obj)}"${checked?' checked':''}> <span>${esc(obj)}${esc(ref)}</span></label>`;}).join('');
 }
-function semakPanduanBM(day,g){
-  if(day.mataPelajaran!=='Bahasa Melayu')return '';
+function semakPanduanRasmi(day,g){
+  if(!['Bahasa Melayu','Matematik'].includes(day.mataPelajaran))return '';
   const item=itemKumpulan(day,g),sk=item&&item.standardContent[g.standardIndex];
-  if(!sk||(g.sp||[]).some(sp=>!sk.learning.includes(sp)))return 'Semak semula SP lama dan pilih SP rasmi mengikut tahun sebelum menjana.';
+  if(item&&item.standardsNotApplicable&&(g.sp||[]).length)return 'Pra Nombor tiada SK/SP dalam buku. Nyahpilih SP lama sebelum menjana; objektif dan kandungan RPH dikekalkan.';
+  if(!(item&&item.standardsNotApplicable)&&(!sk||(g.sp||[]).some(sp=>!sk.learning.includes(sp))))return 'Semak semula SP lama dan pilih SP rasmi mengikut tahun sebelum menjana.';
   const pilihan=String(g.objektif||'').split(/\n+/).map(ringkasPanduan).filter(Boolean),rasmi=(item.suggestedObjectives||[]).map(ringkasPanduan);
-  if(!pilihan.length||pilihan.some(obj=>!rasmi.includes(obj)))return 'Pilih objektif daripada senarai rasmi buku panduan untuk kemahiran ini. Objektif BM tidak dijana atau ditambah sendiri.';
+  const rasmiPilihan=sumberObjektifRasmi(item,g).map(s=>ringkasPanduan(s.text));
+  if(!pilihan.length||pilihan.some(obj=>!(rasmiPilihan.length?rasmiPilihan:rasmi).includes(obj)))return 'Pilih objektif daripada senarai rasmi buku panduan untuk SK dan tahun ini. Objektif tidak dijana atau ditambah sendiri.';
   return '';
 }
 function kemaskiniObjektifDipilih(i){
@@ -1488,14 +1498,14 @@ function gunaCadanganAktiviti(i,field,index){
 }
 function isiSemuaPanduan(i){
   const day=hariAktif(store),g=day&&day.groups[i],item=g&&itemKumpulan(day,g);if(!item||!kumpulanSedia(g)){aiMsg(i,'Pilih Kemahiran, SK dan sekurang-kurangnya satu SP dahulu.',false);return;}
-  const semakan=semakPanduanBM(day,g);if(semakan){aiMsg(i,semakan,false);return;}
+  const semakan=semakPanduanRasmi(day,g);if(semakan){aiMsg(i,semakan,false);return;}
   if(!g.objektif){const pertama=(item.suggestedObjectives||[])[0]||'';g.objektifDipilih=pertama?[pertama]:[];g.objektif=pertama?'1. '+ringkasPanduan(pertama):'';}
   const acts=item.suggestedActivities||[];['setInduksi','langkah1','langkah2','didikHibur','penutup'].forEach((f,idx)=>{if(!g[f]&&acts.length)g[f]=acts[Math.min(idx,acts.length-1)];});
   simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();
 }
 function aiContext(day,i){
   const g=day.groups[i],item=itemKumpulan(day,g),sk=item&&item.standardContent[g.standardIndex];
-  return {subject:day.mataPelajaran,className:day.kelas,group:namaKumpulanHari(day)[i],studentCount:day.bilanganMurid,skill:item?item.skill:'',skillCode:item?item.skillCode:'',standardContent:sk?sk.content:'',standardLearning:(g.sp||[]),guideObjective:item?(item.suggestedObjectives||[]):[],guideActivity:item?(item.suggestedActivities||[]):[],objective:g.objektif,current:salinKumpulanPedagogi(g)};
+  return {subject:day.mataPelajaran,className:day.kelas,group:namaKumpulanHari(day)[i],studentCount:day.bilanganMurid,skill:item?item.skill:'',skillCode:item?item.skillCode:'',standardContent:sk?sk.content:'',standardLearning:(g.sp||[]),guideObjective:item?sumberObjektifRasmi(item,g).map(s=>s.text):[],guideActivity:item?(item.suggestedActivities||[]):[],objective:g.objektif,current:salinKumpulanPedagogi(g)};
 }
 function ringkasPanduan(value){return String(value||'').replace(/^\d+\.\s*/,'').replace(/\s+/g,' ').trim();}
 function localAiGenerate(field,ctx){
@@ -1521,8 +1531,8 @@ async function requestAi(field,ctx){
 function aiMsg(i,text,ok=true){const el=document.querySelector('.ai-status[data-g="'+i+'"]');if(el){el.textContent=text;el.className='ai-mesej ai-status '+(ok?'ok':'err');}}
 async function janaFieldAI(i,field,button){
   const day=hariAktif(store),g=day&&day.groups[i];if(!g||!kumpulanSedia(g)){aiMsg(i,'Lengkapkan Kemahiran, SK dan SP dahulu.',false);return;}
-  if(day.mataPelajaran==='Bahasa Melayu'&&field==='objektif'){aiMsg(i,'Pilih satu atau lebih objektif rasmi dalam senarai buku panduan di atas. Objektif BM tidak dijana oleh AI.',false);return;}
-  const semakan=semakPanduanBM(day,g);if(semakan){aiMsg(i,semakan,false);return;}
+  if(['Bahasa Melayu','Matematik'].includes(day.mataPelajaran)&&field==='objektif'){aiMsg(i,'Pilih satu atau lebih objektif rasmi dalam senarai buku panduan di atas. Objektif tidak dijana oleh AI.',false);return;}
+  const semakan=semakPanduanRasmi(day,g);if(semakan){aiMsg(i,semakan,false);return;}
   if(field==='kriteriaKejayaan'&&!String(g.objektif||'').trim()){aiMsg(i,'Pilih sekurang-kurangnya satu objektif dahulu supaya kriteria boleh diselaraskan.',false);return;}
   if(g[field]&&!confirm('Medan ini telah mempunyai kandungan. Gantikan dengan hasil baharu?'))return;
   const old=button&&button.textContent;if(button){button.disabled=true;button.textContent='Sedang menjana...';}
@@ -1530,7 +1540,7 @@ async function janaFieldAI(i,field,button){
 }
 async function janaRphLengkap(i,button){
   const day=hariAktif(store),g=day&&day.groups[i];if(!g||!kumpulanSedia(g)){aiMsg(i,'Lengkapkan Kemahiran, SK dan SP dahulu.',false);return false;}
-  const semakan=semakPanduanBM(day,g);if(semakan){aiMsg(i,semakan,false);return false;}
+  const semakan=semakPanduanRasmi(day,g);if(semakan){aiMsg(i,semakan,false);return false;}
   const old=button&&button.textContent;if(button){button.disabled=true;button.textContent='Sedang menjana RPH...';}
   try{for(const field of ['objektif','kriteriaKejayaan','setInduksi','langkah1','langkah2','didikHibur','penutup'])if(!String(g[field]||'').trim())g[field]=String(await requestAi(field,aiContext(day,i))||'');g.aiGenerated=true;simpanStore();buildGroupBlocks();renderPreview();renderShellSummaries();aiMsg(i,'RPH lengkap dijana. Kandungan sedia ada dikekalkan.',true);return true;}catch(e){aiMsg(i,'RPH gagal dijana. Kandungan lama tidak diubah.',false);return false;}finally{if(button){button.disabled=false;button.textContent=old;}}
 }
@@ -1680,7 +1690,7 @@ function renderPreview(){
 function janaCommand(i){
   const day=hariAktif(store); if(!day) return;
   const g=day.groups[i]; if(!g) return;
-  const semakan=semakPanduanBM(day,g);if(semakan){aiMsg(i,semakan,false);return;}
+  const semakan=semakPanduanRasmi(day,g);if(semakan){aiMsg(i,semakan,false);return;}
   const m=document.querySelector('.ai-status[data-g="'+i+'"]');
   if(!kumpulanSedia(g)){
     if(m){m.textContent="Lengkapkan Kemahiran, Standard Kandungan dan Standard Pembelajaran dahulu.";m.className="ai-mesej ai-status err";}
@@ -1695,7 +1705,7 @@ function janaCommand(i){
   const skTeks=standard?standard.content:"(belum pilih)";
   const kemahiran=(g.kemahiranPemulihan||"").trim()||(item?item.kemahiran:"(belum diisi)");
   const objektif=(g.objektif||"").trim()||"(belum diisi)";
-  const spTeks=(g.sp&&g.sp.length)?g.sp.map(s=>"- "+s).join("\n"):"(belum pilih)";
+  const spTeks=(g.sp&&g.sp.length)?g.sp.map(s=>"- "+s).join("\n"):(item&&item.standardsNotApplicable?'Tidak ditetapkan dalam buku panduan bagi Pra Nombor. Jangan cipta SK/SP.':"(belum pilih)");
   const prompt=
 `Anda pembantu guru Pemulihan Khas. Bina aktiviti pengajaran ringkas, sesuai dan berperingkat untuk murid pemulihan.
 
@@ -1710,6 +1720,7 @@ ${objektif}
 Balas TEPAT dalam format berikut SAHAJA. Jangan tambah sebarang teks lain, tajuk, atau penjelasan.
 Gunakan semua objektif yang dipilih sebagai asas. Jana satu set kriteria kejayaan yang boleh diukur dan selaras dengan setiap objektif. Pastikan aktiviti ringkas, konkrit, visual, berulang dan sesuai untuk kumpulan kecil:
 Jangan tambah, ganti atau reka kod/teks SK, SP atau objektif. Kekalkan tahun SP dan skop kemahiran yang dibekalkan. Kriteria kejayaan ialah cadangan terbitan daripada objektif terpilih, bukan petikan rasmi buku panduan. Jika objektif tidak selaras dengan SK/SP, minta guru menyemak pilihan; jangan mereka padanan baharu.
+Bagi Matematik, lingkungan nombor pada SK/SP rasmi boleh lebih luas daripada kemahiran pemulihan. Jangan luaskan aktiviti melebihi lingkungan kemahiran dan objektif terpilih; jangan ubah teks SK/SP untuk menyamakan lingkungan itu.
 KRITERIA_KEJAYAAN: [kriteria yang boleh diukur berdasarkan semua objektif dipilih]
 SET_INDUKSI: [aktiviti set induksi]
 LANGKAH_1: [aktiviti langkah 1]

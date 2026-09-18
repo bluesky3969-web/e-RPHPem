@@ -1,202 +1,1995 @@
 [
   {
     "kemahiran": "Kemahiran 1 - Pra Nombor",
-    "standardKandungan": "-",
-    "standardPembelajaran": ["-"]
-  },
-  {
-    "kemahiran": "Kemahiran 2 - Konsep Nombor",
-    "standardKandungan": "1.1 Kuantiti secara intuitif (Tahun 1)",
-    "standardPembelajaran": [
-      "1.1.1 Menyatakan kuantiti melalui perbandingan"
+    "standardKandungan": "Tidak ditetapkan dalam buku panduan (Pra Nombor)",
+    "standardPembelajaran": [],
+    "standardContent": [
+      {
+        "code": "",
+        "content": "Tidak ditetapkan dalam buku panduan (Pra Nombor)",
+        "learning": [],
+        "notApplicable": true
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Mengkelaskan bahan konkrit dan semi konkrit mengikut: a) warna b) saiz c) bentuk d) jenis"
     ]
   },
   {
-    "kemahiran": "Kemahiran 3.1 - Nombor Bulat Hingga 10 / Kemahiran 3.2 - Nombor Bulat Hingga 20",
-    "standardKandungan": "1.2 Nilai Nombor; 1.3 Menulis nombor; 1.5 Rangkaian nombor; 1.6 Nilai tempat (Tahun 1)",
+    "kemahiran": "Kemahiran 2 - Konsep Nombor",
+    "standardKandungan": "Tahun 1 — 1.1 Kuantiti secara intuitif.",
     "standardPembelajaran": [
-      "1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan; (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti; (iii) Membandingkan kuantiti dua kumpulan objek",
-      "1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor; (iii) Membandingkan nilai dua nombor; (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun",
-      "1.3.1 Menulis nombor dalam angka dan perkataan",
-      "1.5.1 Membilang nombor",
-      "1.5.2 Melengkapkan sebarang rangkaian nombor",
-      "1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor"
+      "Tahun 1 — 1.1.1 Menyatakan kuantiti melalui perbandingan."
+    ],
+    "standardContent": [
+      {
+        "code": "1.1",
+        "year": 1,
+        "content": "Tahun 1 — 1.1 Kuantiti secara intuitif.",
+        "learning": [
+          "Tahun 1 — 1.1.1 Menyatakan kuantiti melalui perbandingan."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.1.1 Menyatakan kuantiti melalui perbandingan.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyatakan kuantiti kumpulan objek banyak atau sedikit secara intuitif.",
+      "2. Menentukan kumpulan objek melalui padanan atau perbandingan: a) banyak atau sedikit b) lebih atau kurang c) sama banyak d) tidak sama banyak.",
+      "3. Menyatakan kumpulan objek melalui perbandingan: a) banyak atau sedikit b) lebih atau kurang c) sama banyak d) tidak sama banyak.",
+      "4. Menyusun kumpulan objek mengikut turutan : a) kecil ke besar / besar ke kecil b) nipis ke tebal / tebal ke nipis c) rendah ke tinggi / tinggi ke rendah."
+    ]
+  },
+  {
+    "kemahiran": "Kemahiran 3.1 - Nombor Bulat Hingga 10",
+    "standardKandungan": "Tahun 1 — 1.2 Nilai Nombor.\nTahun 1 — 1.3 Menulis nombor.\nTahun 1 — 1.5 Rangkaian nombor.\nTahun 1 — 1.6 Nilai tempat.",
+    "standardPembelajaran": [
+      "Tahun 1 — 1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan. (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti. (iii) Membandingkan kuantiti dua kumpulan objek.",
+      "Tahun 1 — 1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor. (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun.",
+      "Tahun 1 — 1.3.1 Menulis nombor dalam angka dan perkataan.",
+      "Tahun 1 — 1.5.1 Membilang nombor.",
+      "Tahun 1 — 1.5.2 Melengkapkan sebarang rangkaian nombor.",
+      "Tahun 1 — 1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor."
+    ],
+    "standardContent": [
+      {
+        "code": "1.2",
+        "year": 1,
+        "content": "Tahun 1 — 1.2 Nilai Nombor.",
+        "learning": [
+          "Tahun 1 — 1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan. (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti. (iii) Membandingkan kuantiti dua kumpulan objek.",
+          "Tahun 1 — 1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor. (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan. (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti. (iii) Membandingkan kuantiti dua kumpulan objek.",
+            "pdfPage": 38,
+            "bookPage": 31
+          },
+          {
+            "year": 1,
+            "text": "1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor. (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      },
+      {
+        "code": "1.3",
+        "year": 1,
+        "content": "Tahun 1 — 1.3 Menulis nombor.",
+        "learning": [
+          "Tahun 1 — 1.3.1 Menulis nombor dalam angka dan perkataan."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.3.1 Menulis nombor dalam angka dan perkataan.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      },
+      {
+        "code": "1.5",
+        "year": 1,
+        "content": "Tahun 1 — 1.5 Rangkaian nombor.",
+        "learning": [
+          "Tahun 1 — 1.5.1 Membilang nombor.",
+          "Tahun 1 — 1.5.2 Melengkapkan sebarang rangkaian nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.5.1 Membilang nombor.",
+            "pdfPage": 38,
+            "bookPage": 31
+          },
+          {
+            "year": 1,
+            "text": "1.5.2 Melengkapkan sebarang rangkaian nombor.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      },
+      {
+        "code": "1.6",
+        "year": 1,
+        "content": "Tahun 1 — 1.6 Nilai tempat.",
+        "learning": [
+          "Tahun 1 — 1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyebut nombor, 1 hingga 9.",
+      "2. Mengenal pasti angka, 1 hingga 9.",
+      "3. Membilang objek dalam kumpulan, 1 hingga 9.",
+      "4. Menulis angka, 1 hingga 9.",
+      "5. Membaca nombor dalam perkataan. ‘satu’ hingga ‘sembilan’.",
+      "6. Menulis nombor dalam perkataan, 'satu' hingga 'sembilan'.",
+      "7. Menyusun nombor, 1 hingga 9 dengan membilang satu-satu secara tertib: i) Menaik ii) Menurun",
+      "8. a) Menyebut nombor 0 dan 10 b) Mengenal pasti angka ‘0’ dan ‘10’ dalam membilang c) Membilang objek dalam kumpulan hingga ‘10’ d) Menulis angka ‘0’ dan ‘10’ e) Membaca perkataan ‘sifar’ dan ‘sepuluh’ f) Menulis perkataan ‘sifar’ dan ‘sepuluh’.",
+      "9. Menyusun nombor 0 hingga 10 dengan cara : a) Membilang satu-satu secara tertib menaik. b) Membilang satu – satu secara tertib menurun. c) Membilang daripada sebarang nombor secara tertib menaik. d) Membilang daripada sebarang nombor secara tertib menurun.",
+      "10. Membandingkan dua nombor dan menyatakan yang mana lebih atau kurang.",
+      "11. Menentukan lebih satu atau kurang satu daripada suatu nombor."
+    ]
+  },
+  {
+    "kemahiran": "Kemahiran 3.2 - Nombor Bulat Hingga 20",
+    "standardKandungan": "Tahun 1 — 1.2 Nilai Nombor.\nTahun 1 — 1.3 Menulis nombor.\nTahun 1 — 1.5 Rangkaian nombor.\nTahun 1 — 1.6 Nilai tempat.",
+    "standardPembelajaran": [
+      "Tahun 1 — 1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan. (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti. (iii) Membandingkan kuantiti dua kumpulan objek.",
+      "Tahun 1 — 1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor. (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun.",
+      "Tahun 1 — 1.3.1 Menulis nombor dalam angka dan perkataan.",
+      "Tahun 1 — 1.5.1 Membilang nombor.",
+      "Tahun 1 — 1.5.2 Melengkapkan sebarang rangkaian nombor.",
+      "Tahun 1 — 1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor."
+    ],
+    "standardContent": [
+      {
+        "code": "1.2",
+        "year": 1,
+        "content": "Tahun 1 — 1.2 Nilai Nombor.",
+        "learning": [
+          "Tahun 1 — 1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan. (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti. (iii) Membandingkan kuantiti dua kumpulan objek.",
+          "Tahun 1 — 1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor. (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.2.1 Menamakan nombor hingga 100: (i) Membilang objek dalam kumpulan. (ii) Menamakan nombor bagi kumpulan objek sebagai mewakili kuantiti. (iii) Membandingkan kuantiti dua kumpulan objek.",
+            "pdfPage": 38,
+            "bookPage": 31
+          },
+          {
+            "year": 1,
+            "text": "1.2.2 Menentukan nilai nombor hingga 100: (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor. (iv) Menyusun kumpulan objek mengikut tertib menaik dan tertib menurun.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      },
+      {
+        "code": "1.3",
+        "year": 1,
+        "content": "Tahun 1 — 1.3 Menulis nombor.",
+        "learning": [
+          "Tahun 1 — 1.3.1 Menulis nombor dalam angka dan perkataan."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.3.1 Menulis nombor dalam angka dan perkataan.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      },
+      {
+        "code": "1.5",
+        "year": 1,
+        "content": "Tahun 1 — 1.5 Rangkaian nombor.",
+        "learning": [
+          "Tahun 1 — 1.5.1 Membilang nombor.",
+          "Tahun 1 — 1.5.2 Melengkapkan sebarang rangkaian nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.5.1 Membilang nombor.",
+            "pdfPage": 38,
+            "bookPage": 31
+          },
+          {
+            "year": 1,
+            "text": "1.5.2 Melengkapkan sebarang rangkaian nombor.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      },
+      {
+        "code": "1.6",
+        "year": 1,
+        "content": "Tahun 1 — 1.6 Nilai tempat.",
+        "learning": [
+          "Tahun 1 — 1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "1.6.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor.",
+            "pdfPage": 38,
+            "bookPage": 31
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. i) Menyebut nombor, 11 hingga 20. ii) Mengenal pasti angka, 11 hingga 20. iii) Menulis angka, 11 hingga 20.",
+      "2. Membilang objek dalam kumpulan, 11 hingga 20.",
+      "3. a) Membaca nombor dalam perkataan, 'sebelas’ hingga 'dua puluh'. b) Menulis nombor dalam perkataan, 'sebelas' hingga 'dua puluh'.",
+      "4. Menyatakan nilai setiap digit dalam suatu nombor.",
+      "5. Menyusun nombor, 11 hingga 20 dengan : a) membilang satu-satu secara tertib menaik. b) membilang satu-satu secara tertib menurun. c) membilang daripada sebarang nombor secara tertib menaik. d) membilang daripada sebarang nombor secara tertib menurun."
     ]
   },
   {
     "kemahiran": "Kemahiran 3.3 - Nombor Bulat Hingga 100",
-    "standardKandungan": "1.1 Nilai Nombor; 1.2 Menulis nombor; 1.3 Rangkaian nombor; 1.4 Nilai tempat (Tahun 2)",
+    "standardKandungan": "Tahun 2 — 1.1 Nilai Nombor.\nTahun 2 — 1.2 Menulis nombor.\nTahun 2 — 1.3 Rangkaian nombor\nTahun 2 — 1.4 Nilai tempat.",
     "standardPembelajaran": [
-      "1.1.1 Menamakan nombor hingga 1000: (i) Membaca sebarang nombor yang diberi dalam perkataan; (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka; (iii) Memadan angka dengan namanya dalam perkataan",
-      "1.1.2 Menentukan nilai nombor hingga 1000: (i) Menunjukkan kuantiti bagi nombor yang diberi; (ii) Memadankan kumpulan objek dengan nombor",
-      "1.2.1 Menulis nombor dalam angka dan perkataan",
-      "1.2.2 Menentukan nilai nombor hingga 100: (iii) Membandingkan nilai dua nombor",
-      "1.3.1 Membilang nombor",
-      "1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun",
-      "1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor"
+      "Tahun 2 — 1.1.1 Menamakan nombor hingga 1000: (i) Membaca sebarang nombor yang diberi dalam perkataan. (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka. (iii) Memadan angka dengan namanya dalam perkataan.",
+      "Tahun 2 — 1.1.2 Menentukan nilai nombor hingga 1000: (i) Menunjukkan kuantiti bagi nombor yang diberi. (ii) Memadankan kumpulan objek dengan nombor.",
+      "Tahun 2 — 1.2.1 Menulis nombor dalam angka dan perkataan.",
+      "Tahun 2 — 1.2.2 Menentukan nilai nombor hingga 100: (iii) Membandingkan nilai dua nombor.",
+      "Tahun 2 — 1.3.1 Membilang nombor.",
+      "Tahun 2 — 1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun.",
+      "Tahun 2 — 1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor."
+    ],
+    "standardContent": [
+      {
+        "code": "1.1",
+        "year": 2,
+        "content": "Tahun 2 — 1.1 Nilai Nombor.",
+        "learning": [
+          "Tahun 2 — 1.1.1 Menamakan nombor hingga 1000: (i) Membaca sebarang nombor yang diberi dalam perkataan. (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka. (iii) Memadan angka dengan namanya dalam perkataan.",
+          "Tahun 2 — 1.1.2 Menentukan nilai nombor hingga 1000: (i) Menunjukkan kuantiti bagi nombor yang diberi. (ii) Memadankan kumpulan objek dengan nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "1.1.1 Menamakan nombor hingga 1000: (i) Membaca sebarang nombor yang diberi dalam perkataan. (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka. (iii) Memadan angka dengan namanya dalam perkataan.",
+            "pdfPage": 38,
+            "bookPage": 31
+          },
+          {
+            "year": 2,
+            "text": "1.1.2 Menentukan nilai nombor hingga 1000: (i) Menunjukkan kuantiti bagi nombor yang diberi. (ii) Memadankan kumpulan objek dengan nombor.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      },
+      {
+        "code": "1.2",
+        "year": 2,
+        "content": "Tahun 2 — 1.2 Menulis nombor.",
+        "learning": [
+          "Tahun 2 — 1.2.1 Menulis nombor dalam angka dan perkataan.",
+          "Tahun 2 — 1.2.2 Menentukan nilai nombor hingga 100: (iii) Membandingkan nilai dua nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "1.2.1 Menulis nombor dalam angka dan perkataan.",
+            "pdfPage": 39,
+            "bookPage": 32
+          },
+          {
+            "year": 2,
+            "text": "1.2.2 Menentukan nilai nombor hingga 100: (iii) Membandingkan nilai dua nombor.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      },
+      {
+        "code": "1.3",
+        "year": 2,
+        "content": "Tahun 2 — 1.3 Rangkaian nombor",
+        "learning": [
+          "Tahun 2 — 1.3.1 Membilang nombor.",
+          "Tahun 2 — 1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "1.3.1 Membilang nombor.",
+            "pdfPage": 39,
+            "bookPage": 32
+          },
+          {
+            "year": 2,
+            "text": "1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      },
+      {
+        "code": "1.4",
+        "year": 2,
+        "content": "Tahun 2 — 1.4 Nilai tempat.",
+        "learning": [
+          "Tahun 2 — 1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyebut nombor hingga 100.",
+      "2. Mengenal pasti angka hingga 100.",
+      "3. Membilang hingga 100 objek dengan membuat kumpulan sepuluh- sepuluh, lima-lima, dua- dua dan satu-satu.",
+      "4. Menulis angka hingga 100.",
+      "5. Membaca nombor dalam perkataan hingga 'seratus'.",
+      "6. Menulis nombor dalam perkataan hingga 'seratus'.",
+      "7. Mengenal pasti nilai tempat dan nilai digit bagi nombor hingga 'seratus'.",
+      "8. Menyusun nombor hingga 100 dengan membilang satu-satu secara tertib menaik dan tertib menurun.",
+      "9. Menyusun nombor hingga 100 dengan membilang dua-dua secara tertib menaik dan tertib menurun.",
+      "10. Menyusun nombor hingga 100 dengan membilang lima-lima secara tertib menaik dan tertib menurun.",
+      "11. Menyusun nombor hingga 100 dengan membilang sepuluh- sepuluh secara tertib menaik dan tertib menurun.",
+      "12. Membandingkan dua nombor dan menyatakan yang mana lebih atau kurang.",
+      "13. Menyusun nombor mengikut urutan dengan: a) membandingkan nombor tersebut, dan b) meletakkan nombor tersebut pada garis nombor.",
+      "14. a) Menyebut nombor ordinal daripada “kesebelas‟ hingga “kedua puluh‟. b). Menggunakan nombor ordinal dalam konteks yang berbeza."
     ]
   },
   {
     "kemahiran": "Kemahiran 3.4 - Nombor Bulat Hingga 1000",
-    "standardKandungan": "1.1 Nilai Nombor; 1.2 Menulis nombor; 1.3 Rangkaian nombor; 1.4 Nilai tempat; 1.5 Menganggar; 1.6 Membundarkan nombor (Tahun 3)",
+    "standardKandungan": "Tahun 3 — 1.1 Nilai Nombor.\nTahun 3 — 1.2 Menulis nombor.\nTahun 3 — 1.3 Rangkaian nombor\nTahun 3 — 1.4 Nilai tempat\nTahun 3 — 1.5 Menganggar.\nTahun 3 — 1.6 Membundarkan nombor.",
     "standardPembelajaran": [
-      "1.1.1 Menamakan nombor hingga 10 000: (i) Membaca sebarang nombor yang diberi dalam perkataan; (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka; (iii) Memadan angka dengan namanya dalam perkataan",
-      "1.1.2 Menentukan nilai nombor hingga 10 000: (i) Menunjukkan kuantiti bagi nombor yang diberi; (ii) Memadankan kumpulan objek dengan nombor; (iii) Membandingkan nilai dua nombor",
-      "1.2.1 Menulis nombor dalam angka dan perkataan",
-      "1.3.1 Membilang satu-satu hingga sepuluh-sepuluh, seratus-seratus dan seribu-seribu secara tertib menaik dan menurun",
-      "1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun",
-      "1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor",
-      "1.4.2 Mencerakin sebarang nombor mengikut nilai tempat dan nilai digit",
-      "1.5.1 Memberi anggaran kuantiti yang munasabah dengan menggunakan perkataan 'lebih kurang', 'kurang daripada' dan 'lebih daripada' berdasarkan set rujukan",
-      "1.6.1 Membundarkan nombor bulat hingga ribu terdekat"
+      "Tahun 3 — 1.1.1 Menamakan nombor hingga 10 000: (i) Membaca sebarang nombor yang diberi dalam perkataan. (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka. (iii) Memadan angka dengan namanya dalam perkataan.",
+      "Tahun 3 — 1.1.2 Menentukan nilai nombor hingga 10 000: (i) Menunjukkan kuantiti bagi nombor yang diberi. (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor.",
+      "Tahun 3 — 1.2.1 Menulis nombor dalam angka dan perkataan.",
+      "Tahun 3 — 1.3.1 Membilang satu-satu hingga sepuluh-sepuluh, seratus-seratus dan seribu-seribu secara tertib menaik dan menurun.",
+      "Tahun 3 — 1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun.",
+      "Tahun 3 — 1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor.",
+      "Tahun 3 — 1.4.2 Mencerakin sebarang nombor mengikut nilai tempat dan nilai digit.",
+      "Tahun 3 — 1.5.1 Memberi anggaran kuantiti yang munasabah dengan menggunakan perkataan ‘lebih kurang’, ‘kurang daripada’ dan ‘lebih daripada’ berdasarkan set rujukan.",
+      "Tahun 3 — 1.6.1 Membundarkan nombor bulat hingga ribu terdekat."
+    ],
+    "standardContent": [
+      {
+        "code": "1.1",
+        "year": 3,
+        "content": "Tahun 3 — 1.1 Nilai Nombor.",
+        "learning": [
+          "Tahun 3 — 1.1.1 Menamakan nombor hingga 10 000: (i) Membaca sebarang nombor yang diberi dalam perkataan. (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka. (iii) Memadan angka dengan namanya dalam perkataan.",
+          "Tahun 3 — 1.1.2 Menentukan nilai nombor hingga 10 000: (i) Menunjukkan kuantiti bagi nombor yang diberi. (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "1.1.1 Menamakan nombor hingga 10 000: (i) Membaca sebarang nombor yang diberi dalam perkataan. (ii) Menyebut sebarang nombor yang diberi dalam bentuk angka. (iii) Memadan angka dengan namanya dalam perkataan.",
+            "pdfPage": 39,
+            "bookPage": 32
+          },
+          {
+            "year": 3,
+            "text": "1.1.2 Menentukan nilai nombor hingga 10 000: (i) Menunjukkan kuantiti bagi nombor yang diberi. (ii) Memadankan kumpulan objek dengan nombor. (iii) Membandingkan nilai dua nombor.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      },
+      {
+        "code": "1.2",
+        "year": 3,
+        "content": "Tahun 3 — 1.2 Menulis nombor.",
+        "learning": [
+          "Tahun 3 — 1.2.1 Menulis nombor dalam angka dan perkataan."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "1.2.1 Menulis nombor dalam angka dan perkataan.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      },
+      {
+        "code": "1.3",
+        "year": 3,
+        "content": "Tahun 3 — 1.3 Rangkaian nombor",
+        "learning": [
+          "Tahun 3 — 1.3.1 Membilang satu-satu hingga sepuluh-sepuluh, seratus-seratus dan seribu-seribu secara tertib menaik dan menurun.",
+          "Tahun 3 — 1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "1.3.1 Membilang satu-satu hingga sepuluh-sepuluh, seratus-seratus dan seribu-seribu secara tertib menaik dan menurun.",
+            "pdfPage": 39,
+            "bookPage": 32
+          },
+          {
+            "year": 3,
+            "text": "1.3.2 Melengkapkan sebarang rangkaian nombor secara tertib menaik dan menurun.",
+            "pdfPage": 39,
+            "bookPage": 32
+          }
+        ]
+      },
+      {
+        "code": "1.4",
+        "year": 3,
+        "content": "Tahun 3 — 1.4 Nilai tempat",
+        "learning": [
+          "Tahun 3 — 1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor.",
+          "Tahun 3 — 1.4.2 Mencerakin sebarang nombor mengikut nilai tempat dan nilai digit."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "1.4.1 Menyatakan nilai tempat dan nilai digit bagi sebarang nombor.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 3,
+            "text": "1.4.2 Mencerakin sebarang nombor mengikut nilai tempat dan nilai digit.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "1.5",
+        "year": 3,
+        "content": "Tahun 3 — 1.5 Menganggar.",
+        "learning": [
+          "Tahun 3 — 1.5.1 Memberi anggaran kuantiti yang munasabah dengan menggunakan perkataan ‘lebih kurang’, ‘kurang daripada’ dan ‘lebih daripada’ berdasarkan set rujukan."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "1.5.1 Memberi anggaran kuantiti yang munasabah dengan menggunakan perkataan ‘lebih kurang’, ‘kurang daripada’ dan ‘lebih daripada’ berdasarkan set rujukan.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "1.6",
+        "year": 3,
+        "content": "Tahun 3 — 1.6 Membundarkan nombor.",
+        "learning": [
+          "Tahun 3 — 1.6.1 Membundarkan nombor bulat hingga ribu terdekat."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "1.6.1 Membundarkan nombor bulat hingga ribu terdekat.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyebut nombor hingga 1000.",
+      "2. Mengenal pasti angka hingga 1000.",
+      "3. Membilang hingga 1000 objek dengan membuat kumpulan seratus-seratus dan sepuluh-sepuluh.",
+      "4. Menulis angka hingga 1000.",
+      "5. Membaca nombor dalam perkataan hingga 1000.",
+      "6. Menulis nombor dalam perkataan hingga 1000.",
+      "7. Mengenal pasti nilai tempat dan nilai digit bagi nombor hingga 1000.",
+      "8. Menyusun nombor hingga 1000 dengan membilang satu-satu secara tertib menaik dan tertib menurun.",
+      "9. Menyusun nombor hingga 1000 dengan membilang dua-dua secara tertib menaik dan tertib menurun.",
+      "10. Menyusun nombor hingga 1000 dengan membilang lima-lima secara tertib menaik dan tertib menurun.",
+      "11. Menyusun nombor hingga 1000 dengan membilang sepuluh- sepuluh secara tertib menaik dan tertib menurun.",
+      "12. Menyusun nombor hingga 1000 dengan membilang seratus- seratus secara tertib menaik dan tertib menurun.",
+      "13. Membandingkan dua nombor dan menyatakan yang mana lebih atau kurang.",
+      "14. Meletakkan nombor mengikut urutan pada garis nombor.",
+      "15. Menganggarkan kuantiti objek hingga 1000.",
+      "16. Membundarkan sebarang nombor dalam lingkungan 1000 kepada puluh yang terdekat."
     ]
   },
   {
-    "kemahiran": "Kemahiran 4.1 - Tambah Dalam Lingkungan 10 / Kemahiran 4.2 - Tambah Dalam Lingkungan 18",
-    "standardKandungan": "2.1 Konsep tambah dan tolak; 2.2 Tambah dalam lingkungan 100; 2.4 Penyelesaian masalah (Tahun 1)",
+    "kemahiran": "Kemahiran 4.1 - Tambah Dalam Lingkungan 10",
+    "standardKandungan": "Tahun 1 — 2.1 Konsep tambah dan tolak.\nTahun 1 — 2.2 Tambah dalam lingkungan 100.\nTahun 1 — 2.4 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak",
-      "2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan",
-      "2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi",
-      "2.2.1 Menambah dalam lingkungan fakta asas",
-      "2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100",
-      "2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian"
+      "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+      "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+      "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi.",
+      "Tahun 1 — 2.2.1 Menambah dalam lingkungan fakta asas.",
+      "Tahun 1 — 2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100.",
+      "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "2.1",
+        "year": 1,
+        "content": "Tahun 1 — 2.1 Konsep tambah dan tolak.",
+        "learning": [
+          "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+          "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+          "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 1,
+            "text": "2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 1,
+            "text": "2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "2.2",
+        "year": 1,
+        "content": "Tahun 1 — 2.2 Tambah dalam lingkungan 100.",
+        "learning": [
+          "Tahun 1 — 2.2.1 Menambah dalam lingkungan fakta asas.",
+          "Tahun 1 — 2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.2.1 Menambah dalam lingkungan fakta asas.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 1,
+            "text": "2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "2.4",
+        "year": 1,
+        "content": "Tahun 1 — 2.4 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyatakan konsep tambah melalui proses penyatuan.",
+      "2. Menentukan nilai lebih satu daripada suatu nombor.",
+      "3. Menyatakan jumlah bagi dua nombor.",
+      "4. Mengenal simbol ‘tambah’ dan ‘sama dengan’.",
+      "5. Menulis ayat matematik bagi operasi tambah.",
+      "6. Menyatakan pasangan nombor yang menghasilkan jumlah yang sama.",
+      "7. Menyatakan secara spontan jumlah dua nombor.",
+      "8. Menyelesaikan masalah mudah dalam situasi harian."
+    ]
+  },
+  {
+    "kemahiran": "Kemahiran 4.2 - Tambah Dalam Lingkungan 18",
+    "standardKandungan": "Tahun 1 — 2.1 Konsep tambah dan tolak.\nTahun 1 — 2.2 Tambah dalam lingkungan 100.\nTahun 1 — 2.4 Penyelesaian masalah.",
+    "standardPembelajaran": [
+      "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+      "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+      "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi.",
+      "Tahun 1 — 2.2.1 Menambah dalam lingkungan fakta asas.",
+      "Tahun 1 — 2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100.",
+      "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "2.1",
+        "year": 1,
+        "content": "Tahun 1 — 2.1 Konsep tambah dan tolak.",
+        "learning": [
+          "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+          "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+          "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 1,
+            "text": "2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 1,
+            "text": "2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "2.2",
+        "year": 1,
+        "content": "Tahun 1 — 2.2 Tambah dalam lingkungan 100.",
+        "learning": [
+          "Tahun 1 — 2.2.1 Menambah dalam lingkungan fakta asas.",
+          "Tahun 1 — 2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.2.1 Menambah dalam lingkungan fakta asas.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 1,
+            "text": "2.2.2 Menambah dua nombor hasil tambah dalam lingkungan 100.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "2.4",
+        "year": 1,
+        "content": "Tahun 1 — 2.4 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menentukan nilai lebih satu daripada suatu nombor.",
+      "2. Menyatakan jumlah bagi dua nombor.",
+      "3. Menulis ayat matematik bagi operasi tambah.",
+      "4. Menyatakan pasangan nombor yang menghasilkan jumlah yang sama.",
+      "5. Menyatakan secara spontan jumlah dua nombor.",
+      "6. Menyelesaikan masalah mudah dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 4.3 - Tambah Dalam Lingkungan 100",
-    "standardKandungan": "2.1 Tambah dalam lingkungan 1000; 2.5 Penyelesaian masalah (Tahun 2)",
+    "standardKandungan": "Tahun 2 — 2.1 Tambah dalam lingkungan 1000.\nTahun 2 — 2.5 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.1.1 Menambah dua nombor hasil tambah dalam lingkungan 1000",
-      "2.1.2 Menambah tiga nombor hasil tambah dalam lingkungan 1000",
-      "2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000",
-      "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian"
+      "Tahun 2 — 2.1.1 Menambah dua nombor hasil tambah dalam lingkungan 1000.",
+      "Tahun 2 — 2.1.2 Menambah tiga nombor hasil tambah dalam lingkungan 1000.",
+      "Tahun 2 — 2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+      "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "2.1",
+        "year": 2,
+        "content": "Tahun 2 — 2.1 Tambah dalam lingkungan 1000.",
+        "learning": [
+          "Tahun 2 — 2.1.1 Menambah dua nombor hasil tambah dalam lingkungan 1000.",
+          "Tahun 2 — 2.1.2 Menambah tiga nombor hasil tambah dalam lingkungan 1000."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.1.1 Menambah dua nombor hasil tambah dalam lingkungan 1000.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 2,
+            "text": "2.1.2 Menambah tiga nombor hasil tambah dalam lingkungan 1000.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      },
+      {
+        "code": "2.5",
+        "year": 2,
+        "content": "Tahun 2 — 2.5 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 2 — 2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+          "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+            "pdfPage": 40,
+            "bookPage": 33
+          },
+          {
+            "year": 2,
+            "text": "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian.",
+            "pdfPage": 40,
+            "bookPage": 33
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menambah dua nombor tanpa mengumpul semula bagi nombor satu digit dengan nombor satu digit.",
+      "2. Menambah dua nombor tanpa mengumpul semula bagi nombor dua digit dengan nombor satu digit.",
+      "3. Menambah dua nombor tanpa mengumpul semula bagi nombor dua digit dengan nombor dua digit.",
+      "4. Menambah dua nombor dengan mengumpul semula bagi nombor dua digit dengan nombor satu digit.",
+      "5. Menambah dua nombor dengan mengumpul semula bagi nombor dua digit dengan nombor dua digit.",
+      "6. Menambah tiga nombor satu digit.",
+      "7. Melengkapkan ayat matematik operasi tambah yang melibatkan dua nombor.",
+      "8. Menyelesaikan masalah yang melibatkan operasi tambah dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 4.4 - Tambah Dalam Lingkungan 1000",
-    "standardKandungan": "2.1 Tambah dalam lingkungan 10 000; 2.7 Penyelesaian masalah (Tahun 3)",
+    "standardKandungan": "Tahun 3 — 2.1 Tambah dalam lingkungan 10 000.\nTahun 3 — 2.7 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nombor hasil tambah dalam lingkungan 10 000",
-      "2.1.2 Menyelesaikan ayat matematik tambah melibatkan tiga nombor, hasil tambah dalam lingkungan 10 000",
-      "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000"
+      "Tahun 3 — 2.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nombor hasil tambah dalam lingkungan 10 000.",
+      "Tahun 3 — 2.1.2 Menyelesaikan ayat matematik tambah melibatkan tiga nombor, hasil tambah dalam lingkungan 10 000.",
+      "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+    ],
+    "standardContent": [
+      {
+        "code": "2.1",
+        "year": 3,
+        "content": "Tahun 3 — 2.1 Tambah dalam lingkungan 10 000.",
+        "learning": [
+          "Tahun 3 — 2.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nombor hasil tambah dalam lingkungan 10 000.",
+          "Tahun 3 — 2.1.2 Menyelesaikan ayat matematik tambah melibatkan tiga nombor, hasil tambah dalam lingkungan 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nombor hasil tambah dalam lingkungan 10 000.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 3,
+            "text": "2.1.2 Menyelesaikan ayat matematik tambah melibatkan tiga nombor, hasil tambah dalam lingkungan 10 000.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      },
+      {
+        "code": "2.7",
+        "year": 3,
+        "content": "Tahun 3 — 2.7 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menambah hingga tiga nombor tanpa mengumpul semula yang melibatkan hingga nombor tiga digit.",
+      "2. Menambah dua nombor hingga nombor tiga digit dengan mengumpul semula.",
+      "3. Menambah tiga nombor hingga tiga digit dengan mengumpul semula.",
+      "4. Menyelesaikan masalah yang melibatkan operasi tambah dalam situasi harian."
     ]
   },
   {
-    "kemahiran": "Kemahiran 5.1 - Tolak Dalam Lingkungan 10 / Kemahiran 5.2 - Tolak Dalam Lingkungan 18",
-    "standardKandungan": "2.1 Konsep tambah dan tolak; 2.3 Tolak dalam lingkungan 100; 2.4 Penyelesaian masalah (Tahun 1)",
+    "kemahiran": "Kemahiran 5.1 - Tolak Dalam Lingkungan 10",
+    "standardKandungan": "Tahun 1 — 2.1 Konsep tambah dan tolak.\nTahun 1 — 2.3 Tolak dalam lingkungan 100.\nTahun 1 — 2.4 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak",
-      "2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan",
-      "2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi",
-      "2.3.1 Menolak dalam lingkungan fakta asas",
-      "2.3.2 Menolak dua nombor dalam lingkungan 100",
-      "2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian"
+      "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+      "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+      "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi",
+      "Tahun 1 — 2.3.1 Menolak dalam lingkungan fakta asas.",
+      "Tahun 1 — 2.3.2 Menolak dua nombor dalam lingkungan 100.",
+      "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "2.1",
+        "year": 1,
+        "content": "Tahun 1 — 2.1 Konsep tambah dan tolak.",
+        "learning": [
+          "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+          "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+          "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi"
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 1,
+            "text": "2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 1,
+            "text": "2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      },
+      {
+        "code": "2.3",
+        "year": 1,
+        "content": "Tahun 1 — 2.3 Tolak dalam lingkungan 100.",
+        "learning": [
+          "Tahun 1 — 2.3.1 Menolak dalam lingkungan fakta asas.",
+          "Tahun 1 — 2.3.2 Menolak dua nombor dalam lingkungan 100."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.3.1 Menolak dalam lingkungan fakta asas.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 1,
+            "text": "2.3.2 Menolak dua nombor dalam lingkungan 100.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      },
+      {
+        "code": "2.4",
+        "year": 1,
+        "content": "Tahun 1 — 2.4 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyatakan konsep tolak melalui proses pengasingan.",
+      "2. Menentukan nilai kurang satu daripada suatu nombor.",
+      "3. Mengenal simbol ‘tolak’ dan ‘sama dengan’.",
+      "4. Menulis ayat matematik bagi operasi tolak.",
+      "5. Menyelesaikan masalah mudah dalam situasi harian."
+    ]
+  },
+  {
+    "kemahiran": "Kemahiran 5.2 - Tolak Dalam Lingkungan 18",
+    "standardKandungan": "Tahun 1 — 2.1 Konsep tambah dan tolak.\nTahun 1 — 2.3 Tolak dalam lingkungan 100.\nTahun 1 — 2.4 Penyelesaian masalah.",
+    "standardPembelajaran": [
+      "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+      "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+      "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi",
+      "Tahun 1 — 2.3.1 Menolak dalam lingkungan fakta asas.",
+      "Tahun 1 — 2.3.2 Menolak dua nombor dalam lingkungan 100.",
+      "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "2.1",
+        "year": 1,
+        "content": "Tahun 1 — 2.1 Konsep tambah dan tolak.",
+        "learning": [
+          "Tahun 1 — 2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+          "Tahun 1 — 2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+          "Tahun 1 — 2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi"
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.1.1 Mengguna dan mempelbagaikan perbendaharaan kata yang relevan dalam konteks tambah dan tolak.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 1,
+            "text": "2.1.2 Memperkenalkan simbol bagi tambah, tolak dan sama dengan.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 1,
+            "text": "2.1.3 Menggunakan simbol tambah, tolak dan sama dengan bagi menulis ayat matematik berdasarkan situasi yang diberi",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      },
+      {
+        "code": "2.3",
+        "year": 1,
+        "content": "Tahun 1 — 2.3 Tolak dalam lingkungan 100.",
+        "learning": [
+          "Tahun 1 — 2.3.1 Menolak dalam lingkungan fakta asas.",
+          "Tahun 1 — 2.3.2 Menolak dua nombor dalam lingkungan 100."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.3.1 Menolak dalam lingkungan fakta asas.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 1,
+            "text": "2.3.2 Menolak dua nombor dalam lingkungan 100.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      },
+      {
+        "code": "2.4",
+        "year": 1,
+        "content": "Tahun 1 — 2.4 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 1 — 2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "2.4.2 Menyelesaikan masalah tambah dan tolak yang melibatkan situasi harian.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menentukan nilai kurang satu daripada suatu nombor.",
+      "2. Mencari beza antara dua nombor.",
+      "3. Menulis ayat matematik bagi operasi tolak melalui proses pengasingan.",
+      "4. Menolak secara spontan fakta asas tolak.",
+      "5. Menyatakan pasangan nombor yang mungkin, di mana apabila ditolak memberi baki yang sama.",
+      "6. Menyatakan secara spontan beza antara dua nombor.",
+      "7. Membina ayat matematik berdasarkan situasi.",
+      "8. Menyelesaikan masalah harian yang mudah."
     ]
   },
   {
     "kemahiran": "Kemahiran 5.3 - Tolak Dalam Lingkungan 100",
-    "standardKandungan": "2.2 Tolak dalam lingkungan 1000; 2.5 Penyelesaian masalah (Tahun 2)",
+    "standardKandungan": "Tahun 2 — 2.2 Tolak dalam lingkungan 1000.\nTahun 2 — 2.5 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.2.1 Menolak dua nombor dalam lingkungan 1000",
-      "2.2.2 Menolak dua nombor dari satu nombor dalam lingkungan 1000",
-      "2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000",
-      "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian"
+      "Tahun 2 — 2.2.1 Menolak dua nombor dalam lingkungan 1000.",
+      "Tahun 2 — 2.2.2 Menolak dua nombor dari satu nombor dalam lingkungan 1000.",
+      "Tahun 2 — 2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+      "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "2.2",
+        "year": 2,
+        "content": "Tahun 2 — 2.2 Tolak dalam lingkungan 1000.",
+        "learning": [
+          "Tahun 2 — 2.2.1 Menolak dua nombor dalam lingkungan 1000.",
+          "Tahun 2 — 2.2.2 Menolak dua nombor dari satu nombor dalam lingkungan 1000."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.2.1 Menolak dua nombor dalam lingkungan 1000.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 2,
+            "text": "2.2.2 Menolak dua nombor dari satu nombor dalam lingkungan 1000.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      },
+      {
+        "code": "2.5",
+        "year": 2,
+        "content": "Tahun 2 — 2.5 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 2 — 2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+          "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+            "pdfPage": 41,
+            "bookPage": 34
+          },
+          {
+            "year": 2,
+            "text": "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian.",
+            "pdfPage": 41,
+            "bookPage": 34
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menolak nombor satu digit daripada nombor satu digit.",
+      "2. Menolak nombor satu digit daripada nombor dua digit, tanpa mengumpul semula.",
+      "3. Menolak nombor dua digit daripada nombor dua digit, tanpa mengumpul semula.",
+      "4. Menolak nombor satu digit daripada nombor dua digit dengan mengumpul semula.",
+      "5. Menolak nombor dua digit daripada nombor dua digit, dengan mengumpul semula.",
+      "6. Menolak tiga nombor satu digit.",
+      "7. Melengkapkan ayat matematik operasi tolak yang melibatkan dua nombor.",
+      "8. Menyelesaikan masalah yang melibatkan operasi tolak dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 5.4 - Tolak Dalam Lingkungan 1000",
-    "standardKandungan": "2.2 Tolak dalam lingkungan 10 000; 2.7 Penyelesaian masalah (Tahun 3)",
+    "standardKandungan": "Tahun 3 — 2.2 Tolak dalam lingkungan 10 000.\nTahun 3 — 2.7 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nombor dalam lingkungan 10 000",
-      "2.2.2 Menyelesaikan ayat matematik tolak melibatkan dua nombor dari satu nombor dalam lingkungan 10 000",
-      "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000"
+      "Tahun 3 — 2.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nombor dalam lingkungan 10 000.",
+      "Tahun 3 — 2.2.2 Menyelesaikan ayat matematik tolak melibatkan dua nombor dari satu nombor dalam lingkungan 10 000.",
+      "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+    ],
+    "standardContent": [
+      {
+        "code": "2.2",
+        "year": 3,
+        "content": "Tahun 3 — 2.2 Tolak dalam lingkungan 10 000.",
+        "learning": [
+          "Tahun 3 — 2.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nombor dalam lingkungan 10 000.",
+          "Tahun 3 — 2.2.2 Menyelesaikan ayat matematik tolak melibatkan dua nombor dari satu nombor dalam lingkungan 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nombor dalam lingkungan 10 000.",
+            "pdfPage": 42,
+            "bookPage": 35
+          },
+          {
+            "year": 3,
+            "text": "2.2.2 Menyelesaikan ayat matematik tolak melibatkan dua nombor dari satu nombor dalam lingkungan 10 000.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      },
+      {
+        "code": "2.7",
+        "year": 3,
+        "content": "Tahun 3 — 2.7 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menolak nombor dua digit daripada nombor tiga digit, tanpa mengumpul semula.",
+      "2. Menolak nombor tiga digit daripada nombor tiga digit, tanpa mengumpul semula.",
+      "3. Menolak nombor dua digit daripada nombor tiga digit, dengan mengumpul semula.",
+      "4. Menolak nombor tiga digit daripada nombor tiga digit, dengan mengumpul semula.",
+      "5. Menolak berturut-turut dua nombor daripada sebarang nombor hingga nombor tiga digit, tanpa mengumpul semula.",
+      "6. Menolak berturut-turut dua nombor daripada sebarang nombor hingga tiga digit, dengan mengumpul semula.",
+      "7. Mengenal operasi tolak sebagai songsangan operasi tambah.",
+      "8. Menyelesaikan masalah mudah dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 6 - Operasi Darab",
-    "standardKandungan": "2.3 Darab dalam lingkungan 1000; 2.5 Penyelesaian masalah (Tahun 2); 2.3 Darab dalam lingkungan 10 000; 2.7 Penyelesaian masalah (Tahun 3)",
+    "standardKandungan": "Tahun 2 — 2.3 Darab dalam lingkungan 1000.\nTahun 2 — 2.5 Penyelesaian masalah.\nTahun 3 — 2.3 Darab dalam lingkungan 10 000.\nTahun 3 — 2.7 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.3.1 Mendarab dalam lingkungan fakta asas (Tahun 2)",
-      "2.3.2 Mendarab nombor satu digit dengan 10 (Tahun 2)",
-      "2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000 (Tahun 2)",
-      "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian (Tahun 2)",
-      "2.3.1 Menyelesaikan ayat matematik darab bagi sebarang nombor hingga empat digit dengan nombor satu digit, 10, 100 dan 1000, dan hasil darabnya hingga 10 000 (Tahun 3)",
-      "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000 (Tahun 3)"
+      "Tahun 2 — 2.3.1 Mendarab dalam lingkungan fakta asas.",
+      "Tahun 2 — 2.3.2 Mendarab nombor satu digit dengan 10.",
+      "Tahun 2 — 2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+      "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian.",
+      "Tahun 3 — 2.3.1 Menyelesaikan ayat matematik darab bagi sebarang nombor hingga empat digit dengan nombor satu digit, 10, 100 dan 1000, dan hasil darabnya hingga 10 000.",
+      "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+    ],
+    "standardContent": [
+      {
+        "code": "2.3",
+        "year": 2,
+        "content": "Tahun 2 — 2.3 Darab dalam lingkungan 1000.",
+        "learning": [
+          "Tahun 2 — 2.3.1 Mendarab dalam lingkungan fakta asas.",
+          "Tahun 2 — 2.3.2 Mendarab nombor satu digit dengan 10."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.3.1 Mendarab dalam lingkungan fakta asas.",
+            "pdfPage": 42,
+            "bookPage": 35
+          },
+          {
+            "year": 2,
+            "text": "2.3.2 Mendarab nombor satu digit dengan 10.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      },
+      {
+        "code": "2.5",
+        "year": 2,
+        "content": "Tahun 2 — 2.5 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 2 — 2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+          "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.5.1 Mereka cerita masalah tambah, tolak, darab dan bahagi dalam lingkungan 1000.",
+            "pdfPage": 42,
+            "bookPage": 35
+          },
+          {
+            "year": 2,
+            "text": "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      },
+      {
+        "code": "2.3",
+        "year": 3,
+        "content": "Tahun 3 — 2.3 Darab dalam lingkungan 10 000.",
+        "learning": [
+          "Tahun 3 — 2.3.1 Menyelesaikan ayat matematik darab bagi sebarang nombor hingga empat digit dengan nombor satu digit, 10, 100 dan 1000, dan hasil darabnya hingga 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.3.1 Menyelesaikan ayat matematik darab bagi sebarang nombor hingga empat digit dengan nombor satu digit, 10, 100 dan 1000, dan hasil darabnya hingga 10 000.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      },
+      {
+        "code": "2.7",
+        "year": 3,
+        "content": "Tahun 3 — 2.7 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Mengenal konsep darab melalui proses penambahan berulang.",
+      "2. Mengenal konsep darab melalui proses penambahan berulang: i. dua-dua ii. lima-lima iii. sepuluh-sepuluh iv. empat-empat",
+      "3. Menulis ayat matematik tambah berulang.",
+      "4. Mengenal simbol darab (X) dan sama dengan (=).",
+      "5. Melengkapkan ayat matematik dengan menggunakan simbol dengan betul.",
+      "6. Menulis ayat matematik darab kumpulan i. dua-dua ii. lima-lima iii. sepuluh-sepuluh iv. empat-empat berbantukan: a) objek b) gambar c) garis nombor.",
+      "7. Menulis ayat matematik yang sama jawapannya dengan mengubah susunan nombor yang didarabkan bagi kumpulan i. dua-dua ii. lima-lima iii. sepuluh-sepuluh iv. empat-empat.",
+      "8. Membina dan melengkapkan ayat matematik darab bagi sifir i. dua ii. lima iii. sepuluh iv. empat.",
+      "9. memahami dan menulis nilai bagi sifir i. satu ii. sifar",
+      "10. memahami dan menulis nilai bagi sifir i. satu ii. sifar",
+      "11. Melengkapkan ayat matematik darab bagi sifir i. dua ii. lima iii. sepuluh iv. empat v. satu vi. sifar.",
+      "12. Melengkapkan ayat matematik darab bagi sifir i. dua ii. lima iii. sepuluh iv. empat v. satu vi. sifar mengikut tertib menaik dan secara rawak.",
+      "13. Melengkapkan ayat matematik darab bagi sifir i. dua ii. lima iii. sepuluh iv. empat v. satu vi. sifar mengikut salah satu daripada dua nombor yang didarab untuk memberi hasil darab tertentu.",
+      "14. mereka cipta cerita berdasarkan ayat matematik darab yang diberi.",
+      "15. menyelesaikan masalah harian yang melibatkan pendaraban dua nombor dengan menggunakan sifir i. dua ii. lima iii. sepuluh iv. empat",
+      "1. Mengenal konsep darab melalui proses penambahan berulang.",
+      "2. Mengenal simbol darab ( X ).",
+      "3. Menulis ayat matematik tambah berulang. i. tiga-tiga ii. enam-enam iii. tujuh-tujuh iv. lapan-lapan v. sembilan-sembilan",
+      "4. Menulis ayat matematik darab sifir: i. tiga ii. enam iii. tujuh iv. lapan v. sembilan",
+      "5. Melengkapkan ayat matematik berdasarkan garis nombor.",
+      "6. Menulis operasi darab yang sama jawapan dengan operasi darab yang diberi dengan mengubah susunan nombor yang didarabkan.",
+      "7. Membina sifir. i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000",
+      "8. Menulis ayat matematik bagi sifir i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000",
+      "9. Melengkapkan ayat matematik bagi darab melibatkan sifir: i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000",
+      "10. Melengkapkan ayat matematik melibatkan sifir i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000 mengikut tertib menaik.",
+      "11. Melengkapkan ayat matematik melibatkan sifir i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000 secara rawak.",
+      "12. Melengkapkan ayat matematik melibatkan sifir: i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000 mengikut salah satu daripada dua nombor yang didarab untuk memberi hasil darab tertentu.",
+      "13. Mereka cerita berdasarkan ayat matematik darab yang diberi.",
+      "14. Menyelesaikan masalah harian yang melibatkan pendaraban dua nombor dengan menggunakan sifir tiga, enam, tujuh, lapan, sembilan, I00 dan I000."
     ]
   },
   {
     "kemahiran": "Kemahiran 7 - Operasi Bahagi",
-    "standardKandungan": "2.4 Bahagi dalam lingkungan 1000; 2.5 Penyelesaian masalah (Tahun 2); 2.4 Bahagi dalam lingkungan 10 000; 2.7 Penyelesaian masalah (Tahun 3)",
+    "standardKandungan": "Tahun 2 — 2.4 Bahagi dalam lingkungan 1000\nTahun 2 — 2.5 Penyelesaian masalah.\nTahun 3 — 2.4 Bahagi dalam lingkungan 10 000.\nTahun 3 — 2.7 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "2.4.1 Membahagi dalam lingkungan fakta asas (Tahun 2)",
-      "2.4.2 Membahagi sebarang nombor dua digit dengan 10 (Tahun 2)",
-      "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian (Tahun 2)",
-      "2.4.1 Menyelesaikan ayat matematik bahagi bagi sebarang nombor dalam lingkungan 10 000 dengan nombor satu digit, 10, 100 dan 1000 (Tahun 3)",
-      "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000 (Tahun 3)"
+      "Tahun 2 — 2.4.1 Membahagi dalam lingkungan fakta asas.",
+      "Tahun 2 — 2.4.2 Membahagi sebarang nombor dua digit dengan 10.",
+      "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian.",
+      "Tahun 3 — 2.4.1 Menyelesaikan ayat matematik bahagi bagi sebarang nombor dalam lingkungan 10 000 dengan nombor satu digit, 10, 100 dan 1000.",
+      "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+    ],
+    "standardContent": [
+      {
+        "code": "2.4",
+        "year": 2,
+        "content": "Tahun 2 — 2.4 Bahagi dalam lingkungan 1000",
+        "learning": [
+          "Tahun 2 — 2.4.1 Membahagi dalam lingkungan fakta asas.",
+          "Tahun 2 — 2.4.2 Membahagi sebarang nombor dua digit dengan 10."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.4.1 Membahagi dalam lingkungan fakta asas.",
+            "pdfPage": 42,
+            "bookPage": 35
+          },
+          {
+            "year": 2,
+            "text": "2.4.2 Membahagi sebarang nombor dua digit dengan 10.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      },
+      {
+        "code": "2.5",
+        "year": 2,
+        "content": "Tahun 2 — 2.5 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 2 — 2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "2.5.2 Menyelesaikan masalah tambah, tolak, darab dan bahagi yang melibatkan situasi harian.",
+            "pdfPage": 42,
+            "bookPage": 35
+          }
+        ]
+      },
+      {
+        "code": "2.4",
+        "year": 3,
+        "content": "Tahun 3 — 2.4 Bahagi dalam lingkungan 10 000.",
+        "learning": [
+          "Tahun 3 — 2.4.1 Menyelesaikan ayat matematik bahagi bagi sebarang nombor dalam lingkungan 10 000 dengan nombor satu digit, 10, 100 dan 1000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.4.1 Menyelesaikan ayat matematik bahagi bagi sebarang nombor dalam lingkungan 10 000 dengan nombor satu digit, 10, 100 dan 1000.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      },
+      {
+        "code": "2.7",
+        "year": 3,
+        "content": "Tahun 3 — 2.7 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 3 — 2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "2.7.1 Mereka cerita berdasarkan ayat matematik melibatkan dua nombor bagi operasi asas dalam lingkungan 10 000.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Mengenal konsep bahagi melalui proses pengagihan.",
+      "2. Mengelaskan kepada kumpulan i. dua-dua ii. empat-empat iii. lima-lima iv. sepuluh-sepuluh",
+      "3. Memperkenalkan simbol bahagi (÷) dan sama dengan (=).",
+      "4. Membina dan melengkapkan ayat matematik menggunakan simbol bahagi dan sama berdasarkan situasi yang diberi.",
+      "5. Menulis ayat matematik berdasarkan aktiviti pengumpulan.",
+      "5. Menulis ayat matematik berdasarkan aktiviti pengongsian.",
+      "7. Menulis ayat matematik berdasarkan aktiviti tolak berturut-turut.",
+      "8. Menulis ayat matematik berdasarkan aktiviti songsangan operasi darab.",
+      "9. Membentuk ayat matematik bagi pembahagian yang melibatkan sifir bahagi i. dua ii. lima iii. sepuluh iv. empat",
+      "10. Melengkapkan ayat matematik.",
+      "11. Menentukan nilai bagi pembahagian dengan satu dan sifar.",
+      "12. Melengkapkan ayat matematik bahagi yang melibatkan sifir bahagi i. dua, ii. lima, iii. sepuluh, iv. empat, v. satu dan vi. sifar.",
+      "13. Melengkapkan ayat matematik melibatkan sifir bahagi: i. dua, ii. lima, iii. sepuluh, iv. empat, v. satu dan vi. sifar. mengikut: a) tertib menaik b) rawak",
+      "14. Melengkapkan ayat matematik melibatkan sifir bahagi: i. dua, ii. lima, iii. sepuluh, iv. empat, v. satu dan vi. sifar. mengikut salah satu daripada dua nombor yang dibahagi untuk memberi hasil bahagi tertentu dalam pembahagian apabila disoal.",
+      "15. Mereka cipta cerita berdasarkan ayat matematik bahagi yang diberi.",
+      "16. Menyelesaikan masalah melibatkan operasi bahagi dalam situasi harian.",
+      "1. Mengkelaskan kepada kumpulan: i. tiga-tiga, ii. enam- enam, iii. tujuh-tujuh, iv. lapan-lapan,dan v. sembilan-sembilan dengan menyatakan kumpulan yang diperoleh dengan menggunakan: a) objek b) gambar c) garis nombor",
+      "2. Menulis ayat matematik dengan betul berdasarkan aktiviti pengumpulan.",
+      "3. Menulis ayat matematik dengan betul berdasarkan aktiviti pengongsian.",
+      "4. Menulis ayat matematik dengan betul berdasarkan aktiviti tolak berturut-turut.",
+      "5. Menulis ayat matematik dengan betul berdasarkan aktiviti songsangan operasi darab.",
+      "6. Membina ayat matematik bagi operasi bahagi melibatkan sifir : i. tiga ii. enam iii. tujuh iv. lapan v. sembilan berpandukan a) objek konkrit b) gambar c) garis nombor",
+      "7. Melengkapkan ayat matematik bagi operasi bahagi melibatkan sifir : i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000",
+      "8. Melengkapkan ayat matematik bagi operasi bahagi melibatkan sifir: i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. seratus vii. seribu mengikut tertib menaik.",
+      "9. Melengkapkan ayat matematik bagi operasi bahagi melibatkan sifir: i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000 secara rawak.",
+      "10. Melengkapkan ayat matematik bagi operasi bahagi melibatkan sifir : i. tiga ii. enam iii. tujuh iv. lapan v. sembilan vi. 100 vii. 1000 mengikut salah satu daripada dua nombor yang dibahagi untuk memberi hasil bahagi tertentu dalam pembahagian apabila disoal.",
+      "11. Mereka cerita berdasarkan ayat matematik melibatkan dua nombor.",
+      "12. Menyelesaikan masalah harian melibatkan operasi bahagi."
     ]
   },
   {
     "kemahiran": "Kemahiran 8.1 - Wang hingga RM10",
-    "standardKandungan": "4.1 Wang kertas dan duit syiling; 4.3 Penyelesaian masalah (Tahun 1)",
+    "standardKandungan": "Tahun 1 — 4.1 Wang kertas dan duit syiling.\nTahun 1 — 4.3 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "4.1.1 Mengenal pasti mata wang Malaysia dalam bentuk syiling dan wang kertas",
-      "4.1.2 Mewakilkan nilai wang: (i) Sen hingga RM1; (ii) Ringgit hingga RM10",
-      "4.1.3 Menukar wang: (i) Syiling hingga RM1; (ii) Ringgit hingga RM10",
-      "4.3.1 Menyelesaikan masalah harian melibatkan penambahan dan penolakan wang"
+      "Tahun 1 — 4.1.1 Mengenal pasti mata wang Malaysia dalam bentuk syiling dan wang kertas.",
+      "Tahun 1 — 4.1.2 Mewakilkan nilai wang: (i) Sen hingga RM1. (ii) Ringgit hingga RM10.",
+      "Tahun 1 — 4.1.3 Menukar wang: (i) Syiling hingga RM1. (ii) Ringgit hingga RM10",
+      "Tahun 1 — 4.3.1 Menyelesaikan masalah harian melibatkan penambahan dan penolakan wang."
+    ],
+    "standardContent": [
+      {
+        "code": "4.1",
+        "year": 1,
+        "content": "Tahun 1 — 4.1 Wang kertas dan duit syiling.",
+        "learning": [
+          "Tahun 1 — 4.1.1 Mengenal pasti mata wang Malaysia dalam bentuk syiling dan wang kertas.",
+          "Tahun 1 — 4.1.2 Mewakilkan nilai wang: (i) Sen hingga RM1. (ii) Ringgit hingga RM10.",
+          "Tahun 1 — 4.1.3 Menukar wang: (i) Syiling hingga RM1. (ii) Ringgit hingga RM10"
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "4.1.1 Mengenal pasti mata wang Malaysia dalam bentuk syiling dan wang kertas.",
+            "pdfPage": 43,
+            "bookPage": 36
+          },
+          {
+            "year": 1,
+            "text": "4.1.2 Mewakilkan nilai wang: (i) Sen hingga RM1. (ii) Ringgit hingga RM10.",
+            "pdfPage": 43,
+            "bookPage": 36
+          },
+          {
+            "year": 1,
+            "text": "4.1.3 Menukar wang: (i) Syiling hingga RM1. (ii) Ringgit hingga RM10",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      },
+      {
+        "code": "4.3",
+        "year": 1,
+        "content": "Tahun 1 — 4.3 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 1 — 4.3.1 Menyelesaikan masalah harian melibatkan penambahan dan penolakan wang."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "4.3.1 Menyelesaikan masalah harian melibatkan penambahan dan penolakan wang.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Mengenal pasti mata wang Malaysia dalam bentuk duit syiling dan wang kertas.",
+      "2. Mengenal pasti nilai wang dalam ‘RM’ dan ‘sen’.",
+      "3. Menyatakan gabungan wang syiling dan wang kertas yang memberikan jumlah nilai tertentu hingga RM10.",
+      "4. Menambah dan menolak gabungan wang syiling dan wang kertas yang memberikan jumlah nilai tertentu hingga RM10.",
+      "5. Menyelesaikan masalah yang melibatkan wang dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 8.2 - Wang hingga RM100",
-    "standardKandungan": "4.1 Wang kertas dan duit syiling; 4.2 Tambah wang; 4.3 Tolak wang; 4.7 Penyelesaian masalah (Tahun 2)",
+    "standardKandungan": "Tahun 2 — 4.1 Wang kertas dan duit syiling\nTahun 2 — 4.2 Tambah wang.\nTahun 2 — 4.3 Tolak wang\nTahun 2 — 4.7 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "4.1.1 Mengenal pasti mata wang Malaysia hingga RM100",
-      "4.1.2 Menentukan nilai wang hingga RM100",
-      "4.2.1 Menambah dua nilai wang hasil tambahnya hingga RM100",
-      "4.2.2 Menambah tiga nilai wang hasil tambahnya hingga RM100",
-      "4.3.1 Menolak dua nilai wang dalam lingkungan RM100",
-      "4.3.2 Menolak dua nilai wang dari satu nilai wang dalam lingkungan RM100",
-      "4.7.1 Menyelesaikan masalah harian yang melibatkan situasi harian"
+      "Tahun 2 — 4.1.1 Mengenal pasti mata wang Malaysia hingga RM100.",
+      "Tahun 2 — 4.1.2 Menentukan nilai wang hingga RM100.",
+      "Tahun 2 — 4.2.1 Menambah dua nilai wang hasil tambahnya hingga RM100.",
+      "Tahun 2 — 4.2.2 Menambah tiga nilai wang hasil tambahnya hingga RM100.",
+      "Tahun 2 — 4.3.1 Menolak dua nilai wang dalam lingkungan RM100.",
+      "Tahun 2 — 4.3.2 Menolak dua nilai wang dari satu nilai wang dalam lingkungan RM100.",
+      "Tahun 2 — 4.7.1 Menyelesaikan masalah harian yang melibatkan situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "4.1",
+        "year": 2,
+        "content": "Tahun 2 — 4.1 Wang kertas dan duit syiling",
+        "learning": [
+          "Tahun 2 — 4.1.1 Mengenal pasti mata wang Malaysia hingga RM100.",
+          "Tahun 2 — 4.1.2 Menentukan nilai wang hingga RM100."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "4.1.1 Mengenal pasti mata wang Malaysia hingga RM100.",
+            "pdfPage": 43,
+            "bookPage": 36
+          },
+          {
+            "year": 2,
+            "text": "4.1.2 Menentukan nilai wang hingga RM100.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      },
+      {
+        "code": "4.2",
+        "year": 2,
+        "content": "Tahun 2 — 4.2 Tambah wang.",
+        "learning": [
+          "Tahun 2 — 4.2.1 Menambah dua nilai wang hasil tambahnya hingga RM100.",
+          "Tahun 2 — 4.2.2 Menambah tiga nilai wang hasil tambahnya hingga RM100."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "4.2.1 Menambah dua nilai wang hasil tambahnya hingga RM100.",
+            "pdfPage": 43,
+            "bookPage": 36
+          },
+          {
+            "year": 2,
+            "text": "4.2.2 Menambah tiga nilai wang hasil tambahnya hingga RM100.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      },
+      {
+        "code": "4.3",
+        "year": 2,
+        "content": "Tahun 2 — 4.3 Tolak wang",
+        "learning": [
+          "Tahun 2 — 4.3.1 Menolak dua nilai wang dalam lingkungan RM100.",
+          "Tahun 2 — 4.3.2 Menolak dua nilai wang dari satu nilai wang dalam lingkungan RM100."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "4.3.1 Menolak dua nilai wang dalam lingkungan RM100.",
+            "pdfPage": 43,
+            "bookPage": 36
+          },
+          {
+            "year": 2,
+            "text": "4.3.2 Menolak dua nilai wang dari satu nilai wang dalam lingkungan RM100.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      },
+      {
+        "code": "4.7",
+        "year": 2,
+        "content": "Tahun 2 — 4.7 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 2 — 4.7.1 Menyelesaikan masalah harian yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "4.7.1 Menyelesaikan masalah harian yang melibatkan situasi harian.",
+            "pdfPage": 43,
+            "bookPage": 36
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Mengenal pasti mata wang Malaysia hingga RM100.",
+      "2. Menentukan nilai wang Hingga RM100.",
+      "3. Menukarkan duit syiling sehingga RM1.",
+      "4. Menukarkan wang kertas sehingga RM100.",
+      "5. Menambah wang sehingga RM100.",
+      "6. Menolak wang sehingga RM100",
+      "7. Menyelesaikan masalah yang melibatkan wang dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 8.3 - Wang hingga RM1000",
-    "standardKandungan": "4.1 Tambah wang; 4.2 Tolak wang; 4.4 Darab wang; 4.5 Bahagi wang; 4.8 Penyelesaian masalah (Tahun 3)",
+    "standardKandungan": "Tahun 3 — 4.1 Tambah wang.\nTahun 3 — 4.2 Tolak wang.\nTahun 3 — 4.4 Darab wang.\nTahun 3 — 4.5 Bahagi wang.\nTahun 3 — 4.8 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "4.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nilai wang dan hasil tambahnya hingga RM10 000",
-      "4.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nilai wang dalam lingkungan RM10 000",
-      "4.4.1 Menyelesaikan ayat matematik darab melibatkan nilai wang dengan nombor satu digit, 10, 100 dan 1000 dan hasil darabnya hingga RM10 000",
-      "4.5.1 Menyelesaikan ayat matematik bahagi melibatkan nilai wang dalam lingkungan RM10 000 dengan nombor satu digit, 10, 100 dan 1000",
-      "4.8.1 Mereka cerita berdasarkan ayat matematik tambah, tolak, darab dan bahagi melibatkan wang"
+      "Tahun 3 — 4.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nilai wang dan hasil tambahnya hingga RM10 000.",
+      "Tahun 3 — 4.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nilai wang dalam lingkungan RM10 000.",
+      "Tahun 3 — 4.4.1 Menyelesaikan ayat matematik darab melibatkan nilai wang dengan nombor satu digit, 10, 100 dan 1000 dan hasil darabnya hingga RM10 000.",
+      "Tahun 3 — 4.5.1 Menyelesaikan ayat matematik bahagi melibatkan nilai wang dalam lingkungan RM10 000 dengan nombor satu digit, 10, 100 dan 1000.",
+      "Tahun 3 — 4.8.1 Mereka cerita berdasarkan ayat matematik tambah, tolak, darab dan bahagi melibatkan wang."
+    ],
+    "standardContent": [
+      {
+        "code": "4.1",
+        "year": 3,
+        "content": "Tahun 3 — 4.1 Tambah wang.",
+        "learning": [
+          "Tahun 3 — 4.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nilai wang dan hasil tambahnya hingga RM10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "4.1.1 Menyelesaikan ayat matematik tambah melibatkan dua nilai wang dan hasil tambahnya hingga RM10 000.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "4.2",
+        "year": 3,
+        "content": "Tahun 3 — 4.2 Tolak wang.",
+        "learning": [
+          "Tahun 3 — 4.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nilai wang dalam lingkungan RM10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "4.2.1 Menyelesaikan ayat matematik tolak melibatkan dua nilai wang dalam lingkungan RM10 000.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "4.4",
+        "year": 3,
+        "content": "Tahun 3 — 4.4 Darab wang.",
+        "learning": [
+          "Tahun 3 — 4.4.1 Menyelesaikan ayat matematik darab melibatkan nilai wang dengan nombor satu digit, 10, 100 dan 1000 dan hasil darabnya hingga RM10 000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "4.4.1 Menyelesaikan ayat matematik darab melibatkan nilai wang dengan nombor satu digit, 10, 100 dan 1000 dan hasil darabnya hingga RM10 000.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "4.5",
+        "year": 3,
+        "content": "Tahun 3 — 4.5 Bahagi wang.",
+        "learning": [
+          "Tahun 3 — 4.5.1 Menyelesaikan ayat matematik bahagi melibatkan nilai wang dalam lingkungan RM10 000 dengan nombor satu digit, 10, 100 dan 1000."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "4.5.1 Menyelesaikan ayat matematik bahagi melibatkan nilai wang dalam lingkungan RM10 000 dengan nombor satu digit, 10, 100 dan 1000.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "4.8",
+        "year": 3,
+        "content": "Tahun 3 — 4.8 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 3 — 4.8.1 Mereka cerita berdasarkan ayat matematik tambah, tolak, darab dan bahagi melibatkan wang."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "4.8.1 Mereka cerita berdasarkan ayat matematik tambah, tolak, darab dan bahagi melibatkan wang.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyatakan nilai wang dalam ‘RM’ dan ‘sen’.",
+      "2. Menukarkan duit syiling sehingga RM10.",
+      "3. Menukarkan wang kertas sehingga RM1000.",
+      "4. Menukarkan ringgit kepada sen dan sebaliknya.",
+      "5. Menambah wang sehingga RM 1000.",
+      "6. Menolak wang sehingga RM 1000.",
+      "7. Mendarab wang, jawapannya tidak lebih daripada RM 1000.",
+      "8. Membahagi wang yang jumlahnya tidak lebih daripada RM 1000.",
+      "9. Menyelesaikan masalah yang melibatkan wang dalam situasi harian."
     ]
   },
   {
     "kemahiran": "Kemahiran 9 - Masa dan Waktu",
-    "standardKandungan": "5.1 Hari dan bulan; 5.2 Muka jam (Tahun 1); 5.1 Waktu dalam jam dan minit; 5.2 Perkaitan dalam waktu; 5.3 Penyelesaian masalah (Tahun 2); 5.1 Waktu dalam jam dan minit; 5.2 Perkaitan dalam waktu; 5.3 Kalendar; 5.4 Tambah masa; 5.5 Tolak masa; 5.7 Darab masa; 5.8 Bahagi masa; 5.9 Penyelesaian masalah (Tahun 3)",
+    "standardKandungan": "Tahun 1 — 5.1 Hari dan bulan.\nTahun 1 — 5.2 Muka jam.\nTahun 2 — 5.1 Waktu dalam jam dan minit.\nTahun 2 — 5.2 Perkaitan dalam waktu.\nTahun 2 — 5.3 Penyelesaian masalah.\nTahun 3 — 5.1 Waktu dalam jam dan minit.\nTahun 3 — 5.2 Perkaitan dalam waktu.\nTahun 3 — 5.3 Kalendar\nTahun 3 — 5.4 Tambah masa.\nTahun 3 — 5.5 Tolak masa.\nTahun 3 — 5.7 Darab masa.\nTahun 3 — 5.8 Bahagi masa.\nTahun 3 — 5.9 Penyelesaian masalah.",
     "standardPembelajaran": [
-      "5.1.1 Menyatakan waktu dalam sehari (Tahun 1)",
-      "5.1.2 Menyatakan dalam urutan peristiwa dalam sehari (Tahun 1)",
-      "5.1.3 Menamakan hari dalam seminggu (Tahun 1)",
-      "5.1.4 Menamakan bulan dalam setahun (Tahun 1)",
-      "5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit (Tahun 1)",
-      "5.2.2 Mengenal pasti dan menyatakan 'setengah', 'satu perempat' dan 'tiga perempat' berdasarkan muka jam (Tahun 1)",
-      "5.2.3 Menyebut dan menulis waktu dalam jam, setengah dan satu perempat jam sahaja dengan menggunakan jam analog (Tahun 1)",
-      "5.1.1 Mengenal tanda senggatan minit pada muka jam (Tahun 2)",
-      "5.1.2 Menyatakan dan menunjukkan waktu dalam jam dan minit (Tahun 2)",
-      "5.1.3 Menukar waktu dalam jam dan minit daripada perkataan kepada angka dan sebaliknya (Tahun 2)",
-      "5.1.4 Merekod waktu dalam jam dan minit (Tahun 2)",
-      "5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit (Tahun 2)",
-      "5.3.1 Menyelesaikan masalah yang melibatkan situasi harian (Tahun 2)",
-      "5.1.1 Membaca dan mendapatkan maklumat daripada jadual waktu sesuatu aktiviti (Tahun 3)",
-      "5.1.2 Membaca dan merekod waktu sebelum, semasa dan selepas sesuatu aktiviti (Tahun 3)",
-      "5.2.1 Menyatakan perkaitan minggu dengan hari, tahun dengan bulan, dan minit dengan saat (Tahun 3)",
-      "5.2.2 Menukar unit masa melibatkan jam dengan minit, dan minit dengan saat (Tahun 3)",
-      "5.3.1 Membaca dan mendapatkan maklumat daripada kalendar Masihi (Tahun 3)",
-      "5.4.1 Menyelesaikan ayat matematik tambah hingga tiga nilai masa: (i) jam dengan jam; (ii) minit dengan minit (Tahun 3)",
-      "5.5.1 Menyelesaikan ayat matematik tolak hingga tiga nilai masa: (i) jam dengan jam; (ii) minit dengan minit (Tahun 3)",
-      "5.7.1 Menyelesaikan ayat matematik darab melibatkan masa: (i) jam; (ii) minit (Tahun 3)",
-      "5.8.1 Menyelesaikan ayat matematik bahagi melibatkan masa: (i) jam; (ii) minit (Tahun 3)",
-      "5.9.2 Menyelesaikan masalah berkaitan masa dan waktu dalam situasi harian (Tahun 3)"
+      "Tahun 1 — 5.1.1 Menyatakan waktu dalam sehari.",
+      "Tahun 1 — 5.1.2 Menyatakan dalam urutan peristiwa dalam sehari.",
+      "Tahun 1 — 5.1.3 Menamakan hari dalam seminggu.",
+      "Tahun 1 — 5.1.4 Menamakan bulan dalam setahun.",
+      "Tahun 1 — 5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit.",
+      "Tahun 1 — 5.2.2 Mengenal pasti dan menyatakan ‘setengah’, ‘satu perempat‘ dan ‘tiga perempat’ berdasarkan muka jam.",
+      "Tahun 1 — 5.2.3 Menyebut dan menulis waktu dalam jam, setengah dan satu perempat jam sahaja dengan menggunakan jam analog.",
+      "Tahun 2 — 5.1.1 Mengenal tanda senggatan minit pada muka jam.",
+      "Tahun 2 — 5.1.2 Menyatakan dan menunjukkan waktu dalam jam dan minit.",
+      "Tahun 2 — 5.1.3 Menukar waktu dalam jam dan minit daripada perkataan kepada angka dan sebaliknya.",
+      "Tahun 2 — 5.1.4 Merekod waktu dalam jam dan minit.",
+      "Tahun 2 — 5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit.",
+      "Tahun 2 — 5.3.1 Menyelesaikan masalah yang melibatkan situasi harian.",
+      "Tahun 3 — 5.1.1 Membaca dan mendapatkan maklumat daripada jadual waktu sesuatu aktiviti.",
+      "Tahun 3 — 5.1.2 Membaca dan merekod waktu sebelum, semasa dan selepas sesuatu aktiviti.",
+      "Tahun 3 — 5.2.1 Menyatakan perkaitan minggu dengan hari, tahun dengan bulan, dan minit dengan saat.",
+      "Tahun 3 — 5.2.2 Menukar unit masa melibatkan jam dengan minit, dan minit dengan saat.",
+      "Tahun 3 — 5.3.1 Membaca dan mendapatkan maklumat daripada kalendar Masihi.",
+      "Tahun 3 — 5.4.1 Menyelesaikan ayat matematik tambah hingga tiga nilai masa: (i) jam dengan jam, (ii) minit dengan minit.",
+      "Tahun 3 — 5.5.1 Menyelesaikan ayat matematik tolak hingga tiga nilai masa: (i) jam dengan jam, (ii) minit dengan minit.",
+      "Tahun 3 — 5.7.1 Menyelesaikan ayat matematik darab melibatkan masa: (i) jam, (ii) minit.",
+      "Tahun 3 — 5.8.1 Menyelesaikan ayat matematik bahagi melibatkan masa: (i) jam, (ii) minit.",
+      "Tahun 3 — 5.9.2 Menyelesaikan masalah berkaitan masa dan waktu dalam situasi harian."
+    ],
+    "standardContent": [
+      {
+        "code": "5.1",
+        "year": 1,
+        "content": "Tahun 1 — 5.1 Hari dan bulan.",
+        "learning": [
+          "Tahun 1 — 5.1.1 Menyatakan waktu dalam sehari.",
+          "Tahun 1 — 5.1.2 Menyatakan dalam urutan peristiwa dalam sehari.",
+          "Tahun 1 — 5.1.3 Menamakan hari dalam seminggu.",
+          "Tahun 1 — 5.1.4 Menamakan bulan dalam setahun."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "5.1.1 Menyatakan waktu dalam sehari.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 1,
+            "text": "5.1.2 Menyatakan dalam urutan peristiwa dalam sehari.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 1,
+            "text": "5.1.3 Menamakan hari dalam seminggu.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 1,
+            "text": "5.1.4 Menamakan bulan dalam setahun.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "5.2",
+        "year": 1,
+        "content": "Tahun 1 — 5.2 Muka jam.",
+        "learning": [
+          "Tahun 1 — 5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit.",
+          "Tahun 1 — 5.2.2 Mengenal pasti dan menyatakan ‘setengah’, ‘satu perempat‘ dan ‘tiga perempat’ berdasarkan muka jam.",
+          "Tahun 1 — 5.2.3 Menyebut dan menulis waktu dalam jam, setengah dan satu perempat jam sahaja dengan menggunakan jam analog."
+        ],
+        "learningSources": [
+          {
+            "year": 1,
+            "text": "5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 1,
+            "text": "5.2.2 Mengenal pasti dan menyatakan ‘setengah’, ‘satu perempat‘ dan ‘tiga perempat’ berdasarkan muka jam.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 1,
+            "text": "5.2.3 Menyebut dan menulis waktu dalam jam, setengah dan satu perempat jam sahaja dengan menggunakan jam analog.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "5.1",
+        "year": 2,
+        "content": "Tahun 2 — 5.1 Waktu dalam jam dan minit.",
+        "learning": [
+          "Tahun 2 — 5.1.1 Mengenal tanda senggatan minit pada muka jam.",
+          "Tahun 2 — 5.1.2 Menyatakan dan menunjukkan waktu dalam jam dan minit.",
+          "Tahun 2 — 5.1.3 Menukar waktu dalam jam dan minit daripada perkataan kepada angka dan sebaliknya.",
+          "Tahun 2 — 5.1.4 Merekod waktu dalam jam dan minit."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "5.1.1 Mengenal tanda senggatan minit pada muka jam.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 2,
+            "text": "5.1.2 Menyatakan dan menunjukkan waktu dalam jam dan minit.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 2,
+            "text": "5.1.3 Menukar waktu dalam jam dan minit daripada perkataan kepada angka dan sebaliknya.",
+            "pdfPage": 44,
+            "bookPage": 37
+          },
+          {
+            "year": 2,
+            "text": "5.1.4 Merekod waktu dalam jam dan minit.",
+            "pdfPage": 44,
+            "bookPage": 37
+          }
+        ]
+      },
+      {
+        "code": "5.2",
+        "year": 2,
+        "content": "Tahun 2 — 5.2 Perkaitan dalam waktu.",
+        "learning": [
+          "Tahun 2 — 5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "5.2.1 Menyatakan perkaitan hari dengan jam dan jam dengan minit.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.3",
+        "year": 2,
+        "content": "Tahun 2 — 5.3 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 2 — 5.3.1 Menyelesaikan masalah yang melibatkan situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 2,
+            "text": "5.3.1 Menyelesaikan masalah yang melibatkan situasi harian.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.1",
+        "year": 3,
+        "content": "Tahun 3 — 5.1 Waktu dalam jam dan minit.",
+        "learning": [
+          "Tahun 3 — 5.1.1 Membaca dan mendapatkan maklumat daripada jadual waktu sesuatu aktiviti.",
+          "Tahun 3 — 5.1.2 Membaca dan merekod waktu sebelum, semasa dan selepas sesuatu aktiviti."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.1.1 Membaca dan mendapatkan maklumat daripada jadual waktu sesuatu aktiviti.",
+            "pdfPage": 45,
+            "bookPage": 38
+          },
+          {
+            "year": 3,
+            "text": "5.1.2 Membaca dan merekod waktu sebelum, semasa dan selepas sesuatu aktiviti.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.2",
+        "year": 3,
+        "content": "Tahun 3 — 5.2 Perkaitan dalam waktu.",
+        "learning": [
+          "Tahun 3 — 5.2.1 Menyatakan perkaitan minggu dengan hari, tahun dengan bulan, dan minit dengan saat.",
+          "Tahun 3 — 5.2.2 Menukar unit masa melibatkan jam dengan minit, dan minit dengan saat."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.2.1 Menyatakan perkaitan minggu dengan hari, tahun dengan bulan, dan minit dengan saat.",
+            "pdfPage": 45,
+            "bookPage": 38
+          },
+          {
+            "year": 3,
+            "text": "5.2.2 Menukar unit masa melibatkan jam dengan minit, dan minit dengan saat.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.3",
+        "year": 3,
+        "content": "Tahun 3 — 5.3 Kalendar",
+        "learning": [
+          "Tahun 3 — 5.3.1 Membaca dan mendapatkan maklumat daripada kalendar Masihi."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.3.1 Membaca dan mendapatkan maklumat daripada kalendar Masihi.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.4",
+        "year": 3,
+        "content": "Tahun 3 — 5.4 Tambah masa.",
+        "learning": [
+          "Tahun 3 — 5.4.1 Menyelesaikan ayat matematik tambah hingga tiga nilai masa: (i) jam dengan jam, (ii) minit dengan minit."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.4.1 Menyelesaikan ayat matematik tambah hingga tiga nilai masa: (i) jam dengan jam, (ii) minit dengan minit.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.5",
+        "year": 3,
+        "content": "Tahun 3 — 5.5 Tolak masa.",
+        "learning": [
+          "Tahun 3 — 5.5.1 Menyelesaikan ayat matematik tolak hingga tiga nilai masa: (i) jam dengan jam, (ii) minit dengan minit."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.5.1 Menyelesaikan ayat matematik tolak hingga tiga nilai masa: (i) jam dengan jam, (ii) minit dengan minit.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.7",
+        "year": 3,
+        "content": "Tahun 3 — 5.7 Darab masa.",
+        "learning": [
+          "Tahun 3 — 5.7.1 Menyelesaikan ayat matematik darab melibatkan masa: (i) jam, (ii) minit."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.7.1 Menyelesaikan ayat matematik darab melibatkan masa: (i) jam, (ii) minit.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.8",
+        "year": 3,
+        "content": "Tahun 3 — 5.8 Bahagi masa.",
+        "learning": [
+          "Tahun 3 — 5.8.1 Menyelesaikan ayat matematik bahagi melibatkan masa: (i) jam, (ii) minit."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.8.1 Menyelesaikan ayat matematik bahagi melibatkan masa: (i) jam, (ii) minit.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      },
+      {
+        "code": "5.9",
+        "year": 3,
+        "content": "Tahun 3 — 5.9 Penyelesaian masalah.",
+        "learning": [
+          "Tahun 3 — 5.9.2 Menyelesaikan masalah berkaitan masa dan waktu dalam situasi harian."
+        ],
+        "learningSources": [
+          {
+            "year": 3,
+            "text": "5.9.2 Menyelesaikan masalah berkaitan masa dan waktu dalam situasi harian.",
+            "pdfPage": 45,
+            "bookPage": 38
+          }
+        ]
+      }
+    ],
+    "suggestedObjectives": [
+      "1. Menyatakan waktu dalam sehari.",
+      "2. Menyatakan aktiviti - aktiviti pada waktu siang dan malam.",
+      "3. Menamakan hari dalam seminggu mengikut urutan.",
+      "4. Menamakan bulan dalam setahun.",
+      "5. Mengenal muka jam.",
+      "6. Menyatakan waktu dalam pecahan suku jam.",
+      "7. Menyatakan waktu dalam pecahan.",
+      "8. Menyatakan waktu dalam jam.",
+      "1. Menyatakan waktu dalam gandaan lima minit.",
+      "2. Menuliskan waktu dalam gandaan lima minit.",
+      "3. Menggunakan unit bagi waktu dan mengetahui hubungan di antara jam dan minit.",
+      "4. Menggunakan unit bagi waktu dan mengetahui hubungan di antara hari dan jam.",
+      "5. Menyelesaikan masalah yang melibatkan waktu dalam situasi harian.",
+      "1. Menyatakan waktu dalam gandaan lima minit.",
+      "2. Menuliskan waktu dalam gandaan lima minit.",
+      "3. Membaca jadual aktiviti harian.",
+      "4. Membaca kalendar",
+      "5. Membuat pertukaran unit di antara minit dan saat.",
+      "6. Membuat pertukaran unit di antara tahun dan bulan.",
+      "7. Membuat pertukaran unit di antara minggu dan hari.",
+      "8. Menambah unit jam bagi waktu dalam jam.",
+      "9. Menambah unit jam bagi waktu dalam minit.",
+      "10. Menolak unit jam bagi waktu dalam jam.",
+      "11. Menolak unit jam bagi waktu dalam minit.",
+      "12. Mendarab unit bagi waktu dalam jam.",
+      "13. Mendarab unit bagi waktu dalam minit.",
+      "14. Membahagi unit bagi waktu dalam jam.",
+      "15. Membahagi unit bagi waktu dalam minit.",
+      "16. Menyelesaikan masalah yang melibatkan waktu dalam situasi harian."
     ]
   }
 ]
