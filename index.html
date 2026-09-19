@@ -884,9 +884,16 @@ function cloudMsg(teks,jenis=''){const el=$('cloudState');if(el){el.textContent=
 function kemasKiniAuthGate(){const s=sessionSupabase(),masuk=!!(s&&s.user&&s.user.id);document.body.classList.toggle('auth-locked',!masuk);if($('authGate'))$('authGate').hidden=masuk;if($('headerUserEmail'))$('headerUserEmail').textContent=masuk?(s.user.email||'Pengguna'):'Pengguna';if(masuk&&$('authEmail'))$('authEmail').value=s.user.email||'';}
 function cloudBadge(){const badge=$('cloudUserBadge'),s=sessionSupabase();if(badge){if(s&&s.user){badge.textContent=s.user.email||'LOG MASUK';badge.className='status-pill status-complete';}else{badge.textContent='BELUM LOG MASUK';badge.className='status-pill';}}kemasKiniAuthGate();}
 function dataUntukCloud(){const data=JSON.parse(JSON.stringify(store));delete data.ui;return data;}
-function dataCloudSama(a,b){try{return JSON.stringify(a)===JSON.stringify(b);}catch(e){return false;}}
+function jsonTersusun(value){if(Array.isArray(value))return value.map(jsonTersusun);if(value&&typeof value==='object')return Object.fromEntries(Object.keys(value).sort().map(k=>[k,jsonTersusun(value[k])]));return value;}
+function dataCloudSama(a,b){try{return JSON.stringify(jsonTersusun(a))===JSON.stringify(jsonTersusun(b));}catch(e){return false;}}
+function adaKandunganUntukCloud(data=dataUntukCloud()){
+  const settings=data&&data.settings||{},jadual=settings.timetable||{};
+  const adaKelas=(settings.classes||[]).some(c=>String(c.name||'').trim());
+  const adaKumpulan=(settings.groups||[]).some((g,i)=>String(g.name||'').trim()!==String('Kumpulan '+(i+1))||(g.students||[]).length||g.skillNote||g.note||g.level);
+  return !!((data.days||[]).length||adaKelas||adaKumpulan||Object.values(jadual).some(slot=>Array.isArray(slot)&&slot.length)||Object.keys(data.weekMetadata||{}).length);
+}
 function simpanSnapshotPemulihan(sebab){try{localStorage.setItem(kunciPemulihanPengguna(),JSON.stringify({savedAt:new Date().toISOString(),reason:sebab||'snapshot',data:store}));}catch(e){console.warn('Snapshot pemulihan tidak dapat disimpan',e);}}
-function hentikanSyncCloud(mesej){cloudReady=false;localStorage.setItem(kunciSyncPengguna(),'false');clearTimeout(pemasaCloud);if(mesej)cloudMsg(mesej,'err');}
+function hentikanSyncCloud(mesej){cloudReady=false;localStorage.setItem(kunciSyncPengguna(),'false');clearTimeout(pemasaCloud);if(mesej)cloudMsg(mesej,'err');setStatusSimpan('Tersimpan tempatan sahaja • semak Supabase',false);}
 function simpanKonfigurasiSupabaseUI(){
   const url=String(($('supabaseUrl')&&$('supabaseUrl').value)||'').trim().replace(/\/+$/,''),key=String(($('supabaseKey')&&$('supabaseKey').value)||'').trim();
   if(!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(url)){cloudMsg('Project URL Supabase tidak sah.','err');return false;}
@@ -913,11 +920,12 @@ function renderSemulaUntukAkaun(){
   const initial=store.ui&&['dashboard','jana','tools','cetak','settings'].includes(store.ui.view)?store.ui.view:'dashboard';showView(initial);
 }
 function aktifkanStorePengguna(userId){
+  cloudReady=false;cloudVersion=null;clearTimeout(pemasaCloud);
   const key=kunciStorePengguna(userId),cacheSedia=localStorage.getItem(key),claimedBy=localStorage.getItem(KUNCI_TUNTUT_LEGASI);let dataLegasiDituntut=false;
   if(!cacheSedia){
     const legacy=localStorage.getItem(KUNCI);
     if(legacy&&!claimedBy){
-      try{const calon=JSON.parse(legacy);if(calon&&calon.settings){localStorage.setItem(key,legacy);localStorage.setItem(KUNCI_TUNTUT_LEGASI,userId);dataLegasiDituntut=true;}}catch(e){}
+      try{const calon=JSON.parse(legacy);if(calon&&calon.settings&&adaKandunganUntukCloud(calon)){localStorage.setItem(key,legacy);localStorage.setItem(KUNCI_TUNTUT_LEGASI,userId);dataLegasiDituntut=true;}}catch(e){}
     }
     if(!localStorage.getItem(key))localStorage.setItem(key,JSON.stringify(storeDefault()));
   }
@@ -944,45 +952,56 @@ async function mintaResetKataLaluanUI(){
 async function daftarSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
   if(!email||password.length<6){cloudMsg('Masukkan e-mel dan kata laluan sekurang-kurangnya 6 aksara.','err');return;}
-  try{cloudMsg('Mendaftarkan akaun...');const redirectTo=URL_APP_PRODUKSI;const data=await responsSupabase('/auth/v1/signup?redirect_to='+encodeURIComponent(redirectTo),{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg(konteks.dataLegasiDituntut?'Akaun berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.':'Akaun berjaya didaftarkan dan dilog masuk.','ok');}else cloudMsg('Jika ini akaun baharu, semak e-mel untuk pengesahan. Jika pernah daftar, gunakan Log Masuk atau Lupa Kata Laluan.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
+  try{cloudMsg('Mendaftarkan akaun...');const redirectTo=URL_APP_PRODUKSI;const data=await responsSupabase('/auth/v1/signup?redirect_to='+encodeURIComponent(redirectTo),{method:'POST',auth:false,body:{email,password}});if(data&&data.access_token){data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);cloudBadge();await mulaSesiCloud(konteks);}else cloudMsg('Jika ini akaun baharu, semak e-mel untuk pengesahan. Jika pernah daftar, gunakan Log Masuk atau Lupa Kata Laluan.','ok');if($('authPassword'))$('authPassword').value='';}catch(e){cloudMsg('Daftar gagal: '+e.message,'err');}
 }
 async function logMasukSupabaseUI(){
   if(!simpanKonfigurasiSupabaseUI())return;const email=String($('supabaseEmail').value||'').trim(),password=$('supabasePassword').value||'';
   if(!email||!password){cloudMsg('Masukkan e-mel dan kata laluan.','err');return;}
-  try{cloudMsg('Sedang log masuk...');const data=await responsSupabase('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email,password}});data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);$('supabasePassword').value='';if($('authPassword'))$('authPassword').value='';cloudBadge();await mulaSesiCloud(konteks);if(konteks.dataLegasiDituntut)cloudMsg('Log masuk berjaya. Data tempatan lama dipautkan kepada akaun ini tetapi belum dihantar.','ok');}catch(e){cloudMsg('Log masuk gagal: '+e.message,'err');}
+  try{cloudMsg('Sedang log masuk...');const data=await responsSupabase('/auth/v1/token?grant_type=password',{method:'POST',auth:false,body:{email,password}});data.expires_at=Math.floor(Date.now()/1000)+(data.expires_in||3600);simpanSessionSupabase(data);const konteks=aktifkanStorePengguna(data.user.id);$('supabasePassword').value='';if($('authPassword'))$('authPassword').value='';cloudBadge();await mulaSesiCloud(konteks);}catch(e){cloudMsg('Log masuk gagal: '+e.message,'err');}
 }
 async function logKeluarSupabaseUI(){
-  const userId=idPenggunaAktif();if(userId)simpanStore();
+  const userId=idPenggunaAktif();if(userId){simpanStore();clearTimeout(pemasaCloud);if(cloudReady&&adaKandunganUntukCloud())await simpanCloudSekarang();}
   try{if(sessionSupabase())await responsSupabase('/auth/v1/logout',{method:'POST'});}catch(e){}
-  if(userId){localStorage.removeItem(kunciMetaPengguna(userId));localStorage.setItem(kunciSyncPengguna(userId),'false');}
+  clearTimeout(pemasaCloud);
   simpanSessionSupabase(null);cloudVersion=null;cloudReady=false;store=storeDefault();cloudBadge();authMsg('Log keluar selesai. Data setiap akaun kekal berasingan.','ok');if($('cloudVersions'))$('cloudVersions').innerHTML='';
 }
 async function rekodCloudSemasa(){const list=await responsSupabase('/rest/v1/erph_state?select=data,version,updated_at&limit=1');return Array.isArray(list)&&list.length?list[0]:null;}
 async function mulaSesiCloud(konteks={}){
   cloudBadge();const s=sessionSupabase();if(!s||!s.user)return;
   try{const remote=await rekodCloudSemasa(),meta=metaSupabase(),localData=dataUntukCloud();
-    if(!remote){cloudVersion=0;cloudReady=false;cloudMsg('Log masuk berjaya. Supabase masih kosong. Klik “Hantar Data Tempatan ke Supabase” untuk salinan pertama.','ok');return;}
+    if(ralatMuatStore){hentikanSyncCloud('Data tempatan tidak dapat dibaca. Autosimpan cloud dihentikan; gunakan backup untuk pemulihan.');return;}
+    if(!remote){
+      cloudVersion=0;cloudReady=true;localStorage.setItem(kunciSyncPengguna(s.user.id),'true');
+      if(adaKandunganUntukCloud(localData)){cloudMsg('Data tempatan ditemui. Sedang membuat salinan pertama di Supabase...');setStatusSimpan('Disimpan tempatan • menunggu pengesahan Supabase',false);await simpanCloudSekarang();}
+      else{cloudMsg('Supabase masih kosong. Autosimpan cloud aktif dan akan bermula apabila data pertama diisi.','ok');setStatusSimpan('Belum ada data untuk disimpan ke Supabase',true);}
+      return;
+    }
     cloudVersion=+remote.version;
-    if(konteks.cacheBaharu&&!konteks.dataLegasiDituntut){gunaDataCloud(remote,'muat-akaun-pada-peranti-baharu');setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data akaun berjaya dimuat daripada Supabase. Autosimpan aktif (versi '+remote.version+').','ok');return;}
-    if(dataCloudSama(localData,remote.data)){setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data tempatan dan Supabase adalah sama. Autosimpan cloud aktif (versi '+remote.version+').','ok');return;}
+    if(!adaKandunganUntukCloud(localData)){gunaDataCloud(remote,'muat-akaun-pada-peranti-baharu');setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data akaun berjaya dimuat daripada Supabase. Autosimpan aktif (versi '+remote.version+').','ok');setStatusSimpan('✓ Data dimuat daripada Supabase • versi '+remote.version,true);return;}
+    if(dataCloudSama(localData,remote.data)){setCloudMeta(s.user.id,remote.version);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('Data tempatan dan Supabase adalah sama. Autosimpan cloud aktif (versi '+remote.version+').','ok');setStatusSimpan('✓ Disahkan di Supabase • versi '+remote.version,true);return;}
     if(meta&&meta.userId===s.user.id&&+meta.version===+remote.version&&localStorage.getItem(kunciSyncPengguna())==='true'){cloudReady=true;cloudMsg('Terdapat perubahan tempatan yang belum dihantar. Autosimpan cloud akan menyambung daripada versi '+remote.version+'.','ok');jadualkanCloudSave();return;}
     hentikanSyncCloud('Data tempatan dan Supabase berbeza. Pilih “Muat Data Supabase” atau “Hantar Data Tempatan” selepas menyemak data. Tiada data ditindih secara automatik.');
-  }catch(e){if(!sessionSupabase()){cloudReady=false;cloudBadge();authMsg('Sesi tamat. Sila log masuk semula.','err');}else hentikanSyncCloud('Sambungan Supabase belum sedia: '+e.message);}
+  }catch(e){cloudReady=false;clearTimeout(pemasaCloud);if(!sessionSupabase()){cloudBadge();authMsg('Sesi tamat. Sila log masuk semula.','err');}else{cloudMsg('Sambungan Supabase belum sedia: '+e.message,'err');setStatusSimpan('Tersimpan tempatan sahaja • Supabase belum disahkan',false);}}
 }
 async function simpanCloudSekarang(paksa=false){
   if(cloudSedangSimpan){cloudPerluSimpanLagi=true;return false;}const s=sessionSupabase();if(!s||!s.user)return false;if(!cloudReady&&!paksa)return false;
-  cloudSedangSimpan=true;cloudPerluSimpanLagi=false;
+  cloudSedangSimpan=true;cloudPerluSimpanLagi=false;const userId=s.user.id,payload=dataUntukCloud();
   try{
     if(cloudVersion==null){const remote=await rekodCloudSemasa();cloudVersion=remote?+remote.version:0;}
-    const result=await responsSupabase('/rest/v1/rpc/save_erph_state',{method:'POST',headers:{Prefer:'return=representation'},body:{p_expected_version:cloudVersion||0,p_data:dataUntukCloud()}});
-    const row=Array.isArray(result)?result[0]:result,newVersion=row&&row.new_version!=null?+row.new_version:cloudVersion;setCloudMeta(s.user.id,newVersion);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('✓ Disimpan ke Supabase • versi '+newVersion+' • '+new Date().toLocaleTimeString('ms-MY'),'ok');return true;
+    if(idPenggunaAktif()!==userId)throw new Error('Akaun berubah semasa penyimpanan.');
+    const result=await responsSupabase('/rest/v1/rpc/save_erph_state',{method:'POST',headers:{Prefer:'return=representation'},body:{p_expected_version:cloudVersion||0,p_data:payload}});
+    const row=Array.isArray(result)?result[0]:result,newVersion=row&&row.new_version!=null?+row.new_version:0;
+    if(!Number.isInteger(newVersion)||newVersion<1)throw new Error('Supabase tidak mengesahkan versi simpanan.');
+    if(idPenggunaAktif()!==userId)return false;
+    const sah=await rekodCloudSemasa();if(idPenggunaAktif()!==userId)return false;if(!sah||+sah.version!==newVersion||!dataCloudSama(payload,sah.data))throw new Error('Data belum sepadan dengan rekod Supabase.');
+    setCloudMeta(s.user.id,newVersion);cloudReady=true;localStorage.setItem(kunciSyncPengguna(),'true');cloudMsg('✓ Disahkan di Supabase • versi '+newVersion+' • '+new Date().toLocaleTimeString('ms-MY'),'ok');setStatusSimpan('✓ Disahkan di Supabase • versi '+newVersion,true);return true;
   }catch(e){
     simpanSnapshotPemulihan('konflik-atau-gagal-cloud');
     if(/VERSION_CONFLICT|serialization|40001/i.test(e.message))hentikanSyncCloud('Konflik dikesan: data cloud lebih baharu. Autosimpan dihentikan supaya tiada data ditindih. Muat data Supabase atau eksport backup tempatan.');
-    else cloudMsg('Simpan cloud gagal; data tempatan masih selamat: '+e.message,'err');return false;
+    else{cloudMsg('Simpan cloud gagal; data tempatan masih selamat: '+e.message,'err');setStatusSimpan('Tersimpan tempatan sahaja • Supabase gagal',false);}return false;
   }finally{cloudSedangSimpan=false;if(cloudPerluSimpanLagi&&cloudReady)jadualkanCloudSave();}
 }
-function jadualkanCloudSave(){if(!cloudReady||localStorage.getItem(kunciSyncPengguna())!=='true'||!sessionSupabase())return;clearTimeout(pemasaCloud);pemasaCloud=setTimeout(()=>simpanCloudSekarang(false),2500);}
+function jadualkanCloudSave(){if(localStorage.getItem(kunciSyncPengguna())!=='true'||!sessionSupabase()||!adaKandunganUntukCloud())return;clearTimeout(pemasaCloud);setStatusSimpan('Disimpan tempatan • menyelaraskan Supabase...',false);pemasaCloud=setTimeout(()=>cloudReady?simpanCloudSekarang(false):mulaSesiCloud(),2500);}
 async function hantarDataTempatanKeCloudUI(){
   if(!sessionSupabase()){cloudMsg('Sila log masuk dahulu.','err');return;}try{const remote=await rekodCloudSemasa();cloudVersion=remote?+remote.version:0;const amaran=remote?'Supabase sudah mempunyai data versi '+remote.version+'. Data tempatan ini akan menjadi versi baharu.':'Ini akan membuat salinan pertama data tempatan di Supabase.';if(!confirm(amaran+'\n\nTeruskan?'))return;cloudReady=true;const ok=await simpanCloudSekarang(true);if(ok)paparToast('Data tempatan berjaya disalin ke Supabase.');}catch(e){hentikanSyncCloud('Data tidak dapat dihantar: '+e.message);}
 }
@@ -1011,7 +1030,7 @@ async function prosesPengesahanEmailRedirect(){
     const cfg=configSupabase(),response=await fetch(cfg.url+'/auth/v1/user',{headers:{apikey:cfg.key,Authorization:'Bearer '+accessToken}}),user=await response.json();
     if(!response.ok||!user||!user.id)throw new Error(user.message||'Sesi pengesahan tidak sah.');
     const session={access_token:accessToken,refresh_token:params.get('refresh_token')||'',expires_in:expiresIn,expires_at:Math.floor(Date.now()/1000)+expiresIn,token_type:params.get('token_type')||'bearer',user};
-    simpanSessionSupabase(session);const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('Log masuk berjaya.','ok');return true;
+    simpanSessionSupabase(session);const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);return true;
   }catch(e){cloudMsg('Pengesahan berjaya. Sila log masuk menggunakan akaun anda.','ok');return true;}
 }
 function batalPemulihanKataLaluanUI(){sessionPemulihanKataLaluan=null;const dialog=$('resetPasswordDialog');if(dialog&&dialog.open)dialog.close();authMsg('Pemulihan dibatalkan. Minta pautan baharu jika diperlukan.');}
@@ -1027,14 +1046,14 @@ async function kemasKiniKataLaluanUI(){
     pemulihan.user=user;simpanSessionSupabase(pemulihan);sessionPemulihanKataLaluan=null;if($('resetPasswordBaru'))$('resetPasswordBaru').value='';if($('resetPasswordSah'))$('resetPasswordSah').value='';const dialog=$('resetPasswordDialog');if(dialog&&dialog.open)dialog.close();const konteks=aktifkanStorePengguna(user.id);cloudBadge();await mulaSesiCloud(konteks);cloudMsg('Kata laluan berjaya ditukar dan anda telah log masuk.','ok');
   }catch(e){mesej('Gagal menukar kata laluan: '+e.message,'err');}
 }
-async function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;if(await prosesPengesahanEmailRedirect())return;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&s.user&&cfg.key){const konteks=aktifkanStorePengguna(s.user.id);mulaSesiCloud(konteks);}else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk membuka aplikasi.','ok');}
+async function initSupabaseUI(){const cfg=configSupabase();if($('supabaseUrl'))$('supabaseUrl').value=cfg.url;if($('supabaseKey'))$('supabaseKey').value=cfg.key;if(await prosesPengesahanEmailRedirect())return;const s=sessionSupabase();if(s&&s.user&&$('supabaseEmail'))$('supabaseEmail').value=s.user.email||'';cloudBadge();if(s&&s.user&&cfg.key){const konteks=aktifkanStorePengguna(s.user.id);await mulaSesiCloud(konteks);}else if(cfg.key)cloudMsg('Sambungan Supabase sedia. Daftar akaun atau log masuk untuk membuka aplikasi.','ok');}
 function setStatusSimpan(teks,ok=true){const el=$("autoSaveMsg");if(el){el.textContent=teks;el.className="ai-mesej "+(ok?"ok":"err");}}
 function tulisStore(){
   try{
     if(ralatMuatStore&&dataRosakMentah!=null){setStatusSimpan("Data rosak dilindungi. Import backup atau gunakan Zon Berisiko untuk memulakan semula.",false);return false;}
     store.schemaVersion=SCHEMA_VERSION;
     localStorage.setItem(kunciStoreSemasa(), JSON.stringify(store));
-    setStatusSimpan("✓ Disimpan " + new Date().toLocaleTimeString("ms-MY"),true);jadualkanCloudSave();return true;
+    setStatusSimpan("Disimpan tempatan • " + new Date().toLocaleTimeString("ms-MY"),!sessionSupabase());jadualkanCloudSave();return true;
   }catch(e){console.error("e-RPH gagal menyimpan localStorage",e);setStatusSimpan("Data tidak dapat disimpan. Eksport backup dan semak ruang penyimpanan browser.",false);if($("appToast"))paparToast("Data tidak dapat disimpan. Sila eksport backup dan semak ruang penyimpanan browser.",false);return false;}
 }
 function simpanStore(){clearTimeout(pemasaSimpanStore);return tulisStore();}
@@ -1875,7 +1894,7 @@ function toolTargets(){const scope=$('toolScope').value;if(scope==='day')return 
 function jalankanBulkTool(){const action=$('toolAction').value,targets=toolTargets();if(!targets.length){toolMsg('Tiada RPH dalam skop dipilih.','err');return;}if(!confirm('Jalankan tindakan "'+$('toolAction').selectedOptions[0].text+'" pada '+targets.length+' RPH?'))return;targets.forEach(day=>{if(action==='aktiviti')toolPadamAktiviti(day);else if(action==='objektif')toolPadamObjektif(day);else if(action==='refleksi')day.refleksi='';else if(action==='intervensi')day.intervensi='';else if(action==='semua')toolPadamSemua(day);});simpanStore();muatBorang();renderShellSummaries();toolMsg(targets.length+' RPH berjaya dikemas kini.','ok');}
 
 /* ---------- EVENT ---------- */
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded",async()=>{
   migrateSettingsCatalog();selaraskanKumpulan(store);
   const current=hariAktif(store),viewed=viewedWeekMonday();if(!current||isninBagiTarikh(current.tarikh)!==viewed){const first=store.days.filter(d=>d.tarikh>=viewed&&d.tarikh<=tambahHariISO(viewed,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;store.ui.selectedDate=first?first.tarikh:viewed;}else store.ui.selectedDate=current.tarikh;
   buildSettingUI();
@@ -1929,8 +1948,9 @@ document.addEventListener("DOMContentLoaded",()=>{
   settings.addEventListener('input',settingsHandler);settings.addEventListener('change',settingsHandler);
   $('importFile').addEventListener('change',e=>{if(e.target.files[0])importJSONFail(e.target.files[0]);});
   $('backupImportFile').addEventListener('change',e=>{if(e.target.files[0])importBackupPenuh(e.target.files[0]);});
+  window.addEventListener('online',()=>{if(sessionSupabase()&&localStorage.getItem(kunciSyncPengguna())==='true')mulaSesiCloud();});
 
-  if(!ralatMuatStore&&sessionSupabase())simpanStore();renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();initSupabaseUI();
+  renderWeekHeader();renderTabs();muatBorang();renderToolFilters();renderShellSummaries();renderArkib();await initSupabaseUI();
   const initial=store.ui&&['dashboard','jana','tools','cetak','settings'].includes(store.ui.view)?store.ui.view:'dashboard';showView(initial);
   const bersih=store.migrations&&store.migrations.v8,jumlahBersih=bersih?((bersih.placeholderTangguhDibuang||0)+(bersih.statusTangguhDipulihkan||0)+(bersih.duplikatSlotDibuang||0)):0;
   if(jumlahBersih&&!(store.ui&&store.ui.migrasiV8Dimaklumkan)){store.ui=store.ui||{};store.ui.migrasiV8Dimaklumkan=true;simpanStore();paparToast('Pembersihan selesai: '+(bersih.placeholderTangguhDibuang||0)+' rekod rosak dibuang, '+(bersih.statusTangguhDipulihkan||0)+' status dipulihkan dan '+(bersih.duplikatSlotDibuang||0)+' duplicate slot dibuang.');}
