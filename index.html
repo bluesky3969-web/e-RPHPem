@@ -563,6 +563,7 @@ function minitMula(masa) {
 function kunciPadananSlot(x) {
   return [x && x.kelas, x && x.masa, x && x.mataPelajaran].map(function(v){return String(v || "").trim().toLowerCase();}).join("|");
 }
+function rekodDalamJadual(day){return !!(day&&!day.jadualDikeluarkan);}
 function indeksSlotJadual(appStore, day) {
   var slots = (((appStore || {}).settings || {}).timetable || {})[day && day.hari] || [];
   var idx = slots.findIndex(function(slot){ return day && day.slotId && slot.id === day.slotId; });
@@ -1101,7 +1102,7 @@ function notaPindahanRph(day){
 }
 function renderSessionCards(){
   const wrap=$('sessionCards'); if(!wrap) return;
-  const aktif=hariAktif(store),tarikh=tarikhTerpilih(),list=store.days.filter(d=>d.tarikh===tarikh).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  const aktif=hariAktif(store),tarikh=tarikhTerpilih(),list=store.days.filter(d=>d.tarikh===tarikh&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
   const kosong=$("emptyViewedWeek");if(kosong)kosong.hidden=mingguAktif().length>0;
   if(!list.length){wrap.innerHTML='<div class="card"><p class="muted">Tiada sesi pada '+esc(formatTarikhBM(tarikh))+'. Jana RPH minggu ini daripada jadual jika diperlukan.</p></div>';return;}
   wrap.innerHTML=list.map((d,i)=>{const s=statusRph(d),nota=notaPindahanRph(d);return `<article class="session-card${aktif&&d.id===aktif.id?' aktif':''}"><span class="status-pill ${s.className}">${s.label}</span><h3>${esc(d.mataPelajaran||'Mata pelajaran belum ditetapkan')}</h3><p>${esc(d.kelas||('RPH '+(i+1)))} &bull; ${esc(d.masa||'Masa belum ditetapkan')}</p>${nota?`<p class="session-note">${nota}</p>`:""}<div class="session-actions"><button class="kecil" onclick="bukaRphCard('${d.id}')">Buka RPH</button><button class="secondary kecil" onclick="janaRphLengkapHari('${d.id}')">Jana RPH</button></div></article>`}).join('');
@@ -1129,9 +1130,9 @@ function renderTabs(){
   renderSessionCards(); renderDashboard();
 }
 function pilihHari(id){const day=store.days.find(d=>d.id===id);if(!day)return;store.activeDayId=id;store.ui.selectedDate=day.tarikh;store.ui.viewedWeekMonday=isninBagiTarikh(day.tarikh);simpanStore();renderTabs();muatBorang();renderShellSummaries();}
-function pilihTarikhUI(tarikh){store.ui.selectedDate=tarikh;const sasaran=store.days.filter(d=>d.tarikh===tarikh).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=sasaran?sasaran.id:null;simpanStore();renderTabs();muatBorang();renderShellSummaries();}
+function pilihTarikhUI(tarikh){store.ui.selectedDate=tarikh;const sasaran=store.days.filter(d=>d.tarikh===tarikh&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=sasaran?sasaran.id:null;simpanStore();renderTabs();muatBorang();renderShellSummaries();}
 function buildSlotPicker(){
-  const aktif=hariAktif(store), pilih=$("rphSlotSelect"), padam=$("padamRphAktif"),slots=store.days.filter(d=>d.tarikh===tarikhTerpilih()).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  const aktif=hariAktif(store), pilih=$("rphSlotSelect"), padam=$("padamRphAktif"),slots=store.days.filter(d=>d.tarikh===tarikhTerpilih()&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
   if(!slots.length){pilih.hidden=true;padam.hidden=true;return;}
   pilih.innerHTML=slots.map((d,i)=>`<option value="${d.id}"${aktif&&d.id===aktif.id?' selected':''}>${esc((d.kelas||('RPH '+(i+1)))+(d.masa?' - '+d.masa:''))}</option>`).join('');
   pilih.hidden=false;padam.hidden=!aktif;
@@ -1170,7 +1171,7 @@ function formatTarikhPaparan(iso){if(!isoSah(iso))return "";const nama=["Januari
 function julatMingguPaparan(monday){return formatTarikhPaparan(monday)+" - "+formatTarikhPaparan(tambahHariISO(monday,4));}
 function setViewedWeek(monday){
   const mula=isninBagiTarikh(monday);store.ui=store.ui||{};store.ui.viewedWeekMonday=mula;store.ui.selectedDate=mula;
-  const first=store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=tambahHariISO(mula,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;
+  const first=store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=tambahHariISO(mula,4)&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;
   simpanStore();renderWeekHeader();renderTabs();muatBorang();renderShellSummaries();
 }
 function navigasiMinggu(arah){setViewedWeek(tambahHariISO(viewedWeekMonday(),arah*7));}
@@ -1292,25 +1293,33 @@ function muatStatusPdpc(day){
 }
 
 function janaRekodMinggu(mula,nombor){
-  mula=isninBagiTarikh(mula);migrateSettingsCatalog();susunSlotJadualIkutMasa(store);let ditambah=0,dikemasKini=0;
+  mula=isninBagiTarikh(mula);migrateSettingsCatalog();susunSlotJadualIkutMasa(store);let ditambah=0,dikemasKini=0,diarkib=0;
+  const dipadankan=new Set();
   HARI_LIST.forEach((h,offset)=>{
     const tarikh=tambahHariISO(mula,offset), slots=((store.settings.timetable||{})[h]||[]).filter(slotPdpcSah);
     slots.forEach((slot,slotIndex)=>{
       if(!slot.id)slot.id=idUnik();
-      let day=store.days.find(d=>d.tarikh===tarikh&&d.slotId===slot.id);
-      if(!day)day=store.days.find(d=>d.tarikh===tarikh&&kunciPadananSlot(d)===kunciPadananSlot(slot));
+      let day=store.days.find(d=>d.tarikh===tarikh&&d.slotId===slot.id&&!dipadankan.has(d.id));
+      if(!day)day=store.days.find(d=>d.tarikh===tarikh&&kunciPadananSlot(d)===kunciPadananSlot(slot)&&!dipadankan.has(d.id));
       if(!day){day=buatHariKosong(tarikh,store.settings,slot);day.createdAt=new Date().toISOString();store.days.push(day);ditambah++;}else dikemasKini++;
+      dipadankan.add(day.id);delete day.jadualDikeluarkan;
       day.tarikh=tarikh;day.hari=h;day.minggu=nombor;day.mondayDate=mula;day.kelas=slot.kelas||day.kelas||'';day.masa=slot.masa||day.masa||'';day.mataPelajaran=slot.mataPelajaran||day.mataPelajaran||'';day.bilanganMurid=slot.studentCount||day.bilanganMurid||'';
       day.classId=slot.classId||day.classId||'';day.subjectId=slot.subjectId||day.subjectId||'';day.slotId=slot.id;day.slotJadual=h+":"+slotIndex;day.dariJadual=true;day.updatedAt=day.updatedAt||day.createdAt||new Date().toISOString();
     });
   });
-  susunHariIkutTarikh(store);return {ditambah,dikemasKini};
+  const akhir=tambahHariISO(mula,4),jadualLengkap=HARI_LIST.every(h=>(store.settings.timetable[h]||[]).every(slotPdpcSah));
+  if(jadualLengkap)store.days.forEach(day=>{if(day&&day.dariJadual&&day.tarikh>=mula&&day.tarikh<=akhir&&!dipadankan.has(day.id)&&!day.jadualDikeluarkan){day.jadualDikeluarkan=true;diarkib++;}});
+  susunHariIkutTarikh(store);return {ditambah,dikemasKini,diarkib};
+}
+function slotJadualBelumLengkap(){
+  migrateSettingsCatalog();
+  return HARI_LIST.flatMap(h=>(store.settings.timetable[h]||[]).filter(slot=>!slotPdpcSah(slot)).map(slot=>h+' '+(slot.masa||'(masa belum diisi)')));
 }
 function binaMingguUI(){
   const inputMula=$("mulaMinggu").value,mesej=$("janaMingguMsg"),nombor=Math.max(1,parseInt($("setMinggu").value,10)||0);
   if(!isoSah(inputMula)||!nombor){if(mesej){mesej.textContent="Masukkan Minggu Semasa dan Tarikh Isnin yang sah.";mesej.className="ai-mesej err";}return;}
   const mula=isninBagiTarikh(inputMula);store.settings.activeWeek={weekNumber:nombor,mondayDate:mula};store.settings.weekNumber=nombor;store.settings.mondayDate=mula;store.ui.viewedWeekMonday=mula;store.ui.selectedDate=mula;
-  const result=janaRekodMinggu(mula,nombor),first=store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=tambahHariISO(mula,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;
+  const result=janaRekodMinggu(mula,nombor),first=mingguAktif()[0];store.activeDayId=first?first.id:null;
   store.weekMetadata=store.weekMetadata||{};if(!store.weekMetadata[mula])store.weekMetadata[mula]={weekNumber:nombor,mondayDate:mula,status:'open',completedAt:null};
   simpanStore();renderWeekHeader();renderTabs();muatBorang();renderShellSummaries();
   if(mesej){mesej.textContent="Jadual berjaya disimpan. Minggu "+nombor+" ("+julatMingguPaparan(mula)+") kini menjadi minggu aktif. "+result.ditambah+" RPH baharu dijana.";mesej.className="ai-mesej ok";}
@@ -1320,17 +1329,19 @@ function kemaskiniMingguDariJadual(gunaTarikhSettings){
   const mula=gunaTarikhSettings?activeWeekData().mondayDate:viewedWeekMonday();
   const mesej=gunaTarikhSettings?$('janaMingguMsg'):$('batchMsg');
   if(!mula){if(mesej){mesej.hidden=false;mesej.textContent='Tarikh minggu tidak dapat ditentukan.';mesej.className='notice err';}return;}
+  const belumLengkap=slotJadualBelumLengkap();
+  if(belumLengkap.length){if(mesej){mesej.hidden=false;mesej.textContent='Lengkapkan masa dan kelas bagi slot jadual dahulu: '+belumLengkap.join(', ')+'. Tiada RPH diubah.';mesej.className=gunaTarikhSettings?'ai-mesej err':'notice err';}return;}
   if(!confirm('Kemaskini metadata slot minggu ini daripada Settings Jadual? Kandungan dan sejarah RPH sedia ada akan dikekalkan.'))return;
   const result=janaRekodMinggu(mula,nomborMingguBagiMonday(mula));selaraskanKumpulan(store);
-  if(!hariAktif(store)&&viewedWeekMonday()===mula){const pertama=mingguAktif()[0];store.activeDayId=pertama?pertama.id:null;}
-  simpanStore();renderTabs();muatBorang();renderShellSummaries();
-  const teks='Kemaskini selesai: '+result.ditambah+' ditambah, '+result.dikemasKini+' dikekalkan/dikemas kini. Tiada RPH lama dipadam.';
+  if(viewedWeekMonday()===mula&&(!hariAktif(store)||!rekodDalamJadual(hariAktif(store)))){const pertama=mingguAktif()[0];store.activeDayId=pertama?pertama.id:null;store.ui.selectedDate=pertama?pertama.tarikh:mula;}
+  simpanStore();renderTabs();muatBorang();renderShellSummaries();renderArkib();
+  const teks='Kemaskini selesai: '+result.ditambah+' ditambah, '+result.dikemasKini+' dikemas kini, '+result.diarkib+' RPH slot lama dipindah daripada jadual aktif ke arkib. Tiada RPH dipadam.';
   if(mesej){mesej.hidden=false;mesej.textContent=teks;mesej.className=gunaTarikhSettings?'ai-mesej ok':'notice';}
 }
 
 function mingguAktif(){
   const mula=viewedWeekMonday(),akhir=tambahHariISO(mula,4);
-  return store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=akhir&&HARI_LIST.includes(d.hari)).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  return store.days.filter(d=>d.tarikh>=mula&&d.tarikh<=akhir&&HARI_LIST.includes(d.hari)&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
 }
 function sediakanMingguDepanUI(){
   const sumber=mingguAktif(), jenis=$("resetMingguDepan").value;
@@ -1338,14 +1349,14 @@ function sediakanMingguDepanUI(){
   const mondayBaru=tambahHariISO(viewedWeekMonday(),7),nomborBaru=nomborMingguBagiMonday(mondayBaru);
   const sebelum=new Set(store.days.filter(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4)).map(d=>d.id));
   janaRekodMinggu(mondayBaru,nomborBaru);let tambah=0;
-  const sasaran=store.days.filter(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4)&&!sebelum.has(d.id));
+  const sasaran=store.days.filter(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4)&&rekodDalamJadual(d)&&!sebelum.has(d.id));
   sasaran.forEach(baru=>{
     const calon=sumber.filter(d=>(baru.slotId&&d.slotId===baru.slotId)||(d.hari===baru.hari&&kunciPadananSlot(d)===kunciPadananSlot(baru)));
     const asal=calon.find(d=>d.isDeferred||d.deferredFromRphId)||calon.find(adaDataPenggunaRph)||calon[0];
     if(asal){baru.groupCount=bilanganKumpulanHari(asal);baru.groupNames=namaKumpulanHari(asal).slice();baru.groups=(asal.groups||[]).map(salinKumpulanPedagogi);baru.copiedFromRphId=asal.id;baru.copiedFromDate=asal.tarikh;resetBahagian(baru,jenis);}
     buangFieldBbmAbm(baru);baru.refleksi="";baru.intervensi="";baru.kehadiran="";baru.kuasai="";baru.belumKuasai="";baru.kehadiranNota="";baru.pdpcStatus="scheduled";baru.pdpcNotConducted=false;baru.pdpcNotConductedReasons=[];baru.pdpcNotConductedOtherReason="";baru.copyRphToNext=false;baru.isDeferred=false;delete baru.deferredFromRphId;delete baru.deferredFromDate;delete baru.deferredToRphId;delete baru.deferredToDate;baru.updatedAt=new Date().toISOString();tambah++;
   });
-  store.ui.viewedWeekMonday=mondayBaru;susunHariIkutTarikh(store);const pertamaBaru=store.days.find(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4));store.activeDayId=pertamaBaru?pertamaBaru.id:null;store.ui.selectedDate=pertamaBaru?pertamaBaru.tarikh:mondayBaru;simpanStore();renderWeekHeader();renderTabs();muatBorang();
+  store.ui.viewedWeekMonday=mondayBaru;susunHariIkutTarikh(store);const pertamaBaru=store.days.find(d=>d.tarikh>=mondayBaru&&d.tarikh<=tambahHariISO(mondayBaru,4)&&rekodDalamJadual(d));store.activeDayId=pertamaBaru?pertamaBaru.id:null;store.ui.selectedDate=pertamaBaru?pertamaBaru.tarikh:mondayBaru;simpanStore();renderWeekHeader();renderTabs();muatBorang();
   dataMsg(tambah?tambah+" RPH minggu "+nomborBaru+" telah disediakan mengikut slot jadual tanpa pendua.":"RPH minggu depan sudah wujud.",!!tambah);
 }
 function namaFail(ext){
@@ -1377,7 +1388,7 @@ function bukaCetakRph(days,tajuk){
 }
 function cetakHariPDF(){
   const aktif=hariAktif(store); if(!aktif){dataMsg("Pilih hari dahulu.",false);return;}
-  const days=store.days.filter(d=>d.tarikh===aktif.tarikh).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
+  const days=store.days.filter(d=>d.tarikh===aktif.tarikh&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store));
   bukaCetakRph(days,"e-RPH "+aktif.hari+" "+aktif.tarikh);
 }
 function cetakRphAktif(){const aktif=hariAktif(store);if(!aktif){dataMsg("Pilih RPH dahulu.",false);return;}bukaCetakRph([aktif],"e-RPH "+(aktif.kelas||aktif.hari)+" "+aktif.tarikh);}
@@ -1566,7 +1577,7 @@ async function janaRphLengkap(i,button){
 async function janaRphLengkapHari(id){const day=store.days.find(d=>d.id===id);if(!day)return;store.activeDayId=id;let ok=0,skip=0;for(let i=0;i<day.groups.length;i++){if(kumpulanSedia(day.groups[i])){if(await janaRphLengkap(i))ok++;}else skip++;}batchMessage(ok+' kumpulan berjaya dijana. '+skip+' belum lengkap.');}
 function batchMessage(text,error=false){const el=$('batchMsg');if(!el)return;el.hidden=false;el.textContent=text;el.className='notice'+(error?' err':'');}
 async function runBatch(days,label){let ok=0,skip=0;for(const day of days){store.activeDayId=day.id;for(let i=0;i<day.groups.length;i++){if(kumpulanSedia(day.groups[i])){if(await janaRphLengkap(i))ok++;}else skip++;}}renderTabs();muatBorang();batchMessage(ok+' RPH/kumpulan '+label+' berjaya dijana. '+skip+' tidak dijana kerana Kemahiran / SK / SP belum lengkap.');}
-function janaBatchHari(){const aktif=hariAktif(store);if(!aktif){batchMessage('Pilih hari dahulu.',true);return;}runBatch(store.days.filter(d=>d.tarikh===aktif.tarikh),'hari ini');}
+function janaBatchHari(){const aktif=hariAktif(store);if(!aktif){batchMessage('Pilih hari dahulu.',true);return;}runBatch(store.days.filter(d=>d.tarikh===aktif.tarikh&&rekodDalamJadual(d)),'hari ini');}
 function janaBatchMinggu(){runBatch(mingguAktif(),'minggu ini');}
 function fieldEditor(i,g,item,field,label){return `<label>${label}</label><div class="field-tools"><div><select onchange="gunaCadanganAktiviti(${i},'${field}',this.value)">${guideOptions(item?item.suggestedActivities:[],'Cadangan Panduan')}</select></div><button type="button" class="secondary kecil" onclick="janaFieldAI(${i},'${field}',this)">Jana AI</button></div><textarea data-g="${i}" data-field="${field}">${esc(g[field])}</textarea>`;}
 
@@ -1824,7 +1835,7 @@ function renderArkib(){
     const days=week.days.filter(d=>(!subject||d.mataPelajaran===subject)&&(!kelas||d.kelas===kelas)&&(!hari||d.hari===hari)&&(!q||teksCarianRph(d).includes(q)));if(!days.length)return '';
     const badge=weekStatus==='completed'?'<span class="week-done-badge">✓ SIAP</span>':'<span class="status-pill">BELUM SIAP</span>';
     const statuses=week.days.map(statusRph),selesai=statuses.filter(s=>s.key==='complete').length,ditangguhkan=statuses.filter(s=>s.key==='deferred').length;
-    return `<section class="archive-week"><div class="archive-week-head"><div><h4>Minggu ${week.weekNumber}</h4><p class="muted">${esc(julatMingguPaparan(week.monday))} • ${week.days.length} RPH • ${selesai} Selesai • ${ditangguhkan} Ditangguhkan</p></div><div>${badge}<button class="secondary kecil" onclick="bukaMingguArkib('${week.monday}')">Buka Minggu</button></div></div><div class="archive-rph-grid">${days.map(d=>{const s=statusRph(d);return `<article class="archive-rph"><span class="status-pill ${s.className}">${s.label}</span><h5>${esc(d.mataPelajaran||'RPH')} • ${esc(d.kelas||'')}</h5><p>${esc(d.hari)}, ${esc(formatTarikhPaparan(d.tarikh))} • ${esc(d.masa||'')}</p><p><b>${esc(ringkasanKemahiran(d))}</b></p>${d.refleksi?`<p>Refleksi: ${esc(d.refleksi)}</p>`:''}<button class="kecil" onclick="bukaRphCard('${d.id}')">Lihat RPH</button><button class="secondary kecil" onclick="gunaSebagaiTemplate('${d.id}')">Gunakan Sebagai Template</button><button class="secondary kecil" onclick="bukaDialogSalinRph('${d.id}')">Salin RPH</button></article>`}).join('')}</div></section>`;
+    return `<section class="archive-week"><div class="archive-week-head"><div><h4>Minggu ${week.weekNumber}</h4><p class="muted">${esc(julatMingguPaparan(week.monday))} • ${week.days.length} RPH • ${selesai} Selesai • ${ditangguhkan} Ditangguhkan</p></div><div>${badge}<button class="secondary kecil" onclick="bukaMingguArkib('${week.monday}')">Buka Minggu</button></div></div><div class="archive-rph-grid">${days.map(d=>{const s=statusRph(d);return `<article class="archive-rph"><span class="status-pill ${s.className}">${d.jadualDikeluarkan?'SLOT LAMA • ARKIB':s.label}</span><h5>${esc(d.mataPelajaran||'RPH')} • ${esc(d.kelas||'')}</h5><p>${esc(d.hari)}, ${esc(formatTarikhPaparan(d.tarikh))} • ${esc(d.masa||'')}</p><p><b>${esc(ringkasanKemahiran(d))}</b></p>${d.refleksi?`<p>Refleksi: ${esc(d.refleksi)}</p>`:''}<button class="kecil" onclick="bukaRphCard('${d.id}')">Lihat RPH</button><button class="secondary kecil" onclick="gunaSebagaiTemplate('${d.id}')">Gunakan Sebagai Template</button><button class="secondary kecil" onclick="bukaDialogSalinRph('${d.id}')">Salin RPH</button></article>`}).join('')}</div></section>`;
   }).join('');wrap.innerHTML=html||'<div class="empty-week">Tiada RPH sepadan dengan carian atau filter ini.</div>';
 }
 function bukaMingguArkib(monday){setViewedWeek(monday);showView('jana');}
@@ -1896,7 +1907,7 @@ function jalankanBulkTool(){const action=$('toolAction').value,targets=toolTarge
 /* ---------- EVENT ---------- */
 document.addEventListener("DOMContentLoaded",async()=>{
   migrateSettingsCatalog();selaraskanKumpulan(store);
-  const current=hariAktif(store),viewed=viewedWeekMonday();if(!current||isninBagiTarikh(current.tarikh)!==viewed){const first=store.days.filter(d=>d.tarikh>=viewed&&d.tarikh<=tambahHariISO(viewed,4)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;store.ui.selectedDate=first?first.tarikh:viewed;}else store.ui.selectedDate=current.tarikh;
+  const current=hariAktif(store),viewed=viewedWeekMonday();if(!current||!rekodDalamJadual(current)||isninBagiTarikh(current.tarikh)!==viewed){const first=store.days.filter(d=>d.tarikh>=viewed&&d.tarikh<=tambahHariISO(viewed,4)&&rekodDalamJadual(d)).sort((a,b)=>bandingRphMengikutJadual(a,b,store))[0];store.activeDayId=first?first.id:null;store.ui.selectedDate=first?first.tarikh:viewed;}else store.ui.selectedDate=current.tarikh;
   buildSettingUI();
 
   const form=$('borangEdit');
